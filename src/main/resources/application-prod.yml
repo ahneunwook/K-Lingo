@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+
+logging:
+  level:
+    root: INFO
+    com.kdopamine.app: INFO
+    org.hibernate.SQL: INFO
+
