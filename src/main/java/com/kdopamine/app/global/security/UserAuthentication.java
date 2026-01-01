@@ -20,14 +20,13 @@ public class UserAuthentication extends AbstractAuthenticationToken {
         super.setAuthenticated(true);
     }
 
-    @Override
     public @Nullable Object getCredentials() {
-        return null;
+        return this.credentials;
     }
 
     @Override
     public @Nullable Object getPrincipal() {
-        return null;
+        return this.principal;
     }
 
     @Override
