@@ -13,6 +13,7 @@ public enum ErrorCode {
     SERVER_EXCEPTION_JWT(500, "A004", "토큰 처리 중 서버 오류가 발생했습니다."),
     TOKEN_NOT_FOUND(404, "A005", "일치하는 토큰을 찾을 수 없습니다."),
     INVALID_REFRESH_TOKEN(401, "A006", "리프레시 토큰이 유효하지 않습니다."),
+    MEMBER_NOT_FOUND(404, "A007", "해당 사용자를 찾을 수 없습니다."),
 
     // Common
     INVALID_INPUT_VALUE(400, "C001", "잘못된 입력값입니다."),
