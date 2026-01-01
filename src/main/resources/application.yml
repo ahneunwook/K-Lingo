@@ -65,3 +65,12 @@ jwt:
     token-secret: ${SECRET_KEY}
     access-token-expiry: 1800000
     refresh-token-expiry: 604800000
+
+oauth:
+  google:
+    client-id: ${GOOGLE_CLIENT_ID}
+    client-secret: ${GOOGLE_CLIENT_SECRET}
+    redirect-uri: ${GOOGLE_REDIRECT_URI}
+
+    token-uri: https://oauth2.googleapis.com/token
+    resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
