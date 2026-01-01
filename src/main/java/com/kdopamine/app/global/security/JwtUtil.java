@@ -4,14 +4,13 @@ import com.kdopamine.app.domain.member.entity.Role;
 import com.kdopamine.app.global.exception.BusinessException;
 import com.kdopamine.app.global.exception.ErrorCode;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
+import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,20 +23,17 @@ public class JwtUtil {
     private final long accessTokenExpiry;
     private final long refreshTokenExpiry;
 
-    private static final String BEARER_PREFIX = "Bearer ";
-
     public JwtUtil(
-            @Value("${jwt.issuer}") String issuer,
-            @Value("${jwt.secret-key}") String secretKey,
-            @Value("${jwt.access-token-expiry}") long accessTokenExpiry,
-            @Value("${jwt.refresh-token-expiry}") long refreshTokenExpiry
+            @Value("${jwt.properties.issuer}") String issuer,
+            @Value("${jwt.properties.token-secret}") String secretKey,
+            @Value("${jwt.properties.access-token-expiry}") long accessTokenExpiry,
+            @Value("${jwt.properties.refresh-token-expiry}") long refreshTokenExpiry
     ) {
         this.issuer = issuer;
         this.accessTokenExpiry = accessTokenExpiry;
         this.refreshTokenExpiry = refreshTokenExpiry;
 
-        // 시크릿 키 설정 (jjwt 0.12.x 최신 버전 기준)
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        byte[] keyBytes = Base64.getDecoder().decode(secretKey);
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -45,7 +41,7 @@ public class JwtUtil {
         Date date = new Date();
         Date expiryDate = new Date(date.getTime() + accessTokenExpiry);
 
-        return BEARER_PREFIX + Jwts.builder()
+        return Jwts.builder()
                 .subject(String.valueOf(userId))
                 .issuer(issuer)
                 .issuedAt(date)
@@ -62,7 +58,7 @@ public class JwtUtil {
         String jti = UUID.randomUUID().toString();
         Date expiryDate = new Date(date.getTime() + refreshTokenExpiry);
 
-        return BEARER_PREFIX + Jwts.builder()
+        return Jwts.builder()
                 .subject(String.valueOf(userId))
                 .id(jti)
                 .claim("type", "refresh")
@@ -73,14 +69,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String substringToken(String tokenValue) {
-        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
-            return tokenValue.substring(7);
-        }
-        return null;
-    }
-
-    public Claims parseRawToken(String token) {
+    public Claims parseToken(String token) {
         try {
             return Jwts.parser()
                     .verifyWith(secretKey)
@@ -102,12 +91,24 @@ public class JwtUtil {
         }
     }
 
-    public Claims parseToken(String bearerToken) {
-        String token = substringToken(bearerToken);
-        if (!StringUtils.hasText(token)) {
-            throw new BusinessException(ErrorCode.TOKEN_EMPTY);
+    public Long getUserId(String token) {
+        Claims claims = parseToken(token);
+        return Long.valueOf(claims.getSubject());
+    }
+
+    /**
+     * 토큰 유효성 검증 (예외 발생 없이)
+     *
+     * @param token JWT 토큰
+     * @return 유효하면 true, 아니면 false
+     */
+    public boolean validateToken(String token) {
+        try {
+            parseToken(token);
+            return true;
+        } catch (BusinessException e) {
+            return false;
         }
-        return parseRawToken(token);
     }
 }
 
