@@ -1,5 +1,6 @@
 package com.kdopamine.app.global.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kdopamine.app.domain.member.repository.MemberRepository;
 import com.kdopamine.app.global.security.JwtAccessDeniedHandler;
 import com.kdopamine.app.global.security.JwtAuthenticationEntryPoint;
@@ -27,6 +28,7 @@ public class SecurityConfig {
 
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtUtil jwtUtil, MemberRepository memberRepository) throws Exception {
@@ -37,10 +39,14 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .rememberMe(AbstractHttpConfigurer::disable)
-                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, memberRepository), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(
+                    new JwtAuthenticationFilter(jwtUtil, memberRepository, objectMapper),
+                    UsernamePasswordAuthenticationFilter.class
+                )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST,"/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/test-token/**").permitAll() // 테스트용 토큰 발급 허용
+                        .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
