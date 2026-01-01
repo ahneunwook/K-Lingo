@@ -26,6 +26,8 @@ public class ErrorResponse {
         private final String field;
         private final String value;
         private final String reason;
+        private final String path;
+
     }
 
     public static ErrorResponse of(String code, String message) {
