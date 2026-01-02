@@ -31,4 +31,14 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role; // USER, ADMIN
 
+    // 소셜 로그인 신규 회원 생성용
+    public static Member createSocialMember(String email, String nickname, String provider, String providerId) {
+        return Member.builder()
+                .email(email)
+                .nickname(nickname)
+                .provider(provider)
+                .providerId(providerId)
+                .role(Role.USER)
+                .build();
+    }
 }
