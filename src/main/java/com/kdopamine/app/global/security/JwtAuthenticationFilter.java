@@ -33,17 +33,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final List<String> EXCLUDED_PATHS = Arrays.asList(
             "/swagger-ui",
             "/v3/api-docs",
-            "/auth/login",
-            "/auth/refresh",
-            "/auth/oauth2",
-            "/health"
+            "/auth/login/google",
+            "/error"
     );
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        String uri = request.getRequestURI();
+        String contextPath = request.getContextPath();
+        String path = uri.substring(contextPath.length());
 
         if (shouldNotFilter(path)) {
             filterChain.doFilter(request, response);
@@ -69,7 +69,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean shouldNotFilter(String path) {
-        return EXCLUDED_PATHS.stream().anyMatch(prefix -> path.startsWith(prefix));    }
+        return EXCLUDED_PATHS.stream().anyMatch(path::startsWith);
+    }
 
     private String extractToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
