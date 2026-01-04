@@ -5,6 +5,7 @@ import '../../config/theme.dart';
 import '../../services/auth_service.dart';
 import '../home/home_screen.dart';
 
+// 로그인 화면
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
