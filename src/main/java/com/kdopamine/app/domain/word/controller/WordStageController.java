@@ -1,5 +1,7 @@
 package com.kdopamine.app.domain.word.controller;
 
+import com.kdopamine.app.domain.word.dto.request.WordQuizCheckReq;
+import com.kdopamine.app.domain.word.dto.response.WordQuizCheckRes;
 import com.kdopamine.app.domain.word.dto.response.WordQuizRes;
 import com.kdopamine.app.domain.word.dto.response.WordStageRes;
 import com.kdopamine.app.domain.word.service.WordStageService;
@@ -27,12 +29,5 @@ public class WordStageController {
         List<WordStageRes> res = wordStageService.getStages(categoryId, user);
 
         return ResponseEntity.ok(ApiResponse.success(res, "스테이지 조회 성공"));
-    }
-
-    @GetMapping("/{stageId}/words")
-    public ResponseEntity<ApiResponse<List<WordQuizRes>>> getWordQuiz(@PathVariable Long stageId){
-        List<WordQuizRes> res = wordStageService.getWordQuiz(stageId);
-
-        return ResponseEntity.ok(ApiResponse.success(res, "문제 조회 성공"));
     }
 }
