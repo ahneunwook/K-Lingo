@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
-import '../../services/word_service.dart';
-import '../../models/word/word_cartegory.dart';
+import '../../services/word_category_service.dart';
+import '../../models/word/word_category.dart';
 import '../../config/routes.dart';
 import '../../config/app_config.dart';
 import '../../services/api_service.dart';
@@ -15,7 +15,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  final WordService _wordService = WordService();
+  final WordCategoryService _categoryService = WordCategoryService();
   
   List<WordCategory>? _categories;
   bool _isLoading = true;
@@ -34,7 +34,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     });
 
     try {
-      final categories = await _wordService.getCategories();
+      final categories = await _categoryService.getCategories();
       setState(() {
         _categories = categories;
         _isLoading = false;
@@ -166,7 +166,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             Navigator.pushNamed(
               context,
               '/stages',
-              arguments: {'categoryId': category.id},
+              arguments: category,
             );
           },
           child: Padding(

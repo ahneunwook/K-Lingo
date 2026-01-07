@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'config/theme.dart';
 import 'screens/splash/splash_screen.dart';
 import 'screens/word/category_screen.dart';
+import 'screens/word/stage_screen.dart';
 import 'config/routes.dart';
 
 void main() {
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
 
       routes: {
         Routes.categories: (context) => const CategoryScreen(),
+        Routes.stages: (context) => const StageScreen(),
       },
     );
   }

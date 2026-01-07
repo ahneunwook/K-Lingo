@@ -4,4 +4,5 @@ class Routes {
   static const String register = '/register';
   static const String home = '/home';
   static const String categories = '/categories';
+  static const String stages = '/stages';
 }

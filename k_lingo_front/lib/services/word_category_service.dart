@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../config/app_config.dart';    // 설정 파일 import
-import '../../models/word/word_cartegory.dart';
+import '../config/app_config.dart';    
+import '../../models/word/word_category.dart';
 import '../services/api_service.dart';
 import '../models/common/api_response.dart';
 
-class WordService {
+class WordCategoryService {
 
   final ApiService _apiService = ApiService();
     
