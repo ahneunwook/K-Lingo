@@ -20,8 +20,6 @@ public class MemberController {
     // 사용자가 구글 로그인 성공하면, 구글이 이 주소로 사용자를 강제 이동시킵니다
     @PostMapping("/auth/login/google")
     public ResponseEntity<ApiResponse<GoogleTokenResponse>> googleLogin(@RequestBody GoogleLoginRequest request) {
-        log.info("구글 로그인 요청 받음");
-
         GoogleTokenResponse tokens = oAuthService.googleLogin(request.getIdToken());
 
         return ResponseEntity.ok(ApiResponse.success(tokens, "구글 로그인 성공"));
