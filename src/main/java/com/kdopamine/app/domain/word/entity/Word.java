@@ -5,10 +5,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "words",
+@Table(name = "word",
     uniqueConstraints = {
-        @UniqueConstraint(name = "word_korean_category",
-                         columnNames = {"korean", "category_id"})
+            @UniqueConstraint(
+                    name = "uk_word_stage_korean",
+                    columnNames = {"stage_id", "korean"}
+            )
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -33,21 +35,17 @@ public class Word extends BaseEntity {
     private String audioUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    private WordCategory category;
-
-    @Column(name = "base_difficulty", nullable = false)
-    private Integer baseDifficulty;
+    @JoinColumn(name = "stage_id")
+    private WordStage wordStage;
 
     /**
      * 기본 단어 생성
      */
-    public static Word createWord(String korean, String english, WordCategory category, Integer baseDifficulty) {
+    public static Word createWord(WordStage wordStage, String korean, String english) {
         return Word.builder()
+            .wordStage(wordStage)
             .korean(korean)
             .english(english)
-            .category(category)
-            .baseDifficulty(baseDifficulty)
             .build();
     }
 
@@ -55,18 +53,16 @@ public class Word extends BaseEntity {
      * 발음 포함 단어 생성
      */
     public static Word createWordWithPronunciation(
+        WordStage wordStage,
         String korean,
         String pronunciation,
-        String english,
-        WordCategory category,
-        Integer baseDifficulty
+        String english
     ) {
         return Word.builder()
+            .wordStage(wordStage)
             .korean(korean)
             .pronunciation(pronunciation)
             .english(english)
-            .category(category)
-            .baseDifficulty(baseDifficulty)
             .build();
     }
 

@@ -51,9 +51,10 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/swagger-resources/**",
-                                "/auth/**",
                                 "/error"
                         ).permitAll()
+                        .requestMatchers("/dev/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(configure -> configure
