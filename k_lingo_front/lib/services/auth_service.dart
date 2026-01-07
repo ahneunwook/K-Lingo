@@ -2,6 +2,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'api_service.dart';
 import '../models/auth/auth_token_response.dart';
+import 'dart:io';
 
 class AuthService {
   static final AuthService _instance = AuthService._internal();
@@ -9,8 +10,11 @@ class AuthService {
   AuthService._internal();
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    // iOS 클라이언트 ID (같은 프로젝트 98735289564)
-    clientId: '98735289564-nh4unvi972tbuculvhea2ah2muikg33o.apps.googleusercontent.com',
+    // iOS일 때만 아이디를 넣고, 안드로이드는 null(비워둠)로 설정합니다.
+  clientId: Platform.isIOS
+      ? '98735289564-nh4unvi972tbuculvhea2ah2muikg33o.apps.googleusercontent.com'
+      : null,
+
     // 웹 클라이언트 ID (백엔드 검증용 - idToken의 audience가 됨)
     serverClientId: '98735289564-0aanklfi4f1ql90ghsvvra7jfj3i6pvd.apps.googleusercontent.com',
     scopes: ['email', 'profile'],
