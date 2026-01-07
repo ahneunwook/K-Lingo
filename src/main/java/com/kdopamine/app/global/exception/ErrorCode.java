@@ -25,7 +25,10 @@ public enum ErrorCode {
     RESOURCE_NOT_FOUND(404, "B001", "리소스를 찾을 수 없습니다."),
     DUPLICATE_RESOURCE(409, "B002", "중복된 리소스입니다."),
     UNAUTHORIZED(401, "B003", "인증이 필요합니다."),
-    FORBIDDEN(403, "B004", "권한이 없습니다.");
+    FORBIDDEN(403, "B004", "권한이 없습니다."),
+
+    //category
+    CATEGORY_NOT_FOUND(404, "C001","해당 카테고리가 없습니다.");
 
     private final int status;
     private final String code;
