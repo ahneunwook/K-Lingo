@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "word_categories")
+@Table(name = "word_category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
@@ -19,10 +19,10 @@ public class WordCategory extends BaseEntity {
     @Column(name = "name_en", nullable = false, unique = true)
     private String nameEn;
 
-    @Column(name = "name_Kr", nullable = false, unique = true)
+    @Column(name = "name_kr", nullable = false, unique = true)
     private String nameKr;
 
-    @Column(name = "icon", length = 50)
+    @Column(name = "icon", length = 200)
     private String icon;
 
     @Column(name = "display_order", nullable = false)
