@@ -64,7 +64,7 @@ jwt:
     issuer: koreanMate-server
     token-secret: ${SECRET_KEY}
     access-token-expiry: 1800000
-    refresh-token-expiry: 604800000
+    refresh-token-expiry: 2592000000
 
 oauth:
   google:
