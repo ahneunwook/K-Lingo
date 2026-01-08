@@ -25,8 +25,8 @@ public class WordQuizRes {
     public static WordQuizRes of(Word word, QuizType quizType, List<String> options) {
         return WordQuizRes.builder()
                 .wordId(word.getId())
-                .content(word.getKorean())
-                .meaning(word.getEnglish())
+                .content(word.getEnglish())
+                .meaning(word.getKorean())
                 .pronunciation(word.getPronunciation())
                 .audioUrl(word.getAudioUrl())
                 .quizType(quizType)

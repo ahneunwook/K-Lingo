@@ -1,20 +1,21 @@
 package com.kdopamine.app.domain.word.service;
 
+import com.kdopamine.app.domain.studylog.service.MemberStageService;
 import com.kdopamine.app.domain.word.dto.request.WordQuizCheckReq;
-import com.kdopamine.app.domain.word.dto.response.WordQuizCheckRes;
 import com.kdopamine.app.domain.word.dto.response.WordQuizRes;
+import com.kdopamine.app.domain.word.dto.response.WordQuizResultRes;
 import com.kdopamine.app.domain.word.entity.QuizType;
 import com.kdopamine.app.domain.word.entity.Word;
+import com.kdopamine.app.domain.word.entity.WordStage;
 import com.kdopamine.app.domain.word.repository.WordRepository;
+import com.kdopamine.app.domain.word.repository.WordStageRepository;
+import com.kdopamine.app.global.exception.BusinessException;
+import com.kdopamine.app.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 public class WordQuizService {
 
     private final WordRepository wordRepository;
+    private final WordStageRepository wordStageRepository;
+    private final MemberStageService memberStageService;
     private final Random random = new Random();
 
     @Transactional(readOnly = true)
@@ -77,9 +80,9 @@ public class WordQuizService {
     private List<String> createOptions(Word correctWord, List<Word> allStageWords) {
         // 정답을 제외한 나머지 단어들의 뜻(English)을 모음
         List<String> wrongCandidates = allStageWords.stream()
-                .filter(w -> !w.getId().equals(correctWord.getId())) // 정답 단어 빼고
-                .filter(w -> !w.getEnglish().equals(correctWord.getEnglish()))
-                .map(Word::getEnglish) // 뜻(Meaning)만 추출 (예: Hello, Thanks...)
+                .filter(w -> !w.getId().equals(correctWord.getId())) // 자기 자신 제외
+                .filter(w -> !w.getKorean().equals(correctWord.getKorean())) // 혹시나 같은 한국어 뜻이 있다면 제외
+                .map(Word::getKorean)
                 .collect(Collectors.toList());
 
         // 오답 후보들도 섞음
@@ -90,7 +93,7 @@ public class WordQuizService {
         List<String> options = new ArrayList<>(wrongCandidates.subList(0, distractorCount));
 
         // 정답(English)도 보기에 추가
-        options.add(correctWord.getEnglish());
+        options.add(correctWord.getKorean());
 
         // 마지막으로 보기 순서(1~4번)를 섞음
         Collections.shuffle(options);
@@ -98,8 +101,51 @@ public class WordQuizService {
         return options;
     }
 
-    public WordQuizCheckRes checkAnswer(WordQuizCheckReq req) {
+    @Transactional
+    public WordQuizResultRes submitQuiz(Long memberId, Long stageId, List<WordQuizCheckReq> answers) {
+        WordStage stage = wordStageRepository.findById(stageId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORD_STAGE_NOT_FOUND));
 
+        List<Long> wordIds = answers.stream().map(WordQuizCheckReq::getWordId).collect(Collectors.toList());
 
+        // DB에서 단어들을 한방에 가져옵니다
+        List<Word> words = wordRepository.findAllById(wordIds);
+
+        // 채점하기 편하게 [WordId : 정답(String)] 형태의 Map으로 바꿉니다.
+        // 이렇게 하면 나중에 찾을 때 반복문 없이 map.get(id)로 바로 찾을 수 있습니다.
+        Map<Long, String> answerMap = words.stream()
+                .collect(Collectors.toMap(Word::getId, Word::getKorean));
+
+        // 채점 시작
+        int totalCount = answers.size();
+        int correctCount = 0;
+
+        for (WordQuizCheckReq req : answers) {
+            // Map에서 정답 꺼내오기 (DB 조회 아님, 메모리 조회라 엄청 빠름)
+            String realAnswer = answerMap.get(req.getWordId());
+
+            // 혹시 DB에 없는 단어 ID가 요청으로 왔을 경우 예외처리
+            if (realAnswer == null) {
+                throw new BusinessException(ErrorCode.WORD_NOT_FOUND);
+            }
+
+            // 정답 비교
+            if (isCorrect(realAnswer, req.getUserAnswer())) {
+                correctCount++;
+            }
+        }
+
+        int score = correctCount;
+        boolean isPassed = score >= stage.getPassScore();
+
+        memberStageService.saveOrUpdateProgress(memberId, stage, score, isPassed);
+
+        // 결과 반환
+        return WordQuizResultRes.of(totalCount, correctCount, score, isPassed);
+    }
+
+    private boolean isCorrect(String real, String user) {
+        if (user == null) return false;
+        return real.replace(" ", "").trim().equals(user.replace(" ", "").trim());
     }
 }
