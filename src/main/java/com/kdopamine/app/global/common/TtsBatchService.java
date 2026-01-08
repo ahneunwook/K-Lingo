@@ -2,23 +2,17 @@ package com.kdopamine.app.global.common;
 
 import com.kdopamine.app.domain.word.entity.Word;
 import com.kdopamine.app.domain.word.repository.WordRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TtsBatchService {
 
     private final WordRepository wordRepository;
     private final GoogleTtsClient googleTtsClient;
-
-    public TtsBatchService(
-            WordRepository wordRepository,
-            GoogleTtsClient googleTtsClient
-    ) {
-        this.wordRepository = wordRepository;
-        this.googleTtsClient = googleTtsClient;
-    }
 
     public void generateMissingAudio() {
 

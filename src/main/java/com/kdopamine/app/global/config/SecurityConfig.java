@@ -55,6 +55,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/dev/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/audio/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(configure -> configure
