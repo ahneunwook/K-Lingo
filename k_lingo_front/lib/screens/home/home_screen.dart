@@ -185,10 +185,18 @@ class HomeScreen extends StatelessWidget {
 
                                 const SizedBox(height: 24),
 
-                                // Categories 버튼
+                                // ✅ Categories 버튼 수정
                                 ElevatedButton(
                                   onPressed: () {
-                                    // TODO: 카테고리 페이지로 이동 로직 추가
+                                    try {
+                                      Navigator.pushNamed(context, Routes.categories);
+                                    } catch (e) {
+                                      print('❌ Navigation Error: $e');
+                                      // 에러 발생 시 사용자에게 알림
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('페이지 이동 중 오류가 발생했습니다')),
+                                      );
+                                    }
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.white,
@@ -338,9 +346,12 @@ class HomeScreen extends StatelessWidget {
                           '10 hours, 19 lessons', 
                           '25%', 
                           const Color(0xFF06B6D4),
-                          // 괄호를 닫지 말고 콤마(,) 찍고 여기에 넣어야 해요!
                           onTap: () {
-                            Navigator.pushNamed(context, Routes.categories);
+                            try {
+                              Navigator.pushNamed(context, Routes.categories);
+                            } catch (e) {
+                              print('❌ Navigation Error: $e');
+                            }
                           },
                         ),
                         const SizedBox(height: 12),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/theme.dart';
 import '../login/login_screen.dart';
+import '../home/home_screen.dart';
+import '../../services/auth_service.dart'; 
+import '../../config/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,8 +13,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -41,20 +43,47 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
     
-    // 2.5초 후 로그인 화면으로 이동
-    _navigateToLogin();
+    // ✅ 로그인 상태 체크 후 화면 이동
+    _checkLoginAndNavigate();
   }
 
-  Future<void> _navigateToLogin() async {
-    await Future.delayed(const Duration(milliseconds: 2500));
+  // ✅ 토큰 체크 후 자동 로그인 또는 로그인 화면으로 이동
+  Future<void> _checkLoginAndNavigate() async {
+    // 애니메이션 보여주기 위해 최소 2초 대기
+    await Future.delayed(const Duration(milliseconds: 2000));
     
     if (!mounted) return;
     
+    try {
+      print('🔍 SplashScreen: 로그인 상태 확인 중...');
+      
+      final isLoggedIn = await AuthService().isLoggedIn();
+      
+      if (!mounted) return;
+      
+      if (isLoggedIn) {
+        print('✅ SplashScreen: 자동 로그인 성공! → HomeScreen');
+        _navigateToScreen(const HomeScreen());
+      } else {
+        print('❌ SplashScreen: 저장된 토큰 없음 → LoginScreen');
+        _navigateToScreen(const LoginScreen());
+      }
+    } catch (e) {
+      print('❌ SplashScreen: 오류 발생 - $e');
+      
+      if (!mounted) return;
+      
+      // 오류 시 로그인 화면으로
+      _navigateToScreen(const LoginScreen());
+    }
+  }
+
+  // 화면 전환 애니메이션
+  void _navigateToScreen(Widget screen) {
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => 
-            const LoginScreen(),
+        pageBuilder: (context, animation, secondaryAnimation) => screen,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,

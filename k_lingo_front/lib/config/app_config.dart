@@ -4,28 +4,28 @@ class AppConfig {
   // 환경 설정
   static const String appName = 'KoreanMate';
   static const String apiVersion = 'v1';
-  static const String _port = '8080'; // 포트 번호 분리
+  static const String _port = '8080'; // 포트 번호
   
-  // API Base URL
-  static String get baseUrl {
-    String host;
-    
+  // [1] 호스트 IP 결정 로직을 따로 분리 (재사용을 위해)
+  static String get _host {
     if (Platform.isAndroid) {
-      // 안드로이드 에뮬레이터 전용 IP
-      host = '10.0.2.2';
+      return '10.0.2.2'; // 안드로이드 에뮬레이터
     } else if (Platform.isIOS) {
-      // iOS 시뮬레이터는 localhost보다 127.0.0.1이 더 안정적임
-      host = '127.0.0.1';
+      return 'localhost'; // iOS 시뮬레이터
     } else {
-      // 그 외 (웹, 데스크톱 등)
-      host = 'localhost';
+      return 'localhost'; // 웹, 데스크톱 등
     }
+    // 실기기 테스트 시 위 코드를 주석 처리하고 아래 IP 사용
+    // return '192.168.0.x'; 
+  }
 
-    // 만약 "실제 폰"을 연결해서 테스트한다면 위 코드를 무시하고
-    // 아래 주석을 풀어서 내 컴퓨터 IP를 직접 적어야 합니다.
-    // host = '192.168.0.x'; 
+  static String get baseUrl {
+    return 'http://$_host:$_port/api/$apiVersion';
+  }
 
-    return 'http://$host:$_port/api/$apiVersion';
+  // API 경로(/api/v1)가 없는 순수 도메인이 필요할 때 사용
+  static String get serverUrl {
+    return 'http://$_host:$_port';
   }
   
   // 타임아웃 설정

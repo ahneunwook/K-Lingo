@@ -27,3 +27,5 @@ docker-compose.override.yml
 # Database
 *.sql.backup
 
+/audio/
+

@@ -1,56 +1,42 @@
 import 'package:flutter/material.dart';
-import '../../services/word_stage_service.dart';
-import '../../models/word/stage.dart';
+import '../../services/word_stage_service.dart'; 
+import '../../models/word/stage.dart'; 
 import '../../models/word/word_category.dart';
+import '../../config/routes.dart';
 
 class StageScreen extends StatefulWidget {
-  // 1️⃣ 생성자에서 'required category'를 제거했습니다.
-  // 이제 main.dart에서 에러가 안 납니다.
-  const StageScreen({Key? key}) : super(key: key);
+  final WordCategory category;
+
+  const StageScreen({Key? key, required this.category}) : super(key: key);
 
   @override
   State<StageScreen> createState() => _StageScreenState();
 }
 
 class _StageScreenState extends State<StageScreen> {
-  // 2️⃣ WordService -> WordStageService로 변경
+  // 제공해주신 WordStageService 클래스 사용
   final WordStageService _stageService = WordStageService();
   
-  WordCategory? _category; // 받아온 카테고리 정보를 저장할 변수
   List<WordStage>? _stages;
   bool _isLoading = true;
   String? _error;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // 3️⃣ 화면이 열릴 때 넘겨받은 데이터(arguments)를 꺼냅니다.
-    if (_category == null) {
-      final args = ModalRoute.of(context)?.settings.arguments;
-      
-      // arguments가 Map으로 들어왔을 때 (categoryId만 있는 경우) -> 처리가 복잡함
-      // arguments가 WordCategory 객체 자체일 때 -> 베스트!
-      if (args is WordCategory) {
-        _category = args;
-        _loadStages();
-      } else if (args is Map && args.containsKey('category')) {
-          _category = args['category'] as WordCategory;
-          _loadStages();
-      }
-    }
+  void initState() {
+    super.initState();
+    // 화면이 생성되자마자 바로 로딩 시작
+    _loadStages();
   }
 
   Future<void> _loadStages() async {
-    if (_category == null) return;
-
     setState(() {
       _isLoading = true;
       _error = null;
     });
 
     try {
-      // 4️⃣ _stageService를 사용하므로 getStages 호출 가능!
-      final stages = await _stageService.getStages(_category!.id);
+      // [핵심] _category 변수 대신 widget.category를 바로 사용합니다.
+      final stages = await _stageService.getStages(widget.category.id);
       setState(() {
         _stages = stages;
         _isLoading = false;
@@ -65,11 +51,6 @@ class _StageScreenState extends State<StageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // 카테고리 정보가 없으면 로딩 중이거나 에러
-    if (_category == null) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
-
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: _buildAppBar(),
@@ -79,7 +60,6 @@ class _StageScreenState extends State<StageScreen> {
   }
 
   PreferredSizeWidget _buildAppBar() {
-    // 5️⃣ widget.category 대신 _category! 사용
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0.5,
@@ -101,8 +81,8 @@ class _StageScreenState extends State<StageScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
-              // _category 변수 사용
-              child: Text(_category!.icon, style: const TextStyle(fontSize: 24)),
+              // widget.category 사용
+              child: Text(widget.category.icon ?? '📚', style: const TextStyle(fontSize: 24)),
             ),
           ),
           const SizedBox(width: 12),
@@ -111,7 +91,7 @@ class _StageScreenState extends State<StageScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _category!.nameKr,
+                  widget.category.nameKr, // widget.category 사용
                   style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 18,
@@ -119,7 +99,7 @@ class _StageScreenState extends State<StageScreen> {
                   ),
                 ),
                 Text(
-                  _category!.nameEn,
+                  widget.category.nameEn, // widget.category 사용
                   style: const TextStyle(
                     color: Color(0xFF9C27B0),
                     fontSize: 11,
@@ -158,9 +138,13 @@ class _StageScreenState extends State<StageScreen> {
       );
     }
 
+    if (_stages == null || _stages!.isEmpty) {
+      return const Center(child: Text('등록된 스테이지가 없습니다.'));
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: _stages?.length ?? 0,
+      itemCount: _stages!.length,
       itemBuilder: (context, index) {
         final stage = _stages![index];
         return Padding(
@@ -172,8 +156,7 @@ class _StageScreenState extends State<StageScreen> {
   }
 
   Widget _buildStageCard(WordStage stage) {
-    // WordStage 모델에 isLocked, isCleared 필드가 있다고 가정
-    // 만약 모델 필드명이 다르다면 수정 필요 (예: stage.locked 등)
+    // 모델 필드명이 nullable일 경우를 대비해 안전하게 처리
     bool isLocked = stage.isLocked ?? false; 
     
     return Container(
@@ -189,16 +172,22 @@ class _StageScreenState extends State<StageScreen> {
         ],
       ),
       child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: isLocked ? null : () {
-            Navigator.pushNamed(
-              context,
-              '/quiz',
-              arguments: {'stageId': stage.id},
-            );
-          },
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: isLocked ? null : () async {  
+        // 퀴즈 화면으로 이동하고 결과 받기
+        final result = await Navigator.pushNamed( 
+            context,
+            Routes.quiz,
+            arguments: stage.id,
+        );
+    
+        // 퀴즈 완료 후 돌아왔으면 새로고침
+        if (result == true && mounted) { 
+            _loadStages();
+        }
+        },
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Row(
@@ -215,6 +204,7 @@ class _StageScreenState extends State<StageScreen> {
     );
   }
 
+  // --- 아래 UI 관련 메서드들은 그대로 둡니다 (수정 필요 없음) ---
   Widget _buildStageIcon(WordStage stage) {
     Color backgroundColor;
     Widget icon;
@@ -242,7 +232,7 @@ class _StageScreenState extends State<StageScreen> {
         ),
         child: Center(
           child: Text(
-            '${stage.stageOrder ?? 0}', // null 방지
+            '${stage.stageOrder ?? 0}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -291,7 +281,6 @@ class _StageScreenState extends State<StageScreen> {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 8),
-        // bestScore가 null일 수 있으므로 0으로 처리
         if (!isLocked && (stage.bestScore ?? 0) > 0)
           _buildScoreBadge(stage.bestScore ?? 0)
         else if (isLocked)
@@ -309,9 +298,9 @@ class _StageScreenState extends State<StageScreen> {
   Widget _buildScoreBadge(int score) {
     Color scoreColor;
     if (score >= 8) {
-      scoreColor = const Color(0xFF4CAF50); // Green
+      scoreColor = const Color(0xFF4CAF50); 
     } else if (score >= 5) {
-      scoreColor = const Color(0xFFFF9800); // Orange
+      scoreColor = const Color(0xFFFF9800); 
     } else {
       scoreColor = Colors.grey;
     }
@@ -339,7 +328,6 @@ class _StageScreenState extends State<StageScreen> {
     return const Icon(Icons.chevron_right, color: Colors.black26, size: 24);
   }
 
-  // 하단 네비게이션은 그대로 유지
   Widget _buildBottomNav() {
     return Container(
       decoration: BoxDecoration(

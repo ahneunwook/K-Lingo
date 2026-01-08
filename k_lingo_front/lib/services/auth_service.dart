@@ -1,3 +1,5 @@
+// lib/services/auth_service.dart
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'api_service.dart';
@@ -10,12 +12,9 @@ class AuthService {
   AuthService._internal();
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    // iOS일 때만 아이디를 넣고, 안드로이드는 null(비워둠)로 설정합니다.
-  clientId: Platform.isIOS
-      ? '98735289564-nh4unvi972tbuculvhea2ah2muikg33o.apps.googleusercontent.com'
-      : null,
-
-    // 웹 클라이언트 ID (백엔드 검증용 - idToken의 audience가 됨)
+    clientId: Platform.isIOS
+        ? '98735289564-nh4unvi972tbuculvhea2ah2muikg33o.apps.googleusercontent.com'
+        : null,
     serverClientId: '98735289564-0aanklfi4f1ql90ghsvvra7jfj3i6pvd.apps.googleusercontent.com',
     scopes: ['email', 'profile'],
   );
@@ -23,21 +22,18 @@ class AuthService {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
   final ApiService _apiService = ApiService();
 
-  // 저장소 키
   static const String _accessTokenKey = 'access_token';
   static const String _refreshTokenKey = 'refresh_token';
 
   /// Google 로그인
   Future<AuthTokenResponse> signInWithGoogle() async {
     try {
-      // 1. Google 로그인 다이얼로그 표시
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       
       if (googleUser == null) {
         throw Exception('Google 로그인이 취소되었습니다.');
       }
 
-      // 2. idToken 가져오기
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final String? idToken = googleAuth.idToken;
 
@@ -45,23 +41,19 @@ class AuthService {
         throw Exception('Google idToken을 가져올 수 없습니다.');
       }
 
-      // 3. 백엔드에 idToken 전송 → JWT 받기
       final response = await _apiService.post(
         '/auth/login/google',
         data: {'idToken': idToken},
       );
 
-      // 4. 응답 파싱
       final tokenResponse = AuthTokenResponse.fromJson(response['data']);
-
-      // 5. 토큰 저장
-      await _saveTokens(tokenResponse);
-
-      // 6. ApiService에 토큰 설정
-      _apiService.setAuthToken(tokenResponse.accessToken);
+      
+      // ✅ 한 번에 처리
+      await _setTokens(tokenResponse.accessToken, tokenResponse.refreshToken);
 
       return tokenResponse;
     } catch (e) {
+      print('❌ Google 로그인 실패: $e');
       rethrow;
     }
   }
@@ -70,38 +62,56 @@ class AuthService {
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _clearTokens();
-    _apiService.clearAuthToken();
   }
 
-  /// 토큰 저장
-  Future<void> _saveTokens(AuthTokenResponse tokens) async {
-    await _storage.write(key: _accessTokenKey, value: tokens.accessToken);
-    await _storage.write(key: _refreshTokenKey, value: tokens.refreshToken);
+  /// ✅ 토큰 세팅 (SecureStorage + ApiService 메모리 동시 처리)
+  Future<void> _setTokens(String accessToken, String refreshToken) async {
+    // SecureStorage에 저장
+    await _storage.write(key: _accessTokenKey, value: accessToken);
+    await _storage.write(key: _refreshTokenKey, value: refreshToken);
+    
+    // ApiService 메모리에 저장
+    _apiService.setAuthToken(accessToken);
+    _apiService.setRefreshToken(refreshToken);
   }
 
   /// 토큰 삭제
   Future<void> _clearTokens() async {
     await _storage.delete(key: _accessTokenKey);
     await _storage.delete(key: _refreshTokenKey);
-  }
-
-  /// 저장된 토큰 불러오기
-  Future<String?> getAccessToken() async {
-    return await _storage.read(key: _accessTokenKey);
-  }
-
-  Future<String?> getRefreshToken() async {
-    return await _storage.read(key: _refreshTokenKey);
+    _apiService.clearAuthToken();
   }
 
   /// 로그인 상태 확인 (앱 시작 시)
   Future<bool> isLoggedIn() async {
-    final token = await getAccessToken();
-    if (token != null) {
-      _apiService.setAuthToken(token);
-      return true;
+    try {
+      final accessToken = await _storage.read(key: _accessTokenKey);
+      final refreshToken = await _storage.read(key: _refreshTokenKey);
+      
+      if (accessToken == null || accessToken.isEmpty) {
+        return false;
+      }
+
+      // ApiService 메모리에 토큰 복원
+      _apiService.setAuthToken(accessToken);
+      if (refreshToken != null && refreshToken.isNotEmpty) {
+        _apiService.setRefreshToken(refreshToken);
+      }
+
+      try {
+        // 간단한 API 호출로 토큰 검증
+        await _apiService.get('/words/categories');
+        return true;
+      } catch (e) {
+        // 인증 실패 시 토큰 삭제
+        if (e.toString().contains('인증이 필요합니다')) {
+          await _clearTokens();
+        }
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
-    return false;
   }
 
   /// 현재 Google 계정 정보
