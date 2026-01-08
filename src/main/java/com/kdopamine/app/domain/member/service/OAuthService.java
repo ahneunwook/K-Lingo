@@ -94,4 +94,23 @@ public class OAuthService {
         }
     }
 
+    public GoogleTokenResponse refreshAccessToken(String refreshToken) {
+
+        if (!jwtUtil.validateToken(refreshToken)) {
+            throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
+        Long memberId = jwtUtil.getUserId(refreshToken);
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+
+        String newAccessToken = jwtUtil.createAccessToken(member.getId(), member.getEmail(), member.getRole());
+        String newRefreshToken = jwtUtil.createRefreshToken(member.getId());
+
+        return GoogleTokenResponse.builder()
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)
+                .build();
+    }
 }
