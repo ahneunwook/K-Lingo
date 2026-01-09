@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
+import 'dart:math';
 import '../../services/word_quiz_service.dart';
 import '../../models/word/word_quiz.dart';      
 import '../../models/word/quiz_submission.dart';
@@ -14,37 +16,64 @@ class QuizScreen extends StatefulWidget {
   State<QuizScreen> createState() => _QuizScreenState();
 }
 
-class _QuizScreenState extends State<QuizScreen> {
+class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateMixin {
   final WordQuizService _quizService = WordQuizService();
   final AudioPlayer _audioPlayer = AudioPlayer();
-  final TextEditingController _answerController = TextEditingController();
+  // final TextEditingController _answerController = TextEditingController(); // 삭제됨 (더 이상 안 씀)
+
+  static const int maxAttempts = 2;
+  int wrongCount = 0;
 
   List<WordQuizRes>? _quizzes;
-  final Map<int, String> _userAnswers = {}; // 사용자가 선택한 답안 저장
+  final Map<int, String> _userAnswers = {};
   
   int _currentIndex = 0;
-  String? _selectedAnswer; // 현재 선택한 답 (화면 표시용)
-  String? _tempSelected;   // 정답 확인 전 선택한 답
-  bool _isAnswered = false; // 정답 확인 버튼 눌렀는지 여부
+  String? _selectedAnswer;
+  String? _tempSelected;
+  bool _isAnswered = false;
   bool _isLoading = true;
   String? _error;
+  int _currentAttempts = 0;
 
+  // [추가] 블록 맞추기용 변수들
+  List<String> _shuffledBlocks = []; // 섞인 보기 글자들
+  List<String> _selectedBlocks = []; // 사용자가 선택한(정답칸에 올라간) 글자들
+  bool _isBlocksInitialized = false; // 현재 문제에 대해 블록이 생성되었는지 체크
+
+  late AnimationController _shakeController;
+  late Animation<double> _shakeAnimation;
+  
   @override
   void initState() {
     super.initState();
     _loadQuiz();
+
+    _shakeController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    // 진동 애니메이션 설정
+    _shakeAnimation = Tween<double>(begin: 0, end: 10)
+        .chain(CurveTween(curve: Curves.elasticIn))
+        .animate(_shakeController)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _shakeController.reset();
+        }
+      });
   }
 
   @override
   void dispose() {
     _audioPlayer.dispose();
-    _answerController.dispose();
+    // _answerController.dispose(); // 삭제됨
+    _shakeController.dispose();
     super.dispose();
   }
 
   Future<void> _loadQuiz() async {
     try {
-      // widget.stageId를 바로 사용
       final quizzes = await _quizService.getQuizWords(widget.stageId);
       setState(() {
         _quizzes = quizzes;
@@ -58,21 +87,62 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
-  // 답안 선택 처리
+  void _shakeScreen() {
+    HapticFeedback.heavyImpact();
+    _shakeController.forward();
+  }
+
+  // 답안 선택 처리 (공통)
   void _handleAnswerSelect(String answer) {
     if (_isAnswered) return;
 
-    setState(() {
-      _selectedAnswer = answer;
-      _isAnswered = true; // 정답 확인 상태로 변경 (바텀시트 올라옴)
-      
-      final currentQuiz = _quizzes![_currentIndex];
-      
-      // 사용자 답안 저장 (나중에 제출용)
-      _userAnswers[currentQuiz.wordId] = answer;
-      
-      // 리스닝이나 쓰기 문제일 경우, 정답 확인 시 소리 재생 등 추가 액션 가능
-    });
+    final currentQuiz = _quizzes![_currentIndex];
+    // 공백 제거 후 비교 (블록 사이에 공백이 들어가도 정답 처리)
+    final isCorrect = answer.replaceAll(' ', '') == currentQuiz.meaning.replaceAll(' ', '');
+
+    _currentAttempts++;
+
+    if (isCorrect) {
+      // 정답
+      setState(() {
+        _selectedAnswer = answer;
+        _isAnswered = true;
+        _userAnswers[currentQuiz.wordId] = answer;
+      });
+    } else {
+      // 오답
+      wrongCount++;
+      _shakeScreen();
+
+      if (_currentAttempts >= maxAttempts) {
+        // 2번 다 틀림 → 결과 표시
+        setState(() {
+          _selectedAnswer = answer;
+          _isAnswered = true;
+          _userAnswers[currentQuiz.wordId] = answer;
+        });
+      } else {
+        // 1번 틀림 → 다시 시도 기회 줌
+        setState(() {
+          _tempSelected = null;
+          // 블록 상태만 리셋 (다시 풀 수 있게)
+          _selectedBlocks.clear();
+          
+          // 섞인 블록 다시 원상복구 (정답 글자들 다시 밑으로 내림)
+          final String cleanAnswer = currentQuiz.meaning.trim();
+          _shuffledBlocks = cleanAnswer.split('').toList();
+          _shuffledBlocks.shuffle();
+        });
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('틀렸어요! 다시 한번 시도해보세요'),
+            duration: Duration(seconds: 1),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   // 다음 문제로 이동
@@ -83,7 +153,12 @@ class _QuizScreenState extends State<QuizScreen> {
         _selectedAnswer = null;
         _tempSelected = null;
         _isAnswered = false;
-        _answerController.clear();
+        _currentAttempts = 0;
+        
+        // [추가] 다음 문제를 위해 블록 상태 초기화
+        _shuffledBlocks.clear();
+        _selectedBlocks.clear();
+        _isBlocksInitialized = false;
       });
     } else {
       _submitQuiz();
@@ -93,7 +168,6 @@ class _QuizScreenState extends State<QuizScreen> {
   // 최종 제출
   Future<void> _submitQuiz() async {
     try {
-      // DTO 변환 (WordQuizCheckReq에는 quizType이 없음 -> 제거함)
       final answers = _quizzes!.map((quiz) {
         return WordQuizCheckReq(
           wordId: quiz.wordId,
@@ -101,7 +175,6 @@ class _QuizScreenState extends State<QuizScreen> {
         );
       }).toList();
 
-      // 로딩 표시
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -111,8 +184,7 @@ class _QuizScreenState extends State<QuizScreen> {
       final result = await _quizService.submitQuiz(widget.stageId, answers);
 
       if (mounted) {
-        Navigator.pop(context); // 로딩 닫기
-        // 결과 화면으로 교체
+        Navigator.pop(context);
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -121,12 +193,12 @@ class _QuizScreenState extends State<QuizScreen> {
                 stageId: widget.stageId,
           ),
           ),
-          result: true,
+          result: true, // 목록 화면 갱신을 위해 true 전달
         );
       }
     } catch (e) {
       if (mounted) {
-        Navigator.pop(context); // 로딩 닫기
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('제출 실패: $e')),
         );
@@ -136,14 +208,11 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Future<void> _playAudio(String? audioUrl) async {
     if (audioUrl == null || audioUrl.isEmpty) return;
-    
     try {
       String finalUrl = audioUrl;
-
      if (!audioUrl.startsWith('http')) {
         finalUrl = '${AppConfig.baseUrl}$audioUrl'; 
     }   
-
       print('재생 URL: $finalUrl'); 
       await _audioPlayer.play(UrlSource(finalUrl));
     } catch (e) {
@@ -183,19 +252,32 @@ class _QuizScreenState extends State<QuizScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F3FF),
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(progress),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: _buildQuizContent(currentQuiz),
+      body: AnimatedBuilder(
+        animation: _shakeController,
+        builder: (context, child) {
+          final double offset = 
+              _shakeController.value > 0 
+                  ? 10 * (1 - _shakeController.value) *
+                    sin(2 * pi * 2 * _shakeController.value)
+                  : 0;
+          return Transform.translate(
+            offset: Offset(offset, 0),
+            child: child,
+          );
+        },
+        child: SafeArea(
+          child: Column(
+            children: [
+              _buildHeader(progress),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: _buildQuizContent(currentQuiz),
+                ),
               ),
-            ),
-            // 정답을 선택했을 때만 바텀시트(O/X 결과) 표시
-            if (_isAnswered) _buildBottomSheet(currentQuiz),
-          ],
+              if (_isAnswered) _buildBottomSheet(currentQuiz),
+            ],
+          ),
         ),
       ),
     );
@@ -231,7 +313,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ],
             ),
           ),
-          const SizedBox(width: 48), // 아이콘 공간만큼 띄워줌
+          const SizedBox(width: 48),
         ],
       ),
     );
@@ -240,7 +322,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _buildQuizContent(WordQuizRes quiz) {
     switch (quiz.quizType) {
       case 'WRITING':
-        return _buildWriting(quiz);
+        return _buildWriting(quiz); // 여기가 바뀜
       case 'LISTENING':
         return _buildListening(quiz);
       case 'CHOICE':
@@ -249,7 +331,7 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
-  // --- 1. 객관식 UI ---
+  // --- 1. 객관식 UI (기존 동일) ---
   Widget _buildMultipleChoice(WordQuizRes quiz) {
     return Column(
       children: [
@@ -259,56 +341,222 @@ class _QuizScreenState extends State<QuizScreen> {
           return _buildOptionButton(option, quiz.meaning);
         }).toList(),
         const SizedBox(height: 16),
-        // 아직 정답 선택 안 했으면 확인 버튼 표시
         if (!_isAnswered) _buildSubmitButton('정답 확인'),
       ],
     );
   }
 
-  // --- 2. 주관식 UI ---
+  // --- 2. [수정됨] 주관식 UI -> 글자 조각 맞추기 ---
   Widget _buildWriting(WordQuizRes quiz) {
+    if (!_isBlocksInitialized) {
+      // 1. 정답에서 공백 제거하고 리스트로 만듦
+      String cleanAnswer = quiz.meaning.replaceAll(' ', '');
+      _shuffledBlocks = cleanAnswer.split('').toList();
+
+      // 2. [핵심] 현재 스테이지의 '다른 단어들'에서 글자를 추출 (오답 풀 만들기)
+      final Set<String> distractorPool = {};
+      
+      // _quizzes 리스트 전체를 돌면서 글자 수집
+      if (_quizzes != null) {
+        for (var otherQuiz in _quizzes!) {
+          // 자기 자신은 제외
+          if (otherQuiz.wordId == quiz.wordId) continue;
+          
+          // 공백 제거한 글자들을 후보군에 등록
+          String otherMeaning = otherQuiz.meaning.replaceAll(' ', '');
+          for (var char in otherMeaning.split('')) {
+            // 정답에 이미 포함된 글자는 굳이 오답으로 안 넣음 (중복 방지)
+            if (!cleanAnswer.contains(char)) {
+              distractorPool.add(char);
+            }
+          }
+        }
+      }
+
+      // 3. 오답 글자 섞어서 2~3개 뽑기
+      final List<String> poolList = distractorPool.toList();
+      poolList.shuffle(); // 후보군 섞기
+      
+      final random = Random();
+      // 글자 수에 따라 오답 개수 조절 (예: 3글자 이하면 3개 추가, 길면 2개 추가)
+      int countToAdd = cleanAnswer.length <= 3 ? 3 : 2;
+
+      for (int i = 0; i < countToAdd; i++) {
+        if (poolList.isNotEmpty) {
+          _shuffledBlocks.add(poolList.removeAt(0)); // 앞에서 하나씩 꺼내기
+        } else {
+          // 만약 스테이지에 단어가 1개뿐이라 가져올 게 없으면 랜덤 한글로 대체 (방어 코드)
+          final fallback = ['는', '가', '을', '를', '이', '하', '지', '도'];
+          _shuffledBlocks.add(fallback[random.nextInt(fallback.length)]);
+        }
+      }
+
+      // 4. 최종적으로 정답+오답 섞기
+      _shuffledBlocks.shuffle();
+      _isBlocksInitialized = true;
+    }
+
     return Column(
       children: [
-        _buildQuestionCard('주관식', '다음 단어의 뜻을 입력하세요', quiz),
-        const SizedBox(height: 24),
+        // 상단 문제 카드 (듣기 버튼 포함)
         Container(
-          padding: const EdgeInsets.all(20),
+          width: double.infinity,
+          padding: const EdgeInsets.all(32),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              _buildBadge('순서 맞추기'),
+              const SizedBox(height: 16),
+              const Text('글자를 순서대로 선택하세요', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 24),
+              InkWell(
+                onTap: () => _playAudio(quiz.audioUrl),
+                child: Container(
+                  width: 80, height: 80,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(colors: [Color(0xFF9C27B0), Color(0xFFEC407A)]),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(color: const Color(0xFF9C27B0).withOpacity(0.3), blurRadius: 20, spreadRadius: 5),
+                    ],
+                  ),
+                  child: const Icon(Icons.volume_up, size: 40, color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                quiz.content,
+                style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color(0xFF9C27B0)),
+                textAlign: TextAlign.center,
+              ),
+              if (quiz.pronunciation != null) ...[
+                const SizedBox(height: 8),
+                Text('[ ${quiz.pronunciation} ]', style: const TextStyle(fontSize: 16, color: Colors.black54)),
+              ]
+            ],
+          ),
+        ),
+        
+        const SizedBox(height: 32),
+
+        // 2. [정답 입력 칸] (선택된 블록들이 들어가는 곳)
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+          constraints: const BoxConstraints(minHeight: 80),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
-            border: _isAnswered
-                ? Border.all(
-                    color: _answerController.text.trim() == quiz.meaning
-                        ? Colors.green
-                        : Colors.red,
-                    width: 3,
-                  )
-                : Border.all(color: Colors.transparent),
-          ),
-          child: TextField(
-            controller: _answerController,
-            enabled: !_isAnswered,
-            autofocus: false, // 필요 시 true
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            decoration: const InputDecoration(
-              hintText: '정답 입력',
-              border: InputBorder.none,
+            border: Border.all(
+              color: _isAnswered
+                  ? (_selectedBlocks.join() == quiz.meaning.replaceAll(' ', '') ? Colors.green : Colors.red)
+                  : const Color(0xFF9C27B0), // 기본 보라색
+              width: 2,
             ),
-            onSubmitted: (value) {
-              if (value.trim().isNotEmpty && !_isAnswered) {
-                _handleAnswerSelect(value.trim());
-              }
-            },
+          ),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
+            children: _selectedBlocks.isEmpty
+                ? [const Text('아래 버튼을 눌러 정답을 맞추세요', style: TextStyle(color: Colors.grey, fontSize: 16))]
+                : _selectedBlocks.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final char = entry.value;
+                    return GestureDetector(
+                      onTap: _isAnswered ? null : () {
+                        // 정답 칸의 블록을 누르면 다시 아래(보기)로 내려감 (취소)
+                        setState(() {
+                          _selectedBlocks.removeAt(index);
+                          _shuffledBlocks.add(char);
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3E5F5),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: const Color(0xFF9C27B0)),
+                          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
+                        ),
+                        child: Text(char, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF9C27B0))),
+                      ),
+                    );
+                  }).toList(),
           ),
         ),
-        const SizedBox(height: 16),
-        if (!_isAnswered) _buildSubmitButton('정답 제출'),
+
+        const SizedBox(height: 24),
+
+        // 3. [보기 블록들] (섞여있는 글자들)
+        // 이미 제출했으면(정답 확인 후면) 보기 블록을 숨김
+        if (!_isAnswered)
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 12,
+            runSpacing: 12,
+            children: _shuffledBlocks.map((char) {
+              return ElevatedButton(
+                onPressed: () {
+                  // 보기 블록을 누르면 정답 칸으로 올라감
+                  setState(() {
+                    _shuffledBlocks.remove(char); // 리스트에서 하나 삭제
+                    _selectedBlocks.add(char);
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black87,
+                  elevation: 2,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    side: BorderSide(color: Colors.grey[300]!),
+                  ),
+                ),
+                child: Text(char, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              );
+            }).toList(),
+          ),
+
+        const SizedBox(height: 32),
+
+        // 4. [제출 버튼]
+        if (!_isAnswered)
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              // 하나라도 선택해야 버튼 활성화
+              onPressed: _selectedBlocks.isNotEmpty
+                  ? () {
+                      final answerString = _selectedBlocks.join(); // 리스트 -> 문자열
+                      _handleAnswerSelect(answerString);
+                    }
+                  : null,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                backgroundColor: const Color(0xFF9C27B0),
+                disabledBackgroundColor: Colors.grey[300],
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              ),
+              child: const Text('정답 확인', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+            ),
+          ),
       ],
     );
   }
 
-  // --- 3. 듣기 평가 UI ---
+  // --- 3. 듣기 평가 UI (기존 동일) ---
   Widget _buildListening(WordQuizRes quiz) {
     return Column(
       children: [
@@ -363,7 +611,7 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
-  // --- 공통 위젯들 ---
+  // --- 공통 위젯들 (기존 동일) ---
   Widget _buildQuestionCard(String badge, String title, WordQuizRes quiz) {
     return Container(
       width: double.infinity,
@@ -411,7 +659,6 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Widget _buildOptionButton(String option, String correctAnswer) {
-    // 임시 선택된 상태 or 최종 확인 상태에 따라 UI 변경
     final isSelected = _isAnswered ? _selectedAnswer == option : _tempSelected == option;
     final isCorrect = option == correctAnswer;
 
@@ -421,7 +668,6 @@ class _QuizScreenState extends State<QuizScreen> {
     Widget? trailing;
 
     if (_isAnswered) {
-      // 정답 확인 후
       if (isCorrect) {
         bgColor = Colors.green[50];
         borderColor = Colors.green;
@@ -432,7 +678,6 @@ class _QuizScreenState extends State<QuizScreen> {
         trailing = const Icon(Icons.close, color: Colors.red);
       }
     } else {
-      // 정답 확인 전 (선택 중)
       if (isSelected) {
         bgColor = const Color(0xFFF3E5F5);
         borderColor = const Color(0xFF9C27B0);
@@ -468,7 +713,7 @@ class _QuizScreenState extends State<QuizScreen> {
     final currentQuiz = _quizzes![_currentIndex];
 
     if (currentQuiz.quizType == 'WRITING') {
-      isEnabled = _answerController.text.trim().isNotEmpty;
+      isEnabled = _selectedBlocks.isNotEmpty; // 블록이 하나라도 선택되면 활성화
     } else {
       isEnabled = _tempSelected != null;
     }
@@ -479,7 +724,8 @@ class _QuizScreenState extends State<QuizScreen> {
         onPressed: isEnabled
             ? () {
                 if (currentQuiz.quizType == 'WRITING') {
-                  _handleAnswerSelect(_answerController.text.trim());
+                   final answerString = _selectedBlocks.join();
+                  _handleAnswerSelect(answerString);
                 } else {
                   _handleAnswerSelect(_tempSelected!);
                 }
@@ -497,7 +743,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
   // --- O/X 결과 바텀시트 ---
   Widget _buildBottomSheet(WordQuizRes quiz) {
-    // 공백 제거 후 비교 (주관식 대비)
     final bool isCorrect = _selectedAnswer!.replaceAll(' ', '') == quiz.meaning.replaceAll(' ', '');
 
     return Container(
@@ -685,7 +930,7 @@ class QuizResultScreen extends StatelessWidget {
                     width: double.infinity,
                     child: OutlinedButton.icon(
                       onPressed: () {
-                        Navigator.popUntil(context, (route) => route.isFirst);
+                        Navigator.pop(context); 
                       },
                       icon: const Icon(Icons.home_outlined),
                       label: const Text(
