@@ -4,6 +4,8 @@ import com.kdopamine.app.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "members")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,6 +32,20 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role; // USER, ADMIN
+
+    @Column(nullable = false)
+    private Integer level = 1;
+
+    @Column(nullable = false)
+    private Integer currentXp = 0;
+
+    @Column(nullable = false)
+    private Integer streakDays = 0;
+
+    @Column(nullable = false)
+    private Integer totalAttendanceDays = 0;
+
+    private LocalDate lastAttendanceDate;
 
     // 소셜 로그인 신규 회원 생성용
     public static Member createSocialMember(String email, String nickname, String provider, String providerId) {
