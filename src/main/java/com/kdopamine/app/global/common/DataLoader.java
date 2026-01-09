@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -31,31 +33,23 @@ public class DataLoader implements CommandLineRunner {
     private final WordRepository wordRepository;
 
     @Override
-    // ❌ @Transactional 제거! (읽기 전용 조회와 쓰기를 분리하여 트랜잭션 문제 원천 차단)
+    @Transactional // 트랜잭션 하나로 묶음 (속도 향상 및 정합성)
     public void run(String... args) throws Exception {
-
-        // 1. 스테이지 데이터 확인
-        if (stageRepository.count() > 0) {
-            log.info("ℹ️ 스테이지 데이터가 이미 존재합니다. (SKIP)");
-            return;
-        }
 
         log.info("🚀 데이터 로딩 시작...");
 
-        // 2. DB 카테고리 로드
+        // 1. DB 카테고리 로드
         Map<String, WordCategory> categoryMap = loadCategoriesFromDB();
 
-        // 카테고리가 텅 비었으면 여기서 멈춤
         if (categoryMap.isEmpty()) {
-            log.error("🛑 [치명적 오류] DB에서 카테고리를 하나도 못 가져왔습니다!");
-            log.error("👉 확인: DB에 데이터가 진짜 들어있나요? application.yml의 ddl-auto가 create로 되어있어 지워진 건 아닌가요?");
+            log.error("🛑 [오류] DB에 카테고리가 없습니다. import.sql 등을 확인하세요.");
             return;
         }
 
-        // 3. 스테이지 로드
+        // 2. 스테이지 로드 (중복 체크 포함)
         Map<String, WordStage> stageMap = loadStages(categoryMap);
 
-        // 4. 단어 로드
+        // 3. 단어 로드 (중복 체크 포함)
         loadWords(stageMap);
 
         log.info("✅ 데이터 세팅 최종 완료!");
@@ -64,14 +58,9 @@ public class DataLoader implements CommandLineRunner {
     private Map<String, WordCategory> loadCategoriesFromDB() {
         List<WordCategory> categories = categoryRepository.findAll();
         Map<String, WordCategory> map = new HashMap<>();
-
-        log.info("🔍 DB 카테고리 스캔 결과: 총 {}개 발견", categories.size());
-
         for (WordCategory c : categories) {
-            // 공백 제거 및 대문자 변환으로 매칭 확률 높임
-            String key = c.getNameEn().trim();
+            String key = c.getNameEn().trim().toUpperCase();
             map.put(key, c);
-            log.info("   👉 로드됨: [{}] -> ID: {}", key, c.getId());
         }
         return map;
     }
@@ -90,7 +79,6 @@ public class DataLoader implements CommandLineRunner {
         boolean isFirstLine = true;
 
         while ((line = br.readLine()) != null) {
-            // 🔥 [핵심] BOM(투명 문자) 제거 로직
             if (isFirstLine && line.startsWith("\uFEFF")) {
                 line = line.substring(1);
                 isFirstLine = false;
@@ -99,31 +87,39 @@ public class DataLoader implements CommandLineRunner {
             if (line.trim().isEmpty()) continue;
 
             String[] data = line.split(",");
-            String categoryName = data[0].trim(); // CSV에 적힌 이름
+            if (data.length < 4) continue; // 데이터 깨짐 방지
 
-            // 맵에서 찾기
+            String categoryName = data[0].trim().toUpperCase();
+            int stageOrder = Integer.parseInt(data[1].trim());
+            String title = data[2].trim();
+            int passScore = Integer.parseInt(data[3].trim());
+
             WordCategory category = categoryMap.get(categoryName);
-
             if (category == null) {
-                // 🔍 여기서 왜 안 되는지 로그로 범인 색출
-                log.error("❌ 매핑 실패! CSV에는 '{}'라고 적혀있는데, DB 목록엔 이 키가 없습니다.", categoryName);
-                log.error("   (혹시 DB에는 'Greetings' 소문자인데 CSV는 'GREETINGS' 대문자인가요?)");
+                log.warn("⚠️ 카테고리 매칭 실패: {}", categoryName);
                 continue;
             }
 
-            WordStage stage = WordStage.createStage(
-                    category,
-                    Integer.parseInt(data[1].trim()),
-                    data[2].trim(),
-                    Integer.parseInt(data[3].trim()),
-                    Integer.parseInt(data[4].trim())
-            );
+            // 🔥 [수정 핵심] DB에 이미 있는지 확인! (중복 방지)
+            // Repository에 이 메서드가 없으면 만들어야 합니다: findByWordCategoryAndStageOrder
+            Optional<WordStage> existingStage = stageRepository.findByWordCategoryAndStageOrder(category, stageOrder);
 
-            stageRepository.save(stage); // 여기선 트랜잭션 필요할 수 있음 (Repository 기본 내장이라 괜찮음)
+            WordStage stage;
+            if (existingStage.isPresent()) {
+                // 이미 있으면 DB에서 가져와서 맵에 넣음 (새로 저장 X)
+                stage = existingStage.get();
+                // log.info("ℹ️ 스테이지 스킵 (이미 존재): {} - Stage {}", categoryName, stageOrder);
+            } else {
+                // 없으면 새로 저장
+                stage = WordStage.createStage(category, stageOrder, title, passScore);
+                stageRepository.save(stage);
+                log.info("💾 스테이지 저장: {} - Stage {}", categoryName, stageOrder);
+            }
+
+            // 나중에 단어 넣을 때 쓰려고 맵에 저장 (Key: GREETINGS_1)
             map.put(categoryName + "_" + stage.getStageOrder(), stage);
         }
         br.close();
-        log.info("📂 스테이지 로드 완료: {}개", map.size());
         return map;
     }
 
@@ -136,7 +132,6 @@ public class DataLoader implements CommandLineRunner {
         boolean isFirstLine = true;
 
         while ((line = br.readLine()) != null) {
-            // 🔥 BOM 제거
             if (isFirstLine && line.startsWith("\uFEFF")) {
                 line = line.substring(1);
                 isFirstLine = false;
@@ -145,26 +140,32 @@ public class DataLoader implements CommandLineRunner {
             if (line.trim().isEmpty()) continue;
 
             String[] data = line.split(",");
+            if (data.length < 5) continue; // 데이터 깨짐 방지
 
-            // GREETINGS_1
-            String key = data[0].trim() + "_" + data[1].trim();
+            String categoryName = data[0].trim().toUpperCase();
+            String stageOrderStr = data[1].trim();
+            String korean = data[2].trim();
+            String english = data[3].trim();
+            String pronunciation = data[4].trim();
+
+            // 맵에서 해당 스테이지 객체 찾기
+            String key = categoryName + "_" + stageOrderStr;
             WordStage stage = stageMap.get(key);
 
-            if (stage == null) {
-                // 스테이지가 제대로 안 만들어졌으면 단어도 패스
-                continue;
+            if (stage == null) continue;
+
+            // 🔥 [수정 핵심] 단어도 중복 체크 (같은 스테이지에 같은 한국어 단어가 있는지)
+            boolean exists = wordRepository.existsByWordStageAndKorean(stage, korean);
+
+            if (!exists) {
+                Word word = Word.createWordWithPronunciation(
+                        stage, korean, pronunciation, english
+                );
+                wordRepository.save(word);
+                // log.info("💾 단어 저장: {}", korean);
             }
-
-            Word word = Word.createWordWithPronunciation(
-                    stage,
-                    data[2].trim(),
-                    data[4].trim(),
-                    data[3].trim()
-            );
-
-            wordRepository.save(word);
         }
         br.close();
-        log.info("📚 단어 로드 완료!");
+        log.info("📚 단어 로드 로직 완료");
     }
 }

@@ -9,7 +9,7 @@ import lombok.*;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk_stage_category_order",
-                        columnNames = {"category_id", "stage_order"}
+                        columnNames = {"word_category_id", "stage_order"}
                 )
         })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,23 +26,21 @@ public class WordStage extends BaseEntity {
     @JoinColumn(name = "word_category_id", nullable = false)
     private WordCategory wordCategory;
 
+    @Column(nullable = false)
     private Integer stageOrder;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private Integer passScore; // 7점 이상
 
-    @Column(name = "retry_count", nullable = false)
-    @Builder.Default
-    private Integer retryCount = 2;
-
-    public static WordStage createStage(WordCategory category, Integer order, String title, Integer passScore, Integer retryCount) {
+    public static WordStage createStage(WordCategory category, Integer order, String title, Integer passScore) {
         return WordStage.builder()
                 .wordCategory(category)
                 .stageOrder(order)
                 .title(title)
                 .passScore(passScore)
-                .retryCount(retryCount)
                 .build();
     }
 }
