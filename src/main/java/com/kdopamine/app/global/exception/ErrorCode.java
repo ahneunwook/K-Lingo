@@ -30,7 +30,12 @@ public enum ErrorCode {
     //words
     CATEGORY_NOT_FOUND(404, "D001","해당 카테고리가 없습니다."),
     WORD_NOT_FOUND(404, "D002", "해당 단어가 없습니다."),
-    WORD_STAGE_NOT_FOUND(404, "D003", "해당 스테이지가 없습니다.");
+    WORD_STAGE_NOT_FOUND(404, "D003", "해당 스테이지가 없습니다."),
+
+    //quest
+    QUEST_IS_NOT_COMPLETE(400, "E001", "퀘스트가 완료되지 않았습니다."),
+    ALREADY_GET_REWARD(400, "E002", "이미 보상을 수령했습니다."),
+    QUEST_NOT_FOUND(404, "E003", "해당 퀘스트가 없습니다.");
 
     private final int status;
     private final String code;
