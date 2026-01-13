@@ -1,9 +1,9 @@
-package com.kdopamine.app.domain.member.controller;
+package com.kdopamine.app.domain.auth.controller;
 
-import com.kdopamine.app.domain.member.dto.request.GoogleLoginRequest;
-import com.kdopamine.app.domain.member.dto.request.RefreshTokenRequest;
-import com.kdopamine.app.domain.member.dto.response.GoogleTokenResponse;
-import com.kdopamine.app.domain.member.service.OAuthService;
+import com.kdopamine.app.domain.auth.dto.request.GoogleLoginRequest;
+import com.kdopamine.app.domain.auth.dto.request.RefreshTokenRequest;
+import com.kdopamine.app.domain.auth.dto.response.GoogleTokenResponse;
+import com.kdopamine.app.domain.auth.service.OAuthService;
 import com.kdopamine.app.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

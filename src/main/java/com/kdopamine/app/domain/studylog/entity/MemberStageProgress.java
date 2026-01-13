@@ -1,6 +1,6 @@
 package com.kdopamine.app.domain.studylog.entity;
 
-import com.kdopamine.app.domain.member.entity.Member;
+import com.kdopamine.app.domain.auth.entity.Member;
 import com.kdopamine.app.domain.word.entity.WordStage;
 import com.kdopamine.app.global.entity.BaseEntity;
 import jakarta.persistence.*;

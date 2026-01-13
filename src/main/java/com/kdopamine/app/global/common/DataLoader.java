@@ -17,10 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -100,8 +98,6 @@ public class DataLoader implements CommandLineRunner {
                 continue;
             }
 
-            // 🔥 [수정 핵심] DB에 이미 있는지 확인! (중복 방지)
-            // Repository에 이 메서드가 없으면 만들어야 합니다: findByWordCategoryAndStageOrder
             Optional<WordStage> existingStage = stageRepository.findByWordCategoryAndStageOrder(category, stageOrder);
 
             WordStage stage;
@@ -127,9 +123,23 @@ public class DataLoader implements CommandLineRunner {
         ClassPathResource resource = new ClassPathResource("data/words.csv");
         if (!resource.exists()) return;
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
+        // 🔥 [핵심 개선] 모든 단어를 한 번에 조회!
+        List<Word> allExistingWords = wordRepository.findAll();
+
+        // 🔥 "스테이지ID_한국어" 형태로 Set 구성 → O(1) 조회
+        Set<String> existingWordKeys = allExistingWords.stream()
+                .map(w -> w.getWordStage().getId() + "_" + w.getKorean())
+                .collect(Collectors.toSet());
+
+        log.info("📊 기존 단어 {} 개 로드 완료", allExistingWords.size());
+
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)
+        );
+
         String line;
         boolean isFirstLine = true;
+        List<Word> wordsToSave = new ArrayList<>();
 
         while ((line = br.readLine()) != null) {
             if (isFirstLine && line.startsWith("\uFEFF")) {
@@ -140,7 +150,7 @@ public class DataLoader implements CommandLineRunner {
             if (line.trim().isEmpty()) continue;
 
             String[] data = line.split(",");
-            if (data.length < 5) continue; // 데이터 깨짐 방지
+            if (data.length < 5) continue;
 
             String categoryName = data[0].trim().toUpperCase();
             String stageOrderStr = data[1].trim();
@@ -148,24 +158,33 @@ public class DataLoader implements CommandLineRunner {
             String english = data[3].trim();
             String pronunciation = data[4].trim();
 
-            // 맵에서 해당 스테이지 객체 찾기
             String key = categoryName + "_" + stageOrderStr;
             WordStage stage = stageMap.get(key);
 
             if (stage == null) continue;
 
-            // 🔥 [수정 핵심] 단어도 중복 체크 (같은 스테이지에 같은 한국어 단어가 있는지)
-            boolean exists = wordRepository.existsByWordStageAndKorean(stage, korean);
-
-            if (!exists) {
-                Word word = Word.createWordWithPronunciation(
-                        stage, korean, pronunciation, english
-                );
-                wordRepository.save(word);
-                // log.info("💾 단어 저장: {}", korean);
+            // 🔥 메모리 Set에서 O(1) 체크
+            String wordKey = stage.getId() + "_" + korean;
+            if (existingWordKeys.contains(wordKey)) {
+                continue; // 이미 있으면 스킵
             }
+
+            Word word = Word.createWordWithPronunciation(
+                    stage, korean, pronunciation, english
+            );
+            wordsToSave.add(word);
         }
+
         br.close();
+
+        // 🔥 새 단어만 배치로 저장
+        if (!wordsToSave.isEmpty()) {
+            wordRepository.saveAll(wordsToSave);
+            log.info("💾 새 단어 {} 개 저장 완료", wordsToSave.size());
+        } else {
+            log.info("ℹ️ 저장할 새 단어 없음 (모두 존재)");
+        }
+
         log.info("📚 단어 로드 로직 완료");
     }
 }

@@ -1,6 +1,5 @@
 package com.kdopamine.app.domain.studylog.repository;
 
-import com.kdopamine.app.domain.member.entity.Member;
 import com.kdopamine.app.domain.studylog.entity.MemberStageProgress;
 import org.springframework.data.jpa.repository.JpaRepository;
 

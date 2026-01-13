@@ -1,6 +1,6 @@
 package com.kdopamine.app.domain.quest.repository;
 
-import com.kdopamine.app.domain.member.entity.Member;
+import com.kdopamine.app.domain.auth.entity.Member;
 import com.kdopamine.app.domain.quest.entity.MemberQuest;
 import com.kdopamine.app.domain.quest.entity.QuestType;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.kdopamine.app.domain.member.entity;
+package com.kdopamine.app.domain.auth.entity;
 
 import lombok.Getter;
 

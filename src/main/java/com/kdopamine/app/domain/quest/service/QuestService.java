@@ -1,7 +1,7 @@
 package com.kdopamine.app.domain.quest.service;
 
-import com.kdopamine.app.domain.member.entity.Member;
-import com.kdopamine.app.domain.member.service.MemberReader;
+import com.kdopamine.app.domain.auth.entity.Member;
+import com.kdopamine.app.domain.auth.service.MemberReader;
 import com.kdopamine.app.domain.quest.dto.response.QuestResponse;
 import com.kdopamine.app.domain.quest.dto.response.QuestRewardResponse;
 import com.kdopamine.app.domain.quest.entity.MemberQuest;

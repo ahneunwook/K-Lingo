@@ -1,7 +1,7 @@
 package com.kdopamine.app.domain.studylog.service;
 
-import com.kdopamine.app.domain.member.entity.Member;
-import com.kdopamine.app.domain.member.repository.MemberRepository;
+import com.kdopamine.app.domain.auth.entity.Member;
+import com.kdopamine.app.domain.auth.repository.MemberRepository;
 import com.kdopamine.app.domain.quest.entity.QuestType;
 import com.kdopamine.app.domain.quest.service.QuestService;
 import com.kdopamine.app.domain.studylog.entity.MemberStageProgress;

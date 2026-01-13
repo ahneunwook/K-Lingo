@@ -1,7 +1,7 @@
-package com.kdopamine.app.domain.member.controller;
+package com.kdopamine.app.domain.auth.controller;
 
-import com.kdopamine.app.domain.member.entity.Member;
-import com.kdopamine.app.domain.member.repository.MemberRepository;
+import com.kdopamine.app.domain.auth.entity.Member;
+import com.kdopamine.app.domain.auth.repository.MemberRepository;
 import com.kdopamine.app.global.response.ApiResponse;
 import com.kdopamine.app.global.security.JwtUtil;
 import lombok.RequiredArgsConstructor;

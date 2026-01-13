@@ -1,4 +1,4 @@
-package com.kdopamine.app.domain.member.dto.request;
+package com.kdopamine.app.domain.auth.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

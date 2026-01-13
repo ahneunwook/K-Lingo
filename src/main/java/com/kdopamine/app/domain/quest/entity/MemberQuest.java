@@ -1,6 +1,6 @@
 package com.kdopamine.app.domain.quest.entity;
 
-import com.kdopamine.app.domain.member.entity.Member;
+import com.kdopamine.app.domain.auth.entity.Member;
 import com.kdopamine.app.global.entity.BaseEntity;
 import com.kdopamine.app.global.exception.BusinessException;
 import com.kdopamine.app.global.exception.ErrorCode;

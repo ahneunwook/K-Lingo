@@ -1,8 +1,8 @@
 package com.kdopamine.app.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kdopamine.app.domain.member.entity.Member;
-import com.kdopamine.app.domain.member.repository.MemberRepository;
+import com.kdopamine.app.domain.auth.entity.Member;
+import com.kdopamine.app.domain.auth.repository.MemberRepository;
 import com.kdopamine.app.global.exception.BusinessException;
 import com.kdopamine.app.global.exception.ErrorCode;
 import com.kdopamine.app.global.response.ErrorResponse;

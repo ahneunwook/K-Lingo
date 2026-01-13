@@ -1,6 +1,6 @@
-package com.kdopamine.app.domain.member.repository;
+package com.kdopamine.app.domain.auth.repository;
 
-import com.kdopamine.app.domain.member.entity.Member;
+import com.kdopamine.app.domain.auth.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

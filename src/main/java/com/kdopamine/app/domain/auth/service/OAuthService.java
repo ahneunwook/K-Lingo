@@ -1,12 +1,12 @@
-package com.kdopamine.app.domain.member.service;
+package com.kdopamine.app.domain.auth.service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
-import com.kdopamine.app.domain.member.dto.response.GoogleTokenResponse;
-import com.kdopamine.app.domain.member.entity.Member;
-import com.kdopamine.app.domain.member.repository.MemberRepository;
+import com.kdopamine.app.domain.auth.dto.response.GoogleTokenResponse;
+import com.kdopamine.app.domain.auth.entity.Member;
+import com.kdopamine.app.domain.auth.repository.MemberRepository;
 import com.kdopamine.app.global.exception.BusinessException;
 import com.kdopamine.app.global.exception.ErrorCode;
 import com.kdopamine.app.global.security.JwtUtil;

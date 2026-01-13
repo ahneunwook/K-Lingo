@@ -1,6 +1,6 @@
 package com.kdopamine.app.global.security;
 
-import com.kdopamine.app.domain.member.entity.Role;
+import com.kdopamine.app.domain.auth.entity.Role;
 import com.kdopamine.app.global.exception.BusinessException;
 import com.kdopamine.app.global.exception.ErrorCode;
 import io.jsonwebtoken.*;

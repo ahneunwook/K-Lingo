@@ -1,6 +1,6 @@
 package com.kdopamine.app.global.security;
 
-import com.kdopamine.app.domain.member.entity.Member;
+import com.kdopamine.app.domain.auth.entity.Member;
 import lombok.Getter;
 
 import java.security.Principal;
