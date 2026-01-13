@@ -2,25 +2,24 @@
 -- 카테고리 초기 데이터 (핵심 15개)
 -- ===================================
 
-INSERT INTO word_categories (name_en, name_kr, icon, display_order, description, created_at, updated_at) VALUES
--- 기초 필수 (1-5)
-('GREETINGS', '인사', '👋', 1, '인사말과 기본 예의', NOW(), NOW()),
-('NUMBERS', '숫자', '🔢', 2, '숫자 세기', NOW(), NOW()),
-('COLORS', '색깔', '🎨', 3, '색상', NOW(), NOW()),
-('TIME', '시간', '⏰', 4, '시간과 날짜', NOW(), NOW()),
-('LOCATIONS', '위치', '📍', 5, '위치와 방향', NOW(), NOW()),
+INSERT INTO word_category (name_en, name_kr, icon, display_order, description, created_at, updated_at) VALUES
+-- 1. 일단 생존하자 (Survival)
+('GREETINGS', '왕기초 인사', '👋', 1, '안녕? 반가워! 필수 예절', NOW(), NOW()),
+('NUMBERS', '숫자/계산', '🔢', 2, '하나 둘 셋, 가격 계산하기', NOW(), NOW()),
+('SURVIVAL', '생존 회화', '🚨', 3, '도와주세요! 화장실 어디에요?', NOW(), NOW()),
+('FOOD', '맛있는 음식', '🍗', 4, '김치, 치맥, 삼겹살 먹방', NOW(), NOW()),
+('ORDERING', '주문하기', '☕', 5, '아이스 아메리카노 주세요', NOW(), NOW()),
 
--- 사람과 일상 (6-10)
-('FAMILY', '가족', '👨‍👩‍👧‍👦', 6, '가족 관계', NOW(), NOW()),
-('BODY', '신체', '🫱', 7, '신체 부위', NOW(), NOW()),
-('EMOTIONS', '감정', '😊', 8, '감정 표현', NOW(), NOW()),
-('FOOD', '음식', '🍽️', 9, '음식과 식사', NOW(), NOW()),
-('HOME', '집', '🏠', 10, '집과 가구', NOW(), NOW()),
+-- 2. 한국 즐기기 (Living)
+('TRANSPORT', '교통/길찾기', '🚇', 6, '지옥철, 버스, 환승입니다', NOW(), NOW()),
+('PLACES', '핫플레이스', '📍', 7, '한강, 편의점, 노래방, PC방', NOW(), NOW()),
+('SHOPPING', '쇼핑하기', '🛍️', 8, '신상, 세일, 깎아주세요', NOW(), NOW()),
+('TIME', '시간/약속', '⏰', 9, '주말 약속, 빨리빨리 문화', NOW(), NOW()),
+('HEALTH', '병원/약국', '💊', 10, '아파요, 약 주세요, 밴드', NOW(), NOW()),
 
--- 활동과 사회 (11-15)
-('DAILY_VERBS', '일상동사', '🏃', 11, '일상 행동', NOW(), NOW()),
-('TRANSPORTATION', '교통', '🚗', 12, '교통수단', NOW(), NOW()),
-('SHOPPING', '쇼핑', '🛍️', 13, '쇼핑과 구매', NOW(), NOW()),
-('SCHOOL', '학교', '🏫', 14, '학교와 교육', NOW(), NOW()),
-('WORK', '직장', '💼', 15, '회사와 업무', NOW(), NOW());
-
+-- 3. 인싸 되기 (Social & Culture)
+('RELATIONSHIPS', '호칭/가족', '👨‍👩‍👧', 11, '오빠, 언니, 선배님, 꼰대(?)', NOW(), NOW()),
+('EMOTIONS', '기분/감정', '🥰', 12, '행복해, 킹받네(?), 우울해', NOW(), NOW()),
+('K_CULTURE', 'K-POP/드라마', '🎵', 13, '최애, 덕질, 정주행, 스포 금지', NOW(), NOW()),
+('SLANG', '요즘 유행어', '😎', 14, '대박, 헐, 꿀잼, 인싸', NOW(), NOW()),
+('LOVE', '연애/사랑', '💖', 15, '썸타다, 고백, 심쿵, 데이트', NOW(), NOW());

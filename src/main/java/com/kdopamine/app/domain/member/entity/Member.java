@@ -57,4 +57,17 @@ public class Member extends BaseEntity {
                 .role(Role.USER)
                 .build();
     }
+
+    public void gainXp(int amount) {
+        this.currentXp += amount;
+
+        while (this.currentXp >= getRequiredXpForNextLevel()) {
+            this.currentXp -= getRequiredXpForNextLevel();
+            this.level++;
+        }
+    }
+
+    public int getRequiredXpForNextLevel() {
+        return (int) (100 * Math.pow(1.2, this.level - 1));
+    }
 }

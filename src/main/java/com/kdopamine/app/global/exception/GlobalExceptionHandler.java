@@ -1,9 +1,11 @@
 package com.kdopamine.app.global.exception;
 
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.kdopamine.app.global.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -119,6 +121,27 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(errorResponse);
+    }
+
+    /**
+     * RequestBody(JSON) 파싱 실패 시 발생
+     * - 필드명 불일치
+     * - 타입 불일치
+     * - JSON 문법 오류
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException e
+    ) {
+        log.error("HttpMessageNotReadableException: {}", e.getMessage());
+
+        ErrorCode errorCode = ErrorCode.INVALID_INPUT_VALUE;
+        ErrorResponse errorResponse =
+                ErrorResponse.of(errorCode.getCode(), "요청 JSON 형식이 올바르지 않습니다.");
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(errorResponse);
     }
 

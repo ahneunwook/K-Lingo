@@ -1,5 +1,7 @@
 package com.kdopamine.app.domain.word.service;
 
+import com.kdopamine.app.domain.quest.entity.QuestType;
+import com.kdopamine.app.domain.quest.service.QuestService;
 import com.kdopamine.app.domain.studylog.service.MemberStageService;
 import com.kdopamine.app.domain.word.dto.request.WordQuizCheckReq;
 import com.kdopamine.app.domain.word.dto.response.WordQuizRes;
@@ -25,6 +27,7 @@ public class WordQuizService {
     private final WordRepository wordRepository;
     private final WordStageRepository wordStageRepository;
     private final MemberStageService memberStageService;
+    private final QuestService questService;
     private final Random random = new Random();
 
     @Transactional(readOnly = true)
@@ -133,6 +136,10 @@ public class WordQuizService {
             if (isCorrect(realAnswer, req.getUserAnswer())) {
                 correctCount++;
             }
+        }
+
+        if (correctCount > 0) {
+            questService.handleAction(memberId, QuestType.QUIZ_CORRECT, correctCount);
         }
 
         int score = correctCount;

@@ -28,6 +28,11 @@ public class MemberController {
 
     @PostMapping("/auth/refresh")
     public ResponseEntity<ApiResponse<GoogleTokenResponse>> refreshToken(@RequestBody RefreshTokenRequest request) {
+        if (request.getRefreshToken() == null || request.getRefreshToken().isEmpty()) {
+            System.out.println("리프레쉬 토큰이 필요함");
+        }
+
+        System.out.println("🔄 Refresh 요청: " + request.getRefreshToken().substring(0, 20) + "...");
 
         GoogleTokenResponse tokens = oAuthService.refreshAccessToken(request.getRefreshToken());
 
