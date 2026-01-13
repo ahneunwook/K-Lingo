@@ -1,37 +1,45 @@
 {
   "project_info": {
-    "project_number": "853319023496",
-    "project_id": "koreanmate-96032",
-    "storage_bucket": "koreanmate-96032.firebasestorage.app"
+    "project_number": "98735289564",
+    "project_id": "korenmate",
+    "storage_bucket": "korenmate.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:853319023496:android:45d64f8eddf9f46615983d",
+        "mobilesdk_app_id": "1:98735289564:android:4434fd07f531527ca4b019",
         "android_client_info": {
           "package_name": "com.example.k_lingo_front"
         }
       },
       "oauth_client": [
         {
-          "client_id": "853319023496-1loon750oo5bk9307mnmsnf13ga41dfu.apps.googleusercontent.com",
+          "client_id": "98735289564-2gjerr3t589c112mn7q652ibvg45rcc2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.k_lingo_front",
+            "certificate_hash": "d221454136f7aab6349596ae4e9b5aa8639a5c03"
+          }
+        },
+        {
+          "client_id": "98735289564-0aanklfi4f1ql90ghsvvra7jfj3i6pvd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBTCCNOn21TZmDPzsXrcTDiO7I3wy2Khsg"
+          "current_key": "AIzaSyBDqMpn6qpU0oRdy9Nuvuj_9Oj3-HxKZbs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "853319023496-1loon750oo5bk9307mnmsnf13ga41dfu.apps.googleusercontent.com",
+              "client_id": "98735289564-0aanklfi4f1ql90ghsvvra7jfj3i6pvd.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "853319023496-h1jrknqk2fhb8599hj31t2ia2o4iaunp.apps.googleusercontent.com",
+              "client_id": "98735289564-nh4unvi972tbuculvhea2ah2muikg33o.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.kLingoFront"

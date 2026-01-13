@@ -1,6 +1,7 @@
 package com.kdopamine.app.domain.member.controller;
 
 import com.kdopamine.app.domain.member.dto.request.GoogleLoginRequest;
+import com.kdopamine.app.domain.member.dto.request.RefreshTokenRequest;
 import com.kdopamine.app.domain.member.dto.response.GoogleTokenResponse;
 import com.kdopamine.app.domain.member.service.OAuthService;
 import com.kdopamine.app.global.response.ApiResponse;
@@ -23,5 +24,13 @@ public class MemberController {
         GoogleTokenResponse tokens = oAuthService.googleLogin(request.getIdToken());
 
         return ResponseEntity.ok(ApiResponse.success(tokens, "구글 로그인 성공"));
+    }
+
+    @PostMapping("/auth/refresh")
+    public ResponseEntity<ApiResponse<GoogleTokenResponse>> refreshToken(@RequestBody RefreshTokenRequest request) {
+
+        GoogleTokenResponse tokens = oAuthService.refreshAccessToken(request.getRefreshToken());
+
+        return ResponseEntity.ok(ApiResponse.success(tokens, "토큰 갱신 성공"));
     }
 }

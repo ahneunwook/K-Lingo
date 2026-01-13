@@ -40,4 +40,14 @@ public class MemberStageProgress extends BaseEntity {
                 .wordStage(stage)
                 .build();
     }
+
+    public void updateProgress(Integer score, boolean passed) {
+        if (score > this.bestScore) {
+            this.bestScore = score;
+        }
+
+        if (passed) {
+            this.isCleared = true;
+        }
+    }
 }
