@@ -1,4 +1,4 @@
-class WordStage {
+class Stage {
   final int id;
   final int stageOrder;
   final String title;
@@ -6,7 +6,7 @@ class WordStage {
   final bool isCleared;
   final bool isLocked;
 
-  WordStage({
+  Stage({
     required this.id,
     required this.stageOrder,
     required this.title,
@@ -15,8 +15,8 @@ class WordStage {
     required this.isLocked,
   });
 
-  factory WordStage.fromJson(Map<String, dynamic> json) {
-    return WordStage(
+  factory Stage.fromJson(Map<String, dynamic> json) {
+    return Stage(
       id: json['id'],
       stageOrder: json['stageOrder'],
       title: json['title'],

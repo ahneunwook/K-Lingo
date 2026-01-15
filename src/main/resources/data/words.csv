@@ -1,0 +1,1750 @@
+GREETINGS,1,안녕,Hi / Bye,annyeong
+GREETINGS,1,네,Yes,ne
+GREETINGS,1,아니요,No,aniyo
+GREETINGS,1,고마워,Thanks,gomawo
+GREETINGS,1,미안해,Sorry,mianhae
+GREETINGS,1,응,Yeah,eung
+GREETINGS,1,아니,Nah,ani
+GREETINGS,1,잘 자,Good night,jal ja
+GREETINGS,1,안녕하세요,Hello,annyeonghaseyo
+GREETINGS,1,감사합니다,Thank you,gamsahamnida
+GREETINGS,1,괜찮아요,It's okay,gwaenchanayo
+GREETINGS,1,알았어,I got it,arasseo
+GREETINGS,1,몰라,I don't know,molla
+GREETINGS,1,좋아,Good / I like it,joa
+GREETINGS,1,싫어,I don't like it,sileo
+GREETINGS,1,진짜?,Really?,jinjja
+GREETINGS,1,대박,Awesome,daebak
+GREETINGS,1,헐,OMG,heol
+GREETINGS,1,어,Huh?,eo
+GREETINGS,1,왜?,Why?,wae
+
+GREETINGS,2,반갑습니다,Nice to meet you,bangapseumnida
+GREETINGS,2,잘 가,Bye (casual),jal ga
+GREETINGS,2,잘 가요,Go well,jal gayo
+GREETINGS,2,다음에 봐,See you later,daeume bwa
+GREETINGS,2,내일 봐,See you tomorrow,naeil bwa
+GREETINGS,2,이따 봐,See you soon,itta bwa
+GREETINGS,2,뭐 해?,What are you doing?,mwo hae
+GREETINGS,2,어디 가?,Where are you going?,eodi ga
+GREETINGS,2,좋은 아침,Good morning,joeun achim
+GREETINGS,2,좋은 밤,Good night (formal),joeun bam
+GREETINGS,2,잘 지내?,How are you?,jal jinae
+GREETINGS,2,나도,Me too,nado
+GREETINGS,2,정말?,Really? (polite),jeongmal
+GREETINGS,2,당연하지,Of course,dangyeonhaji
+GREETINGS,2,맞아,Right / Correct,maja
+GREETINGS,2,그래,Yeah / That's right,geurae
+GREETINGS,2,알겠어,I understand,algesseo
+GREETINGS,2,괜찮아,It's fine,gwaenchana
+GREETINGS,2,고마워요,Thank you (polite),gomawoyo
+GREETINGS,2,미안해요,Sorry (polite),mianhaeyo
+
+GREETINGS,3,저기요,Excuse me (calling),jeogiyo
+GREETINGS,3,잠시만요,Just a moment,jamsimanyo
+GREETINGS,3,죄송합니다,I'm sorry (formal),joesonghamnida
+GREETINGS,3,부탁합니다,Please,butakamnida
+GREETINGS,3,어서 오세요,Welcome,eoseo oseyo
+GREETINGS,3,들어오세요,Please come in,deureooseyo
+GREETINGS,3,앉으세요,Please sit,anjeuseyo
+GREETINGS,3,이름이 뭐예요?,What's your name?,ireumi mwoyeyo
+GREETINGS,3,몇 살이에요?,How old are you?,myeot sarieyo
+GREETINGS,3,어디 살아요?,Where do you live?,eodi sarayo
+GREETINGS,3,만나서 반가워요,Nice to meet you,mannaseo bangawoyo
+GREETINGS,3,오랜만이에요,Long time no see,oraenmanieyo
+GREETINGS,3,잘 지냈어요?,How have you been?,jal jinaesseoyo
+GREETINGS,3,별일 없어요,Nothing special,byeoril eopseoyo
+GREETINGS,3,연락할게요,I'll contact you,yeollakalgeyo
+GREETINGS,3,조심히 가요,Go safely,josimhi gayo
+GREETINGS,3,좋아해요,I like it,joahaeyo
+GREETINGS,3,싫어해요,I dislike it,sileoehaeyo
+GREETINGS,3,몰라요,I don't know (polite),mollayo
+GREETINGS,3,알아요,I know,arayo
+
+GREETINGS,4,안녕히 가세요,Goodbye (to leaving),annyeonghi gaseyo
+GREETINGS,4,안녕히 계세요,Goodbye (to staying),annyeonghi gyeseyo
+GREETINGS,4,다음에 뵙겠습니다,See you next time,daeume boepgetseumnida
+GREETINGS,4,수고하세요,Good job (greeting),sugohaseyo
+GREETINGS,4,수고하셨습니다,Thank you for your work,sugohasyeotseumnida
+GREETINGS,4,천만에요,You're welcome,cheonmaneyo
+GREETINGS,4,실례합니다,Excuse me (polite),sillyehamnida
+GREETINGS,4,실례했습니다,I'm sorry for interrupting,sillyehaetseumnida
+GREETINGS,4,축하해요,Congratulations,chukahaeyo
+GREETINGS,4,축하합니다,Congratulations (formal),chukahamnida
+GREETINGS,4,환영합니다,Welcome (formal),hwanyeonghamnida
+GREETINGS,4,감사드립니다,Thank you (humble),gamsadeurimnida
+GREETINGS,4,죄송합니다만,I'm sorry but,joesonghamnidaman
+GREETINGS,4,괜찮으시면,If it's okay with you,gwaenchanheusimyeon
+GREETINGS,4,도와주세요,Please help me,dowajuseyo
+GREETINGS,4,여쭤봐도 될까요?,May I ask?,yeojjwobwado doelkkayo
+GREETINGS,4,말씀해 주세요,Please tell me,malseumhae juseyo
+GREETINGS,4,기다려 주세요,Please wait,gidaryeo juseyo
+GREETINGS,4,천천히 말씀해 주세요,Please speak slowly,cheoncheonhi malseumhae juseyo
+GREETINGS,4,다시 한번 말씀해 주세요,Please say it again,dasi hanbeon malseumhae juseyo
+
+GREETINGS,5,잘 먹겠습니다,I'll eat well (before meal),jal meokgetseumnida
+GREETINGS,5,잘 먹었습니다,I ate well (after meal),jal meogeotseumnida
+GREETINGS,5,다녀오겠습니다,I'm leaving (going out),danyeo ogetseumnida
+GREETINGS,5,다녀왔습니다,I'm back (coming home),danyeo watseumnida
+GREETINGS,5,다녀오세요,Have a safe trip,danyeo oseyo
+GREETINGS,5,처음 뵙겠습니다,How do you do?,cheoeum boepgetseumnida
+GREETINGS,5,잘 부탁드립니다,Please take care of me,jal butakdeurimnida
+GREETINGS,5,신경 쓰지 마세요,Don't worry about it,singyeong sseuji maseyo
+GREETINGS,5,편하게 하세요,Make yourself comfortable,pyeonhage haseyo
+GREETINGS,5,수고 많으셨습니다,You worked hard,sugo maneusyeotseumnida
+GREETINGS,5,좋은 하루 되세요,Have a good day,joeun haru doeseyo
+GREETINGS,5,좋은 주말 되세요,Have a good weekend,joeun jumal doeseyo
+GREETINGS,5,건강하세요,Stay healthy,geonganghaseyo
+GREETINGS,5,몸조심하세요,Take care of yourself,momjosimhaseyo
+GREETINGS,5,밥 먹었어요?,Have you eaten?,bap meogeosseoyo
+GREETINGS,5,어디 갔다 와요?,Where have you been?,eodi gatda wayo
+GREETINGS,5,뭐 먹었어요?,What did you eat?,mwo meogeosseoyo
+GREETINGS,5,잘 됐네요,That's great,jal dwaenneyo
+GREETINGS,5,힘내세요,Cheer up,himnaeseyo
+GREETINGS,5,파이팅,Fighting (encouragement),paiting
+
+GREETINGS,6,오래 기다리셨습니다,Thank you for waiting,orae gidarisyeotseumnida
+GREETINGS,6,신세 많이 졌습니다,I'm very grateful for your help,sinse mani jyeotseumnida
+GREETINGS,6,폐를 끼쳐 드려서 죄송합니다,Sorry for the trouble,pyereul kkichyeo deuryeoseo joesonghamnida
+GREETINGS,6,덕분에 잘 지냈습니다,Thanks to you I've been well,deokbune jal jinaetseumnida
+GREETINGS,6,배려해 주셔서 감사합니다,Thank you for your consideration,baeryeohae jusyeoseo gamsahamnida
+GREETINGS,6,신경 써 주셔서 감사합니다,Thank you for caring,singyeong sseo jusyeoseo gamsahamnida
+GREETINGS,6,도움 주셔서 감사합니다,Thank you for your help,doum jusyeoseo gamsahamnida
+GREETINGS,6,말씀 감사합니다,Thank you for your words,malseum gamsahamnida
+GREETINGS,6,안부 전해 주세요,Please give my regards,anbu jeonhae juseyo
+GREETINGS,6,건승하시기 바랍니다,I wish you success,geonseunghashigi baramnida
+GREETINGS,6,앞으로 잘 부탁드립니다,I look forward to working with you,apeuro jal butakdeurimnida
+GREETINGS,6,좋은 시간 되셨기를 바랍니다,I hope you had a good time,joeun sigan doesyeotgireul baramnida
+GREETINGS,6,무슨 일 있으면 연락주세요,Contact me if anything happens,museun il isseumyeon yeollakjuseyo
+GREETINGS,6,뭐 필요한 거 있으면 말씀하세요,Let me know if you need anything,mwo piryohan geo isseumyeon malseumhaseyo
+GREETINGS,6,편한 시간에 연락 주세요,Contact me at your convenience,pyeonhan sigane yeollak juseyo
+GREETINGS,6,나중에 다시 연락드리겠습니다,I'll contact you again later,najunge dashi yeollakdeurigetseumnida
+GREETINGS,6,시간 내주셔서 감사합니다,Thank you for your time,sigan naejusyeoseo gamsahamnida
+GREETINGS,6,바쁘신데 죄송합니다,Sorry for bothering you when you're busy,bappeusinde joesonghamnida
+GREETINGS,6,기회가 되면 또 뵙겠습니다,I hope to see you again,gihoega doemyeon tto boepgetseumnida
+GREETINGS,6,좋은 인연이 되었으면 좋겠습니다,I hope we have a good relationship,joeun inyeoni doeeosseumyeon joketseumnida
+
+NUMBERS,1,하나,One (Native),hana
+NUMBERS,1,둘,Two (Native),dul
+NUMBERS,1,셋,Three (Native),set
+NUMBERS,1,넷,Four (Native),net
+NUMBERS,1,다섯,Five (Native),daseot
+NUMBERS,1,여섯,Six (Native),yeoseot
+NUMBERS,1,일곱,Seven (Native),ilgop
+NUMBERS,1,여덟,Eight (Native),yeodeol
+NUMBERS,1,아홉,Nine (Native),ahop
+NUMBERS,1,열,Ten (Native),yeol
+NUMBERS,1,스물,Twenty (Native),seumul
+NUMBERS,1,서른,Thirty (Native),seoreun
+NUMBERS,1,마흔,Forty (Native),maheun
+NUMBERS,1,쉰,Fifty (Native),swin
+NUMBERS,1,예순,Sixty (Native),yesun
+NUMBERS,1,일흔,Seventy (Native),ilheun
+NUMBERS,1,여든,Eighty (Native),yeodeun
+NUMBERS,1,아흔,Ninety (Native),aheun
+NUMBERS,1,몇 개?,How many?,myeot gae
+NUMBERS,1,나이,Age,nai
+NUMBERS,1,개수,Count / Number of items,gaesu
+NUMBERS,1,하나만,Just one,hanaman
+
+NUMBERS,2,영,Zero,yeong
+NUMBERS,2,공,Zero (phone number),gong
+NUMBERS,2,일,One (Sino),il
+NUMBERS,2,이,Two (Sino),i
+NUMBERS,2,삼,Three (Sino),sam
+NUMBERS,2,사,Four (Sino),sa
+NUMBERS,2,오,Five (Sino),o
+NUMBERS,2,육,Six (Sino),yuk
+NUMBERS,2,칠,Seven (Sino),chil
+NUMBERS,2,팔,Eight (Sino),pal
+NUMBERS,2,구,Nine (Sino),gu
+NUMBERS,2,십,Ten (Sino),sip
+NUMBERS,2,백,Hundred,baek
+NUMBERS,2,천,Thousand,cheon
+NUMBERS,2,만,Ten thousand,man
+NUMBERS,2,억,One hundred million,eok
+NUMBERS,2,번호,Number (ID/Phone),beonho
+NUMBERS,2,전화번호,Phone number,jeonhwabeonho
+NUMBERS,2,날짜,Date,naljja
+NUMBERS,2,층,Floor,cheung
+NUMBERS,2,일 층,1st Floor,il cheung
+NUMBERS,2,몇 번?,What number?,myeot beon
+
+NUMBERS,3,시간,Time,sigan
+NUMBERS,3,시,Hour (o'clock),si
+NUMBERS,3,분,Minute,bun
+NUMBERS,3,초,Second,cho
+NUMBERS,3,반,Half (30 min),ban
+NUMBERS,3,몇 시예요?,What time is it?,myeot siyeyo
+NUMBERS,3,지금,Now,jigeum
+NUMBERS,3,오늘,Today,oneul
+NUMBERS,3,내일,Tomorrow,naeil
+NUMBERS,3,어제,Yesterday,eoje
+NUMBERS,3,오전,AM (Morning),ojeon
+NUMBERS,3,오후,PM (Afternoon),ohu
+NUMBERS,3,새벽,Dawn / Early morning,saebyeok
+NUMBERS,3,밤,Night,bam
+NUMBERS,3,낮,Daytime,nat
+NUMBERS,3,월요일,Monday,woryoil
+NUMBERS,3,화요일,Tuesday,hwayoil
+NUMBERS,3,수요일,Wednesday,suyoil
+NUMBERS,3,목요일,Thursday,mogyoil
+NUMBERS,3,금요일,Friday,geumyoil
+NUMBERS,3,토요일,Saturday,toyoil
+NUMBERS,3,일요일,Sunday,iryoil
+NUMBERS,3,주말,Weekend,jumal
+NUMBERS,3,평일,Weekday,pyeongil
+
+NUMBERS,4,개,items (general counter),gae
+NUMBERS,4,명,people (counter),myeong
+NUMBERS,4,분,people (polite counter),bun
+NUMBERS,4,마리,animals (counter),mari
+NUMBERS,4,병,bottles (counter),byeong
+NUMBERS,4,잔,cups/glasses (counter),jan
+NUMBERS,4,대,machines/cars (counter),dae
+NUMBERS,4,장,paper/tickets (counter),jang
+NUMBERS,4,권,books (counter),gwon
+NUMBERS,4,살,years old (age),sal
+NUMBERS,4,송이,flowers/bunches (counter),songi
+NUMBERS,4,그릇,bowls (counter),geureut
+NUMBERS,4,켤레,pairs of shoes/socks,kyeolle
+NUMBERS,4,벌,clothes (counter),beol
+NUMBERS,4,한 개,One item,han gae
+NUMBERS,4,두 명,Two people,du myeong
+NUMBERS,4,세 병,Three bottles,se byeong
+NUMBERS,4,네 잔,Four cups,ne jan
+NUMBERS,4,몇 분이세요?,How many people? (polite),myeot buniseyo
+
+NUMBERS,5,돈,Money,don
+NUMBERS,5,현금,Cash,hyeongeum
+NUMBERS,5,카드,Card,kadeu
+NUMBERS,5,가격,Price,gagyeok
+NUMBERS,5,얼마예요?,How much is it?,eolmayeyo
+NUMBERS,5,원,Won (Korean Currency),won
+NUMBERS,5,천 원,1000 Won,cheon won
+NUMBERS,5,만 원,10000 Won,man won
+NUMBERS,5,오만 원,50000 Won,oman won
+NUMBERS,5,비싸요,Expensive,bissayo
+NUMBERS,5,싸요,Cheap,ssayo
+NUMBERS,5,거스름돈,Change (money back),geoseureumdon
+NUMBERS,5,영수증,Receipt,yeongsujeung
+NUMBERS,5,할인,Discount,harin
+NUMBERS,5,세일,Sale,seil
+NUMBERS,5,총액,Total amount,chongaek
+NUMBERS,5,동전,Coin,dongjeon
+NUMBERS,5,지폐,Bill / Banknote,jipye
+NUMBERS,5,무료,Free,muryo
+NUMBERS,5,공짜,Free (casual),gongjja
+
+NUMBERS,6,계산서,Bill / Check,gyesanseo
+NUMBERS,6,계산할게요,I will pay,gyesanhalgeyo
+NUMBERS,6,따로 계산,Pay separately,ttaro gyesan
+NUMBERS,6,같이 계산,Pay together,gachi gyesan
+NUMBERS,6,더치페이,Going Dutch / Split bill,deochipei
+NUMBERS,6,엔빵,Splitting the bill (Slang),n-bbang
+NUMBERS,6,일시불,Lump sum payment,ilsibul
+NUMBERS,6,할부,Installment payment,halbu
+NUMBERS,6,서명,Signature,seomyeong
+NUMBERS,6,서비스,Free service / On the house,seobiseu
+NUMBERS,6,부가세,VAT (Tax),bugase
+NUMBERS,6,계좌이체,Bank transfer,gyejwaiche
+NUMBERS,6,봉투값,Bag charge,bongtugap
+NUMBERS,6,품절,Sold out,pumjeol
+NUMBERS,6,환불,Refund,hwanbul
+NUMBERS,6,교환,Exchange,gyohwan
+NUMBERS,6,깎아주세요,Please give a discount,kkakkajuseyo
+NUMBERS,6,영수증 버려주세요,Please throw away the receipt,yeongsujeung beoryeojuseyo
+
+SURVIVAL,1,도와주세요,Help me,dowajuseyo
+SURVIVAL,1,사람 살려,Help! (Emergency),saram sallyeo
+SURVIVAL,1,경찰,Police,gyeongchal
+SURVIVAL,1,119 (응급),Emergency (119),il-il-gu
+SURVIVAL,1,신고해주세요,Please report it,singohaejuseyo
+SURVIVAL,1,멈추세요,Stop please,meomchuseyo
+SURVIVAL,1,위험해요,It's dangerous,wiheomhaeyo
+SURVIVAL,1,싫어요,I don't like it / No,sireoyo
+SURVIVAL,1,하지 마세요,Don't do it,haji maseyo
+SURVIVAL,1,도둑,Thief,doduk
+SURVIVAL,1,불이야,Fire!,buriya
+SURVIVAL,1,살려주세요,Please save me,sallyeojuseyo
+SURVIVAL,1,응급실,Emergency room,eunggeupsil
+SURVIVAL,1,사고 났어요,There was an accident,sago nasseoyo
+SURVIVAL,1,문제 있어요,There is a problem,munje isseoyo
+SURVIVAL,1,빨리요,Quickly,ppalliyo
+SURVIVAL,1,비상구,Emergency exit,bisanggu
+SURVIVAL,2,화장실,Restroom,hwajangsil
+SURVIVAL,2,화장실 어디예요?,Where is the restroom?,hwajangsil eodiyeyo
+SURVIVAL,2,휴지,Tissue / Toilet paper,hyuji
+SURVIVAL,2,휴지 주세요,Please give me tissue,hyuji juseyo
+SURVIVAL,2,비밀번호,Password (Door code),bimilbeonho
+SURVIVAL,2,비밀번호 뭐예요?,What is the password?,bimilbeonho mwoyeyo
+SURVIVAL,2,잠겨 있어요,It's locked,jamgyeo isseoyo
+SURVIVAL,2,열려 있어요,It's open,yeollyeo isseoyo
+SURVIVAL,2,남자 화장실,Men's restroom,namja hwajangsil
+SURVIVAL,2,여자 화장실,Women's restroom,yeoja hwajangsil
+SURVIVAL,2,공용,Unisex / Shared,gongyong
+SURVIVAL,2,손 씻는 곳,Sink / Hand washing area,son ssinneun got
+SURVIVAL,2,급해요,It's urgent,geupaeyo
+SURVIVAL,2,고장 났어요,It's out of order,gojang nasseoyo
+SURVIVAL,2,물 내리세요,Flush the toilet,mul naeriseyo
+SURVIVAL,2,물 안 내려가요,It won't flush,mul an naeryeogayo
+SURVIVAL,2,거울,Mirror,geoul
+SURVIVAL,3,와이파이,Wi-Fi,waipai
+SURVIVAL,3,와이파이 돼요?,Do you have Wi-Fi?,waipai dwaeyo
+SURVIVAL,3,인터넷,Internet,inteonet
+SURVIVAL,3,데이터,Data,deiteo
+SURVIVAL,3,연결이 안 돼요,Can't connect,yeongyeoli an dwaeyo
+SURVIVAL,3,느려요,It's slow,neuryeoyo
+SURVIVAL,3,비밀번호 알려주세요,Tell me the password,bimilbeonho allyeojuseyo
+SURVIVAL,3,배터리,Battery,baeteori
+SURVIVAL,3,충전기,Charger,chungjeongi
+SURVIVAL,3,충전돼요?,Can I charge?,chungjeondwaeyo
+SURVIVAL,3,콘센트,Power outlet,konsenteu
+SURVIVAL,3,보조배터리,Power bank,bojobaeteori
+SURVIVAL,3,유심,SIM card,yusim
+SURVIVAL,3,로밍,Roaming,roming
+SURVIVAL,3,큐알 코드,QR Code,kyual kodeu
+SURVIVAL,3,앱,App,aep
+SURVIVAL,3,로그인,Login,rogeuin
+SURVIVAL,3,검색,Search,geomsaek
+SURVIVAL,4,한국말 못해요,I can't speak Korean,hangungmal motaeyo
+SURVIVAL,4,영어 할 수 있어요?,Can you speak English?,yeongeo hal su isseoyo
+SURVIVAL,4,이해 못했어요,I didn't understand,ihae motaesseoyo
+SURVIVAL,4,다시 말해주세요,Please say it again,dasi malhaejuseyo
+SURVIVAL,4,천천히 말해주세요,Please speak slowly,cheoncheonhi malhaejuseyo
+SURVIVAL,4,적어주세요,Please write it down,jeogeojuseyo
+SURVIVAL,4,무슨 뜻이에요?,What does it mean?,museun tteusieyo
+SURVIVAL,4,몰라요,I don't know,mollayo
+SURVIVAL,4,번역기,Translator,beonyeokgi
+SURVIVAL,4,파파고,Papago (Translation App),papago
+SURVIVAL,4,외국인이에요,I am a foreigner,oeguginieyo
+SURVIVAL,4,도와주실 수 있나요?,Can you help me?,dowajusil su innayo
+SURVIVAL,4,이거 뭐예요?,What is this?,igeo mwoyeyo
+SURVIVAL,4,읽을 수 없어요,I can't read,ilgeul su eopseoyo
+SURVIVAL,4,발음,Pronunciation,bareum
+SURVIVAL,4,소통,Communication,sotong
+SURVIVAL,5,잠시만요,Just a moment / Excuse me,jamsimanyo
+SURVIVAL,5,실례합니다,Excuse me (Polite),sillyehamnida
+SURVIVAL,5,지나갈게요,Coming through,jinagalgeyo
+SURVIVAL,5,비켜주세요,Please step aside,bikyeojuseyo
+SURVIVAL,5,내릴게요,I'm getting off,naerilgeyo
+SURVIVAL,5,먼저 가세요,Please go first,meonjeo gaseyo
+SURVIVAL,5,여기 자리 있어요?,Is this seat taken?,yeogi jari isseoyo
+SURVIVAL,5,앉으세요,Please sit,anjeuseyo
+SURVIVAL,5,밀지 마세요,Don't push,milji maseyo
+SURVIVAL,5,줄 서세요,Please stand in line,jul seoseyo
+SURVIVAL,5,새치기 하지 마세요,Don't cut in line,saechigi haji maseyo
+SURVIVAL,5,조용히 해주세요,Please be quiet,joyonghi haejuseyo
+SURVIVAL,5,시끄러워요,It's noisy,sikkeureowoyo
+SURVIVAL,5,매너,Manners,maeneo
+SURVIVAL,5,신발 벗으세요,Take off your shoes,sinbal beoseuseyo
+SURVIVAL,5,만지지 마세요,Don't touch,manjiji maseyo
+SURVIVAL,5,사진 찍어주세요,Please take a photo,sajin jjigeojuseyo
+SURVIVAL,6,쓰레기통,Trash can,sseuregitong
+SURVIVAL,6,쓰레기,Trash,sseuregi
+SURVIVAL,6,버려주세요,Please throw it away,beoryeojuseyo
+SURVIVAL,6,이거 버려도 돼요?,Can I throw this away?,igeo beoryeodo dwaeyo
+SURVIVAL,6,어디에 버려요?,Where do I throw it?,eodie beoryeoyo
+SURVIVAL,6,분리수거,Recycling,bunlisugeo
+SURVIVAL,6,플라스틱,Plastic,peullaseutik
+SURVIVAL,6,캔,Can,kaen
+SURVIVAL,6,병,Bottle,byeong
+SURVIVAL,6,일반 쓰레기,General waste,ilban sseuregi
+SURVIVAL,6,음식물,Food waste,eumsingmul
+SURVIVAL,6,봉투,Bag,bongtu
+SURVIVAL,6,더러워요,It's dirty,deoreowoyo
+SURVIVAL,6,깨끗해요,It's clean,kkaekkeutaeyo
+SURVIVAL,6,냄새나요,It smells bad,naemsaenayo
+SURVIVAL,6,치워주세요,Please clean it up,chiwojuseyo
+SURVIVAL,6,흘렸어요,I spilled it,heullyeosseoyo
+SURVIVAL,7,있어요,There is / I have,isseoyo
+SURVIVAL,7,없어요,There isn't / I don't have,eopseoyo
+SURVIVAL,7,있어요?,Is there...? / Do you have...?,isseoyo
+SURVIVAL,7,여기 있어요,Here it is,yeogi isseoyo
+SURVIVAL,7,주세요,Please give me,juseyo
+SURVIVAL,7,이거 주세요,Give me this one,igeo juseyo
+SURVIVAL,7,저거 주세요,Give me that one,jeogeo juseyo
+SURVIVAL,7,필요해요,I need it,piryohaeyo
+SURVIVAL,7,필요 없어요,I don't need it,piryo eopseoyo
+SURVIVAL,7,안 돼요,No / It doesn't work,an dwaeyo
+SURVIVAL,7,돼요?,Is it okay? / Does it work?,dwaeyo
+SURVIVAL,7,맞아요,That's right,majayo
+SURVIVAL,7,아니에요,No / It isn't,anieyo
+SURVIVAL,7,좋아요,Good / I like it,joayo
+SURVIVAL,7,싫어요,I don't like it,sireoyo
+SURVIVAL,7,진짜요?,Really?,jinjjayo
+SURVIVAL,7,괜찮아요,It's okay,gwaenchanayo
+
+FOOD,1,밥,Rice,bap
+FOOD,1,쌀밥,White rice,ssalbap
+FOOD,1,잡곡밥,Multigrain rice,japgokbap
+FOOD,1,볶음밥,Fried rice,bokkeumbap
+FOOD,1,비빔밥,Bibimbap,bibimbap
+FOOD,1,반찬,Side dishes,banchan
+FOOD,1,김치,Kimchi,gimchi
+FOOD,1,깍두기,Radish Kimchi,kkakdugi
+FOOD,1,나물,Seasoned vegetables,namul
+FOOD,1,계란말이,Rolled omelet,gyeranmari
+FOOD,1,김,Seaweed (Laver),gim
+FOOD,1,두부,Tofu,dubu
+FOOD,1,국,Soup,guk
+FOOD,1,미역국,Seaweed soup,miyeokguk
+FOOD,1,한식,Korean food,hansik
+FOOD,1,백반,Home-style meal set,baekban
+FOOD,1,숟가락,Spoon,sutgarak
+FOOD,1,젓가락,Chopsticks,jeotgarak
+FOOD,1,식사,Meal,siksa
+FOOD,2,맛있어요,It's delicious,masisseoyo
+FOOD,2,맛없어요,It tastes bad,madeopseoyo
+FOOD,2,매워요,It's spicy,maewoyo
+FOOD,2,달아요,It's sweet,darayo
+FOOD,2,짜요,It's salty,jjayo
+FOOD,2,싱거워요,It's bland,singgeowoyo
+FOOD,2,셔요,It's sour,seoyo
+FOOD,2,써요,It's bitter,sseoyo
+FOOD,2,느끼해요,It's greasy,neukkihaeyo
+FOOD,2,고소해요,It's nutty/savory,gosohaeyo
+FOOD,2,시원해요,It's refreshing (Hot soup),siwonhaeyo
+FOOD,2,뜨거워요,It's hot (temperature),tteugeowoyo
+FOOD,2,차가워요,It's cold (temperature),chagawoyo
+FOOD,2,바삭해요,It's crispy,basakaeyo
+FOOD,2,쫄깃해요,It's chewy,jjolkitaeyo
+FOOD,2,부드러워요,It's soft,budeureowoyo
+FOOD,2,냄새가 좋아요,It smells good,naemsaega joayo
+FOOD,2,배불러요,I'm full,baebulleoyo
+FOOD,2,배고파요,I'm hungry,baegopayo
+FOOD,2,입맛에 맞아요,It suits my taste,immane majayo
+FOOD,3,떡볶이,Tteokbokki (Spicy Rice Cakes),tteokbokki
+FOOD,3,순대,Sundae (Blood Sausage),sundae
+FOOD,3,튀김,Deep-fried food,twigim
+FOOD,3,어묵 (오뎅),Fish cake,eomuk
+FOOD,3,김밥,Gimbap,gimbap
+FOOD,3,참치김밥,Tuna Gimbap,chamchi gimbap
+FOOD,3,삼각김밥,Triangle Gimbap,samgak gimbap
+FOOD,3,라면,Ramyeon (Instant noodles),ramyeon
+FOOD,3,붕어빵,Bungeoppang (Fish-shaped bun),bungeoppang
+FOOD,3,호떡,Hotteok (Sweet pancake),hotteok
+FOOD,3,만두,Dumpling,mandu
+FOOD,3,군고구마,Roasted sweet potato,gungoguma
+FOOD,3,식혜,Sikhye (Rice punch),sikye
+FOOD,3,길거리 음식,Street food,gilgeori eumsik
+FOOD,3,포장마차,Street food stall,pojangmacha
+FOOD,3,간식,Snack,gansik
+FOOD,3,분식,Flour based food (Snack food),bunsik
+FOOD,3,찍먹 (찍어 먹기),Dipping sauce,jjingmeok
+FOOD,3,부먹 (부어 먹기),Pouring sauce,bumeok
+FOOD,4,삼겹살,Pork belly,samgyeopsal
+FOOD,4,목살,Pork neck,moksal
+FOOD,4,돼지갈비,Pork ribs,dwaejigalbi
+FOOD,4,소고기,Beef,sogogi
+FOOD,4,한우,Korean beef (Premium),hanu
+FOOD,4,불고기,Bulgogi,bulgogi
+FOOD,4,쌈,Vegetable wrap,ssam
+FOOD,4,상추,Lettuce,sangchu
+FOOD,4,깻잎,Perilla leaf,kkaennip
+FOOD,4,마늘,Garlic,maneul
+FOOD,4,고추,Chili pepper,gochu
+FOOD,4,쌈장,Ssamjang (Wrap sauce),ssamjang
+FOOD,4,기름장,Sesame oil sauce,gireumjang
+FOOD,4,파채,Green onion salad,pachae
+FOOD,4,구워 주세요,Please grill it,guwo juseyo
+FOOD,4,가위,Scissors,gawi
+FOOD,4,집게,Tongs,jipge
+FOOD,4,무한리필,All you can eat,muhan ripil
+FOOD,4,고기,Meat,gogi
+FOOD,5,김치찌개,Kimchi stew,gimchijjigae
+FOOD,5,된장찌개,Soybean paste stew,doenjangjjigae
+FOOD,5,순두부찌개,Soft tofu stew,sundubujjigae
+FOOD,5,부대찌개,Sausage stew,budaejjigae
+FOOD,5,국밥,Rice soup,gukbap
+FOOD,5,해장국,Hangover soup,haejangguk
+FOOD,5,설렁탕,Ox bone soup,seolleongtang
+FOOD,5,갈비탕,Short rib soup,galbitang
+FOOD,5,삼계탕,Ginseng chicken soup,samgyetang
+FOOD,5,뚝배기,Earthenware pot,ttukbaegi
+FOOD,5,국물,Broth / Soup,gungmul
+FOOD,5,건더기,Solid ingredients,geondeogi
+FOOD,5,말아 먹다,Rice inside soup,mara meokda
+FOOD,5,따로 국밥,Rice separate from soup,ttaro gukbap
+FOOD,5,다대기 (양념장),Seasoning paste,dadaegi
+FOOD,5,들깨가루,Perilla powder,deulkkaegaru
+FOOD,5,후추,Pepper,huchu
+FOOD,5,깍두기 국물,Radish kimchi juice,kkakdugi gungmul
+FOOD,6,짜장면,Jajangmyeon (Black bean noodles),jjajangmyeon
+FOOD,6,짬뽕,Jjamppong (Spicy seafood noodles),jjamppong
+FOOD,6,탕수육,Tangsuyuk (Sweet and sour pork),tangsuyuk
+FOOD,6,단무지,Pickled radish,danmuji
+FOOD,6,냉면,Cold noodles,naengmyeon
+FOOD,6,물냉면,Cold noodle soup,mulnaengmyeon
+FOOD,6,비빔냉면,Spicy cold noodles,bibimnaengmyeon
+FOOD,6,칼국수,Kalguksu (Knife-cut noodles),kalguksu
+FOOD,6,우동,Udon,udong
+FOOD,6,잡채,Japchae (Stir-fried glass noodles),japchae
+FOOD,6,곱배기,Double portion,goppaegi
+FOOD,6,면,Noodles,myeon
+FOOD,6,가위로 잘라주세요,Please cut noodles,gawiro jallajuseyo
+FOOD,6,식초,Vinegar,sikcho
+FOOD,6,겨자,Mustard,gyeoja
+FOOD,6,앞치마,Apron,apchima
+FOOD,7,치킨,Fried chicken,chikin
+FOOD,7,양념 치킨,Seasoned chicken,yangnyeom chikin
+FOOD,7,반반 (반반 무 많이),Half and half,banban
+FOOD,7,치맥,Chicken and Beer,chimaek
+FOOD,7,무 (치킨무),Pickled radish,mu
+FOOD,7,족발,Pork trotters,jokbal
+FOOD,7,보쌈,Boiled pork wrap,bossam
+FOOD,7,야식,Late-night snack,yasik
+FOOD,7,피자,Pizza,pija
+FOOD,7,소주,Soju,soju
+FOOD,7,맥주,Beer,maekju
+FOOD,7,생맥주,Draft beer,saengmaekju
+FOOD,7,소맥,Soju bomb (Soju + Beer),somaek
+FOOD,7,막걸리,Makgeolli (Rice wine),makgeolli
+FOOD,7,안주,Snack for alcohol,anju
+FOOD,7,건배 (짠),Cheers,geonbae
+FOOD,7,원샷,Bottoms up,wonsyat
+FOOD,7,해장,Hangover cure,haejang
+FOOD,7,배달,Delivery,baedal
+
+ORDERING,1,저기요,Excuse me (Calling staff),jeogiyo
+ORDERING,1,사장님,Boss (Calling staff politely),sajangnim
+ORDERING,1,여기요,Over here,yeogiyo
+ORDERING,1,벨 눌러주세요,Please press the bell,bel nulleojuseyo
+ORDERING,1,두 명이에요,Two people please,du myeongieyo
+ORDERING,1,자리 있어요?,Do you have a table?,jari isseoyo
+ORDERING,1,만석입니다,It's full,manseogimnida
+ORDERING,1,웨이팅,Waiting,weiting
+ORDERING,1,대기 번호,Waiting number,daegi beonho
+ORDERING,1,얼마나 기다려요?,How long is the wait?,eolmana gidaryeoyo
+ORDERING,1,예약 했어요,I have a reservation,yeyak haesseoyo
+ORDERING,1,창가 자리,Window seat,changga jari
+ORDERING,1,구석 자리,Corner seat,guseok jari
+ORDERING,1,주문할게요,I would like to order,jumunhalgeyo
+ORDERING,1,잠시만요,Just a moment (deciding),jamsimanyo
+ORDERING,1,아직 결정 못 했어요,We haven't decided yet,ajik gyeoljeong mot haesseoyo
+ORDERING,2,메뉴판 주세요,Menu please,menyupan juseyo
+ORDERING,2,영어 메뉴판,English menu,yeongeo menyupan
+ORDERING,2,그림 메뉴,Picture menu,geurim menyu
+ORDERING,2,추천해 주세요,Please recommend,chucheonhae juseyo
+ORDERING,2,뭐가 제일 맛있어요?,What is the best dish?,mwoga jeil masisseoyo
+ORDERING,2,시그니처 메뉴,Signature menu,sigeunicheo menyu
+ORDERING,2,베스트 메뉴,Best seller,beseuteu menyu
+ORDERING,2,이거 매워요?,Is this spicy?,igeo maewoyo
+ORDERING,2,안 매운 거,Non-spicy food,an maeun geo
+ORDERING,2,어떤 고기예요?,What kind of meat is this?,eotteon gogiyeyo
+ORDERING,2,채식 메뉴,Vegetarian menu,chaesik menyu
+ORDERING,2,이거 뭐예요?,What is this?,igeo mwoyeyo
+ORDERING,2,세트 메뉴,Set menu,seteu menyu
+ORDERING,3,이거 주세요,Give me this one,igeo juseyo
+ORDERING,3,같은 걸로 주세요,Same one please,gateun geollo juseyo
+ORDERING,3,하나 주세요,One please,hana juseyo
+ORDERING,3,이인분 주세요,Two servings please,i-inbun juseyo
+ORDERING,3,일인분 추가요,One more serving please,il-inbun chugayo
+ORDERING,3,공기밥 추가요,One rice bowl please,gonggibap chugayo
+ORDERING,3,사리 추가,Add noodles/toppings,sari chuga
+ORDERING,3,볶음밥 해주세요,Fried rice please,bokkeumbap haejuseyo
+ORDERING,3,물 좀 주세요,Water please,mul jom juseyo
+ORDERING,3,물은 셀프,Water is self-service,mureun selpeu
+ORDERING,3,반찬 리필,Refill side dishes,banchan ripil
+ORDERING,3,더 주세요,Please give me more,deo juseyo
+ORDERING,3,앞접시,Small plate,apjeopsi
+ORDERING,4,아아 (아이스 아메리카노),Iced Americano,a-a
+ORDERING,4,뜨아 (따뜻한 아메리카노),Hot Americano,tteu-a
+ORDERING,4,얼죽아,Iced coffee even in winter,eoljuga
+ORDERING,4,샷 추가,Add a shot,syat chuga
+ORDERING,4,연하게,Weak / Light,yeonhage
+ORDERING,4,진하게,Strong,jinhage
+ORDERING,4,디카페인,Decaf,dikapein
+ORDERING,4,휘핑 빼주세요,No whipped cream,hwiping ppaejuseyo
+ORDERING,4,얼음 적게,Less ice,eoreum jeokge
+ORDERING,4,많이 주세요,Please give me a lot,mani juseyo
+ORDERING,4,사이즈업,Size up,saijeueop
+ORDERING,4,테이크아웃 잔,Takeout cup,teikeuaut jan
+ORDERING,4,머그잔,Mug,meogeujan
+ORDERING,4,진동벨,Buzzer,jindongbel
+ORDERING,4,빨대,Straw,ppaldae
+ORDERING,4,홀더,Cup holder,holdeo
+ORDERING,4,캐리어,Cup carrier,kaerieo
+ORDERING,5,고수 빼주세요,No coriander please,gosu ppaejuseyo
+ORDERING,5,오이 빼주세요,No cucumber please,oi ppaejuseyo
+ORDERING,5,견과류 알레르기,Nut allergy,gyeongwaryu allereugi
+ORDERING,5,안 맵게 해주세요,Make it not spicy,an maepge haejuseyo
+ORDERING,5,덜 맵게,Less spicy,deol maepge
+ORDERING,5,아주 맵게,Very spicy,aju maepge
+ORDERING,5,소스 따로 주세요,Sauce on the side,soseu ttaro juseyo
+ORDERING,5,찍먹 (따로),Dipping (Sauce separate),jjingmeok
+ORDERING,5,부먹 (같이),Pouring (Sauce on top),bumeok
+ORDERING,5,바싹 익혀주세요,Well done please,bassak ikyeojuseyo
+ORDERING,5,잘라 주세요,Please cut it,jalla juseyo
+ORDERING,5,김치 더 주세요,More Kimchi please,gimchi deo juseyo
+ORDERING,5,서비스예요?,Is this free service?,seobiseuyeyo
+ORDERING,6,키오스크,Kiosk,kioseukeu
+ORDERING,6,매장에서 식사,Eat in,maejangeseo siksa
+ORDERING,6,포장하기,Take out,pojanghagi
+ORDERING,6,담기,Add to cart,damgi
+ORDERING,6,결제하기,Pay,gyeoljehagi
+ORDERING,6,카드 투입구,Card slot,kadeutuipgu
+ORDERING,6,영수증 출력,Print receipt,yeongsujeung chullyeok
+ORDERING,6,주문 번호,Order number,jumun beonho
+ORDERING,6,품절,Sold out,pumjeol
+ORDERING,6,봉투 필요하세요?,Need a bag?,bongtu piryohaseyo
+ORDERING,6,일회용품,Disposables (fork/spoon),ilhoeyongpum
+ORDERING,6,데워 드릴까요?,Shall I warm it up?,dewo deurilkkayo
+ORDERING,6,그냥 주세요,Just give it to me,geunyang juseyo
+ORDERING,7,계산서 주세요,Bill please,gyesanseo juseyo
+ORDERING,7,얼마예요?,How much is it?,eolmayeyo
+ORDERING,7,계산할게요,I will pay,gyesanhalgeyo
+ORDERING,7,여기서 계산해요?,Pay here?,yeogiseo gyesanhaeyo
+ORDERING,7,카드로 할게요,Pay by card,kadeuro halgeyo
+ORDERING,7,현금 돼요?,Is cash okay?,hyeongeum dwaeyo
+ORDERING,7,따로 계산할게요,Split the bill,ttaro gyesanhalgeyo
+ORDERING,7,각자 낼게요,Pay separately,gakja naelgeyo
+ORDERING,7,N빵 (더치페이),Split evenly (Slang),n-bbang
+ORDERING,7,일시불,Lump sum payment,ilsibul
+ORDERING,7,할부,Installment,halbu
+ORDERING,7,서명해 주세요,Please sign,seomyeonghae juseyo
+ORDERING,7,영수증 버려주세요,Throw away the receipt,yeongsujeung beoryeojuseyo
+ORDERING,7,잘 먹었습니다,Thank you for the meal,jal meogeotseumnida
+ORDERING,7,많이 파세요,Hope you sell a lot (Goodbye),mani paseyo
+
+TRANSPORT,1,교통카드,Transport card (T-money),gyotongkadeu
+TRANSPORT,1,편의점,Convenience store (Buy/Top-up),pyeonuijeom
+TRANSPORT,1,충전해 주세요,Please recharge,chungjeonhae juseyo
+TRANSPORT,1,잔액,Balance,janaek
+TRANSPORT,1,잔액이 부족합니다,Insufficient balance,janaegi bujokhamnida
+TRANSPORT,1,찍으세요 (태그),Please tag (Tap card),jjigeuseyo
+TRANSPORT,1,환승입니다,Transfer complete,hwanseungimnida
+TRANSPORT,1,청소년 할인,Youth discount,cheongsonyeon harin
+TRANSPORT,1,보증금 환급,Deposit refund,bojeunggeum hwanguep
+TRANSPORT,1,일회용 교통카드,Single journey card,ilhoeyong gyotongkadeu
+TRANSPORT,2,지하철,Subway,jihacheol
+TRANSPORT,2,몇 호선?,Which line?,myeot hoseon
+TRANSPORT,2,이 호선 (2호선),Line number 2,i hoseon
+TRANSPORT,2,갈아타는 곳,Transfer point,garataneun got
+TRANSPORT,2,빠른 환승,Fast transfer (Car number),ppareun hwanseung
+TRANSPORT,2,반대 방향,Opposite direction,bandae banghyang
+TRANSPORT,2,이번 역,This station,ibeon yeok
+TRANSPORT,2,다음 역,Next station,daeum yeok
+TRANSPORT,2,스크린도어,Screen door (Safety door),seukeurindoeo
+TRANSPORT,2,지옥철,Hell subway (Rush hour),jiokcheol
+TRANSPORT,2,출퇴근 시간,Rush hour,chultoegeun sigan
+TRANSPORT,2,노약자석,Priority seat,noyakjaseok
+TRANSPORT,2,임산부 배려석,Pink seat for pregnant women,imsanbu baeryeoseok
+TRANSPORT,2,몇 번 출구?,Which exit number?,myeot beon chulgu
+TRANSPORT,2,나가는 곳,Way out / Exit,naganeun got
+TRANSPORT,3,버스,Bus,beoseu
+TRANSPORT,3,마을버스,Village bus (Local),maeulbeoseu
+TRANSPORT,3,정류장,Bus stop,jeongnyujang
+TRANSPORT,3,승차,Get on,seungcha
+TRANSPORT,3,하차,Get off,hacha
+TRANSPORT,3,벨 눌러주세요,Please press the bell,bel nulleojuseyo
+TRANSPORT,3,내릴게요,I'm getting off!,naerilgeyo
+TRANSPORT,3,문 열어주세요,Please open the door,mun yeoreojuseyo
+TRANSPORT,3,카드 찍으세요,Tap your card,kadeu jjigeuseyo
+TRANSPORT,3,하차 태그,Tag out (Must do for transfer),hacha taegeu
+TRANSPORT,3,환승 할인,Transfer discount,hwanseung harin
+TRANSPORT,3,음료 반입 금지,No drinks allowed,eumnyo banip geumji
+TRANSPORT,3,배차 간격,Bus interval,baecha gangyeok
+TRANSPORT,3,막차,Last bus,makcha
+TRANSPORT,4,택시,Taxi,taeksi
+TRANSPORT,4,카카오택시,Kakao Taxi (App),kakaotaeksi
+TRANSPORT,4,호출,Call / Request,hochul
+TRANSPORT,4,목적지,Destination,mokjeokji
+TRANSPORT,4,기사님,Driver (Polite title),gisanim
+TRANSPORT,4,어디로 모실까요?,Where shall I take you?,eodiro mosilkkayo
+TRANSPORT,4,00으로 가주세요,Please go to [Place],...euro gajuseyo
+TRANSPORT,4,여기서 세워주세요,Please stop here,yeogiseo sewojuseyo
+TRANSPORT,4,사거리에서 우회전,Turn right at the intersection,sageorieseo uhoejeon
+TRANSPORT,4,쭉 가주세요,Go straight please,jjuk gajuseyo
+TRANSPORT,4,미터기 켜주세요,Please turn on the meter,miteogi kyeojuseyo
+TRANSPORT,4,자동 결제,Automatic payment (App),jadong gyeolje
+TRANSPORT,4,빈 차,Empty taxi,bin cha
+TRANSPORT,4,예약,Reserved,yeyak
+TRANSPORT,5,길 묻기,Asking directions,gil mutgi
+TRANSPORT,5,실례합니다,Excuse me,sillyehamnida
+TRANSPORT,5,길을 잃었어요,I am lost,gireul ireosseoyo
+TRANSPORT,5,지도 좀 봐주세요,Please look at this map,jido jom bwajuseyo
+TRANSPORT,5,현재 위치,Current location,hyeonjae wichi
+TRANSPORT,5,어떻게 가요?,How do I get there?,eotteoke gayo
+TRANSPORT,5,걸어서 얼마나 걸려요?,How long does it take on foot?,georeoseo eolmana geollyeoyo
+TRANSPORT,5,이쪽,This way,ijjok
+TRANSPORT,5,저쪽,That way,jeojjok
+TRANSPORT,5,건너편,Across the street,geonneopyeon
+TRANSPORT,5,횡단보도,Crosswalk,hoengdanbodo
+TRANSPORT,5,육교,Overpass,yukgyo
+TRANSPORT,5,지하도,Underpass,jihado
+TRANSPORT,6,지도 앱,Map App,jido aep
+TRANSPORT,6,네이버 지도,Naver Map,neibeo jido
+TRANSPORT,6,길찾기,Directions / Route finding,gilchatgi
+TRANSPORT,6,최단 거리,Shortest distance,choedan geori
+TRANSPORT,6,최소 시간,Minimum time,choeso sigan
+TRANSPORT,6,도보,Walking,dobo
+TRANSPORT,6,대중교통,Public transport,daejunggyotong
+TRANSPORT,6,도착 예정 시간,ETA,dochak yejeong sigan
+TRANSPORT,6,환승 횟수,Number of transfers,hwanseung hoetsu
+TRANSPORT,6,요금,Fare,yogeum
+TRANSPORT,6,내비게이션,Navigation,naebigeisyeon
+TRANSPORT,7,기차,Train,gicha
+TRANSPORT,7,기차역,Train station,gichayeok
+TRANSPORT,7,예매,Booking / Reservation,yemae
+TRANSPORT,7,매진,Sold out,maejin
+TRANSPORT,7,입석,Standing ticket,ipseok
+TRANSPORT,7,특실,First class,teuksil
+TRANSPORT,7,일반실,Economy class,ilbansil
+TRANSPORT,7,창가 자리,Window seat,changga jari
+TRANSPORT,7,통로 자리,Aisle seat,tongno jari
+TRANSPORT,7,역방향,Backward facing seat,yeokbanghyang
+TRANSPORT,7,순방향,Forward facing seat,sunbanghyang
+TRANSPORT,7,플랫폼 (타는 곳),Platform,peullaetpom
+TRANSPORT,8,공유 자전거,Shared bicycle,gongyu jajeongeo
+TRANSPORT,8,따릉이,Ttareungyi (Seoul Bike),ttareungi
+TRANSPORT,8,킥보드,Electric scooter,kikbodeu
+TRANSPORT,8,대여하기,Rent,daeyeohagi
+TRANSPORT,8,반납하기,Return,bannaphagi
+TRANSPORT,8,큐알 코드,QR code,kyual kodeu
+TRANSPORT,8,주차 구역,Parking zone,jucha guyeok
+TRANSPORT,8,헬멧 착용,Wear a helmet,helmet chagyong
+TRANSPORT,8,면허 필요,License required,myeonheo piryo
+TRANSPORT,8,위험해요,It's dangerous,wiheomhaeyo
+TRANSPORT,8,인도 주행 금지,No riding on sidewalks,indo juhaeng geumji
+
+PLACES,1,편의점,Convenience store,pyeonuijeom
+PLACES,1,원플러스원 (1+1),Buy one get one free,wonpeulleoseuwon
+PLACES,1,투플러스원 (2+1),Buy two get one free,tupeulleoseuwon
+PLACES,1,행사 상품,Event product / Promotion,haengsa sangpum
+PLACES,1,할인,Discount,harin
+PLACES,1,적립,Point accumulation,jeongnip
+PLACES,1,멤버십 할인,Membership discount,membeosip harin
+PLACES,1,봉투 필요하세요?,Do you need a bag?,bongtu piryohaseyo
+PLACES,1,봉투 값 있어요,There is a charge for the bag,bongtu gap isseoyo
+PLACES,1,전자레인지,Microwave,jeonjareinji
+PLACES,1,돌려 드세요,Please heat it up (in microwave),dollyeo deuseyo
+PLACES,1,삼각김밥,Triangle Kimbap,samgakgimbap
+PLACES,1,도시락,Lunch box,dosirak
+PLACES,1,컵라면,Cup noodles,keomnamyeon
+PLACES,1,네 캔 만 원,4 cans for 10,000 won (Beer),ne kaen man won
+PLACES,1,얼음컵,Ice cup,eoreumkeop
+PLACES,1,파우치 음료,Pouch drink,pauchi eumnyo
+PLACES,1,숙취 해소제,Hangover cure drink,sukchwi haesoje
+PLACES,1,현금 인출기 (ATM),ATM,hyeongeum inchulgi
+PLACES,1,수수료,Fee (ATM/Service),susuryo
+PLACES,1,택배,Parcel service,taekbae
+PLACES,1,교통카드 충전,Transport card top-up,gyotongkadeu chungjeon
+PLACES,1,상비약,Household medicine,sangbiyak
+PLACES,1,24시간,24 hours,isipsasigan
+PLACES,2,한강 공원,Han River Park,hangang gongwon
+PLACES,2,돗자리,Mat / Picnic sheet,dotjari
+PLACES,2,텐트,Tent,tenteu
+PLACES,2,그늘막,Shade canopy,geuneulmak
+PLACES,2,자전거 대여,Bicycle rental,jajeongeo daeyeo
+PLACES,2,따릉이,Ttareungyi (Seoul Bike),ttareungi
+PLACES,2,배달존,Delivery zone,baedaljon
+PLACES,2,전단지,Flyer / Leaflet,jeondanji
+PLACES,2,치맥 (치킨+맥주),Chicken and Beer,chimaek
+PLACES,2,한강 라면,Han River Ramyeon,hangang ramyeon
+PLACES,2,라면 조리기,Ramyeon machine,ramyeon jorigi
+PLACES,2,보글보글,Boiling sound,bogeulbogeul
+PLACES,2,편의점,Convenience store,pyeonuijeom
+PLACES,2,쓰레기,Trash,sseuregi
+PLACES,2,분리수거,Recycling,bunlisugeo
+PLACES,2,야경,Night view,yagyeong
+PLACES,2,무지개 분수,Rainbow fountain,mujigae bunsu
+PLACES,2,유람선,Cruise ship,yuramseon
+PLACES,2,버스킹,Busking / Street performance,beuseuking
+PLACES,2,물티슈,Wet wipes,multisyu
+PLACES,2,담요,Blanket,damyo
+PLACES,3,코인 노래방 (코노),Coin Karaoke,koin noraebang
+PLACES,3,노래방,Karaoke / Singing room,noraebang
+PLACES,3,동전,Coin,dongjeon
+PLACES,3,지폐,Bill / Banknote,jipye
+PLACES,3,천 원에 세 곡,3 songs for 1,000 won,cheon wone se gok
+PLACES,3,마이크,Microphone,maikeu
+PLACES,3,마이크 커버,Microphone cover,maikeu keobeo
+PLACES,3,리모컨,Remote control,rimokeon
+PLACES,3,예약,Reserve (Song),yeyak
+PLACES,3,시작,Start,sijak
+PLACES,3,취소,Cancel,chwiso
+PLACES,3,우선 예약,Priority reservation,useon yeyak
+PLACES,3,인기 차트,Popular chart,ingi chateu
+PLACES,3,음정 (키),Pitch / Key,eumjeong
+PLACES,3,템포 (빠르기),Tempo / Speed,tempo
+PLACES,3,에코,Echo,eko
+PLACES,3,점수,Score,jeomsu
+PLACES,3,서비스,Service (Bonus time),seobiseu
+PLACES,3,1절만,First verse only,iljeolman
+PLACES,3,간주 점프,Skip intro,ganju jeompeu
+PLACES,3,무선 마이크,Wireless mic,museon maikeu
+PLACES,4,피시방 (PC방),Internet Cafe / PC Bang,pisibang
+PLACES,4,회원,Member,hoewon
+PLACES,4,비회원,Non-member,bihoewon
+PLACES,4,회원 가입,Sign up,hoewon gaip
+PLACES,4,선불기 (키오스크),Prepaid machine / Kiosk,seonbulgi
+PLACES,4,충전하다,Top up (Time),chungjeonhada
+PLACES,4,로그인,Login,rogeuin
+PLACES,4,로그아웃,Logout,rogeuaut
+PLACES,4,아이디,ID,aidi
+PLACES,4,비밀번호,Password,bimilbeonho
+PLACES,4,시간 차감,Time deduction,sigan chagam
+PLACES,4,먹거리 주문,Ordering food,meokgeori jumun
+PLACES,4,음료수,Beverage,eumnyosu
+PLACES,4,라면,Ramyeon,ramyeon
+PLACES,4,볶음밥,Fried rice,bokkeumbap
+PLACES,4,헤드셋,Headset,hedeuset
+PLACES,4,키보드,Keyboard,kibodeu
+PLACES,4,마우스,Mouse,mauseu
+PLACES,4,흡연실,Smoking room,heubyeonsil
+PLACES,4,화장실,Restroom,hwajangsil
+PLACES,4,프린트 돼요?,Can I print?,peurinteu dwaeyo
+PLACES,4,고사양,High spec,gosayang
+PLACES,5,찜질방,Korean dry sauna (Jjimjilbang),jjimjilbang
+PLACES,5,사우나,Sauna,sauna
+PLACES,5,목욕탕,Public bathhouse,mogyoktang
+PLACES,5,카운터,Counter / Reception,kaunteo
+PLACES,5,락커키 (열쇠),Locker key,rakkeoki
+PLACES,5,신발장,Shoe locker,sinbaljang
+PLACES,5,찜질복,Sauna clothes,jjimjilbok
+PLACES,5,수건,Towel,sugeon
+PLACES,5,양머리,Sheep head (Towel hat),yangmeori
+PLACES,5,식혜,Sikhye (Rice punch),sikye
+PLACES,5,맥반석 계란,Roasted egg,maekbanseok gyeran
+PLACES,5,매점,Snack bar,maejeom
+PLACES,5,불가마,Hot kiln sauna,bulgama
+PLACES,5,아이스방,Ice room,aiseubang
+PLACES,5,수면실,Sleeping room,sumyeonsil
+PLACES,5,안마 의자,Massage chair,anma uija
+PLACES,5,때밀이 (세신),Body scrub,ttaemiri
+PLACES,5,남탕,Men's bath,namtang
+PLACES,5,여탕,Women's bath,yeotang
+PLACES,5,탕,Bath tub / Pool,tang
+PLACES,5,샤워 먼저 하세요,Please shower first,syawo meonjeo haseyo
+PLACES,6,랜드마크,Landmark,raendeumakeu
+PLACES,6,경복궁,Gyeongbokgung Palace,gyeongbokgung
+PLACES,6,광화문,Gwanghwamun Gate,gwanghwamun
+PLACES,6,남산 타워 (N타워),Namsan Tower,namsan tawo
+PLACES,6,케이블카,Cable car,keibeulka
+PLACES,6,자물쇠,Padlock (Love lock),jamulsoe
+PLACES,6,한복,Hanbok (Traditional clothes),hanbok
+PLACES,6,한복 대여,Hanbok rental,hanbok daeyeo
+PLACES,6,무료 입장,Free admission,muryo ipjang
+PLACES,6,야간 개장,Night opening,yagan gaejang
+PLACES,6,수문장 교대식,Guard changing ceremony,sumunjang gyodaesik
+PLACES,6,북촌 한옥 마을,Bukchon Hanok Village,bukchon hanok maeul
+PLACES,6,인사동,Insadong,insadong
+PLACES,6,기념품,Souvenir,ginyeompum
+PLACES,6,핫플레이스 (핫플),Hot place,hatpeulleiseu
+PLACES,6,오픈런,Open run (Waiting before open),opeunreon
+PLACES,6,웨이팅,Waiting,weiting
+PLACES,6,포토존,Photo zone,potojon
+PLACES,6,인생샷,Life shot (Best photo),insaengsyat
+PLACES,6,입장료,Entrance fee,ipjangnyo
+PLACES,6,매표소,Ticket office,maepyoso
+PLACES,7,밤문화,Nightlife,bammunhwa
+PLACES,7,홍대,Hongdae,hongdae
+PLACES,7,이태원,Itaewon,itaewon
+PLACES,7,강남,Gangnam,gangnam
+PLACES,7,포장마차 (포차),Tent bar / Pocha,pojangmacha
+PLACES,7,클럽,Club,keulleop
+PLACES,7,술집,Bar / Pub,suljip
+PLACES,7,헌팅 포차,Hunting Pocha (Pickup bar),heonting pocha
+PLACES,7,입장료,Entrance fee,ipjangnyo
+PLACES,7,신분증 (민증),ID card,sinbunjeung
+PLACES,7,검사,Check / Inspection,geomsa
+PLACES,7,팔찌,Wristband,paljji
+PLACES,7,첫차,First train/bus,cheotcha
+PLACES,7,막차,Last train/bus,makcha
+PLACES,7,대리운전,Designated driver service,daeriunjeon
+PLACES,7,숙취,Hangover,sukchwi
+PLACES,7,해장,Hangover cure,haejang
+PLACES,7,24시간 영업,Open 24 hours,isipsasigan yeongeop
+PLACES,7,합석,Sharing a table / Joining,hapseok
+PLACES,7,건배,Cheers,geonbae
+PLACES,7,안주,Snack for alcohol,anju
+PLACES,7,택시 전쟁,Taxi war (Hard to get taxi),taeksi jeonjaeng
+
+SHOPPING,1,아이쇼핑,Window shopping,aisyoping
+SHOPPING,1,구경하다,To browse / Look around,gugyeonghada
+SHOPPING,1,어서오세요,Welcome,eoseooseyo
+SHOPPING,1,찾으시는 거 있으세요?,Are you looking for something?,chajeusineun geo isseuseyo
+SHOPPING,1,그냥 구경하는 중이에요,I'm just looking,geunyang gugyeonghaneun jungieyo
+SHOPPING,1,둘러보고 올게요,I'll look around and come back,dulleobogo olgeyo
+SHOPPING,1,도움이 필요하면 부를게요,I'll call you if I need help,doumi piryohamyeon bureulgeyo
+SHOPPING,1,신상품 (신상),New arrival,sinsangpum
+SHOPPING,1,베스트셀러,Best seller,beseuteuselleo
+SHOPPING,1,인기 상품,Popular product,ingi sangpum
+SHOPPING,1,한정판,Limited edition,hanjeongpan
+SHOPPING,1,세일 중,On sale,seil jung
+SHOPPING,1,진열된 상품,Displayed product,jinyeoldoen sangpum
+SHOPPING,1,재고,Stock,jaego
+SHOPPING,1,품절,Sold out,pumjeol
+SHOPPING,1,입고 예정,Restock schedule,ipgo yejeong
+SHOPPING,1,언제 들어와요?,When will it be restocked?,eonje deureowayo
+SHOPPING,1,마네킹,Mannequin,maneking
+SHOPPING,1,디스플레이,Display,diseupeullei
+SHOPPING,1,가격표,Price tag,gagyeokpyo
+SHOPPING,1,직원,Staff / Clerk,jigwon
+SHOPPING,2,피팅룸 (탈의실),Fitting room,pitingnum
+SHOPPING,2,입어봐도 돼요?,Can I try this on?,ibeobwado dwaeyo
+SHOPPING,2,몇 개까지 돼요?,How many items allowed?,myeot gaekkaji dwaeyo
+SHOPPING,2,페이스 커버,Face cover (Makeup guard),peiseu keobeo
+SHOPPING,2,화장 묻지 않게 조심,Be careful of makeup,hwajang mutji anke josim
+SHOPPING,2,신발 벗고 들어가세요,Take off shoes,sinbal beotgo deureogaseyo
+SHOPPING,2,거울,Mirror,geoul
+SHOPPING,2,사이즈,Size,saijeu
+SHOPPING,2,프리 사이즈,Free size (One size),peuri saijeu
+SHOPPING,2,치수,Measurements,chisu
+SHOPPING,2,너무 커요,It's too big,neomu keoyo
+SHOPPING,2,너무 작아요,It's too small,neomu jagayo
+SHOPPING,2,딱 맞아요,It fits perfectly,ttak majayo
+SHOPPING,2,헐렁해요,It's loose,heolleonghaeyo
+SHOPPING,2,꽉 껴요,It's tight,kkwak kkyeoyo
+SHOPPING,2,소매가 길어요,Sleeves are long,somaega gireoyo
+SHOPPING,2,바지 기장,Pants length,baji gijang
+SHOPPING,2,수선,Alteration / Hemming,suseon
+SHOPPING,2,새 상품 주세요,Please give me a new one,sae sangpum juseyo
+SHOPPING,2,다른 색깔 있어요?,Do you have other colors?,dareun saekkkal isseoyo
+SHOPPING,2,잘 어울려요,It looks good on you,jal eoullyeoyo
+SHOPPING,3,화장품,Cosmetics,hwajangpum
+SHOPPING,3,로드샵,Road shop (Street brand),rodeusyap
+SHOPPING,3,테스터,Tester,tesuteo
+SHOPPING,3,써봐도 돼요?,Can I try this?,sseobwado dwaeyo
+SHOPPING,3,피부 타입,Skin type,pibu taip
+SHOPPING,3,건성,Dry skin,geonseong
+SHOPPING,3,지성,Oily skin,jiseong
+SHOPPING,3,복합성,Combination skin,bokhapseong
+SHOPPING,3,민감성,Sensitive skin,mingamseong
+SHOPPING,3,트러블,Skin trouble / Acne,teureobeul
+SHOPPING,3,미백 (화이트닝),Whitening,mibaek
+SHOPPING,3,주름 개선,Anti-wrinkle,jureum gaeseon
+SHOPPING,3,수분 (보습),Moisture / Hydration,subun
+SHOPPING,3,자외선 차단제 (선크림),Sunscreen,jaoeseon chadanje
+SHOPPING,3,마스크팩,Mask pack (Sheet mask),maseukeupaek
+SHOPPING,3,원플러스원 (1+1),Buy 1 Get 1 Free,wonpeulleoseuwon
+SHOPPING,3,샘플 좀 주세요,Please give me samples,saempeul jom juseyo
+SHOPPING,3,클렌징,Cleansing,keullenjing
+SHOPPING,3,스킨/로션,Toner/Lotion,seukin rosyeon
+SHOPPING,3,립스틱,Lipstick,ripseutik
+SHOPPING,3,추천해 주세요,Please recommend,chucheonhae juseyo
+SHOPPING,3,유통기한,Expiration date,yutonggihan
+SHOPPING,4,전통시장,Traditional market,jeontongsijang
+SHOPPING,4,얼마예요?,How much is it?,eolmayeyo
+SHOPPING,4,비싸요,It's expensive,bissayo
+SHOPPING,4,깎아주세요,Please give a discount,kkakkajuseyo
+SHOPPING,4,좀 더 싸게 해줘요,Make it a bit cheaper,jom deo ssage haejwoyo
+SHOPPING,4,현금,Cash,hyeongeum
+SHOPPING,4,계좌이체,Bank transfer,gyejwaiche
+SHOPPING,4,카드 안 돼요?,No cards?,kadeu an dwaeyo
+SHOPPING,4,서비스 (덤),Service / Extra (Freebie),seobiseu
+SHOPPING,4,덤 주세요,Give me extra please,deom juseyo
+SHOPPING,4,많이 주세요,Give me a lot,mani juseyo
+SHOPPING,4,싱싱해요 (신선해요),It's fresh,singsinghaeyo
+SHOPPING,4,떨이,Clearance (End of day),tteori
+SHOPPING,4,골라 골라,Pick whatever you want,golla golla
+SHOPPING,4,단골,Regular customer,dangol
+SHOPPING,4,이모님,Auntie (Female vendor),imonim
+SHOPPING,4,사장님,Boss (Male vendor),sajangnim
+SHOPPING,4,온누리 상품권,Onnuri gift certificate,onnuri sangpumgwon
+SHOPPING,4,흥정,Bargaining / Haggling,heungjeong
+SHOPPING,4,맛보기 (시식),Tasting,matbogi
+SHOPPING,4,포장해 주세요,Please wrap it up,pojanghae juseyo
+SHOPPING,5,마트 (대형 마트),Supermarket / Mart,mateu
+SHOPPING,5,카트,Shopping cart,kateu
+SHOPPING,5,장바구니,Shopping basket,jangbaguni
+SHOPPING,5,동전 (100원),Coin (for cart),dongjeon
+SHOPPING,5,시식 코너,Tasting corner,sisik koneo
+SHOPPING,5,먹어봐도 돼요?,Can I taste it?,meogeobwado dwaeyo
+SHOPPING,5,맛있어요,It's delicious,masisseoyo
+SHOPPING,5,무게 측정,Weighing,muge cheukjeong
+SHOPPING,5,라벨 (가격표),Price label,rabel
+SHOPPING,5,묶음 상품,Bundle pack,mukkeum sangpum
+SHOPPING,5,기획 상품,Special offer,gihoek sangpum
+SHOPPING,5,마감 세일,Closing sale,magam seil
+SHOPPING,5,계산대,Checkout counter,gyesandae
+SHOPPING,5,무인 계산대 (셀프),Self-checkout,muin gyesandae
+SHOPPING,5,바코드,Barcode,bakodeu
+SHOPPING,5,종량제 봉투,Standard garbage bag,jongnyangje bongtu
+SHOPPING,5,장바구니 가져왔어요,I brought my own bag,jangbaguni gajyeowasseoyo
+SHOPPING,5,박스 포장,Box packing,bakseu pojang
+SHOPPING,5,자율 포장대,Packing area,jayul pojangdae
+SHOPPING,5,테이프,Tape,teipeu
+SHOPPING,6,영수증,Receipt,yeongsujeung
+SHOPPING,6,영수증 지참,Bring receipt,yeongsujeung jicham
+SHOPPING,6,교환,Exchange,gyohwan
+SHOPPING,6,환불,Refund,hwanbul
+SHOPPING,6,반품,Return,banpum
+SHOPPING,6,결제 취소,Payment cancellation,gyeolje chwiso
+SHOPPING,6,결제 카드,Credit card used,gyeolje kadeu
+SHOPPING,6,단순 변심,Change of mind,dansun byeonsim
+SHOPPING,6,사이즈가 안 맞아요,Size doesn't fit,saijeuga an majayo
+SHOPPING,6,불량이에요,It's defective,bullyangieyo
+SHOPPING,6,오염 (얼룩),Stain,oyeom
+SHOPPING,6,구멍 났어요,There is a hole,gumeong nasseoyo
+SHOPPING,6,작동이 안 돼요,It doesn't work,jakdongi an dwaeyo
+SHOPPING,6,택 (Tag),Tag / Label,taek
+SHOPPING,6,택을 뗐어요,I removed the tag,taegeul ttesseoyo
+SHOPPING,6,일주일 이내,Within a week,iljuil inae
+SHOPPING,6,개봉하면 안 돼요,Don't open it,gaebonghamyeon an dwaeyo
+SHOPPING,6,사용 흔적,Signs of use,sayong heunjeok
+SHOPPING,6,환불 규정,Refund policy,hwanbul gyujeong
+SHOPPING,7,텍스 리펀 (면세),Tax refund,tekseu ripeon
+SHOPPING,7,면세점,Duty-free shop,myeonsejeom
+SHOPPING,7,여권,Passport,yeogwon
+SHOPPING,7,여권 보여주세요,Show me your passport,yeogwon boyeojuseyo
+SHOPPING,7,즉시 환급,Immediate refund,jeuksi hwanguep
+SHOPPING,7,사후 환급,Delayed refund (at airport),sahu hwanguep
+SHOPPING,7,삼만 원 이상,Over 30,000 won,samman won isang
+SHOPPING,7,영수증 챙겨주세요,Please keep the receipt,yeongsujeung chaenggyeojuseyo
+SHOPPING,7,키오스크,Kiosk,kioseukeu
+SHOPPING,7,세관,Customs,segwan
+SHOPPING,7,반출 확인,Export confirmation,banchul hwagin
+SHOPPING,7,공항에서 받으세요,Receive it at the airport,gonghangeseo badeuseyo
+SHOPPING,7,현금으로 받기,Receive in cash,hyeongeumeuro batgi
+SHOPPING,7,카드로 받기,Receive by card,kadeuro batgi
+SHOPPING,7,도장,Stamp,dojang
+SHOPPING,7,큐알 코드 스캔,Scan QR code,kyual kodeu seukaen
+SHOPPING,7,환급액,Refund amount,hwangubaek
+SHOPPING,7,수수료 제외,Excluding fee,susuryo jeoe
+
+TIME,1,월요일,Monday,woryoil
+TIME,1,화요일,Tuesday,hwayoil
+TIME,1,수요일,Wednesday,suyoil
+TIME,1,목요일,Thursday,mogyoil
+TIME,1,금요일,Friday,geumyoil
+TIME,1,토요일,Saturday,toyoil
+TIME,1,일요일,Sunday,iryoil
+TIME,1,주말,Weekend,jumal
+TIME,1,평일,Weekday,pyeongil
+TIME,1,오늘,Today,oneul
+TIME,1,내일,Tomorrow,naeil
+TIME,1,모레,Day after tomorrow,more
+TIME,1,어제,Yesterday,eoje
+TIME,1,그저께,Day before yesterday,geujeokke
+TIME,1,공휴일 (빨간 날),Public holiday (Red day),gonghyuil
+TIME,1,생일,Birthday,saengil
+TIME,1,기념일,Anniversary,ginyeomil
+TIME,1,무슨 요일이에요?,What day is it?,museun yoirieyo
+TIME,1,며칠이에요?,What date is it?,myeochirieyo
+TIME,1,달력,Calendar,dallyeok
+TIME,1,불금 (불타는 금요일),Fire Friday (TGIF),bulgeum
+TIME,1,연휴,Long weekend / Holiday,yeonhyu
+TIME,2,아침,Morning / Breakfast,achim
+TIME,2,점심,Lunch / Noon,jeomsim
+TIME,2,저녁,Evening / Dinner,jeonyeok
+TIME,2,밤,Night,bam
+TIME,2,새벽,Dawn / Early morning,saebyeok
+TIME,2,오전,AM (Before noon),ojeon
+TIME,2,오후,PM (After noon),ohu
+TIME,2,정오 (낮 12시),Noon,jeongo
+TIME,2,자정 (밤 12시),Midnight,jajeong
+TIME,2,지금,Now,jigeum
+TIME,2,나중에,Later,najunge
+TIME,2,아까,A while ago,akka
+TIME,2,이따가,In a little while,ittaga
+TIME,2,곧,Soon,got
+TIME,2,아점 (브런치),Brunch (Breakfast + Lunch),ajeom
+TIME,2,야식,Late night snack,yasik
+TIME,2,해 뜨는 시간 (일출),Sunrise,ilchul
+TIME,2,해 지는 시간 (일몰),Sunset,ilmol
+TIME,2,식사 시간,Meal time,siksa sigan
+TIME,2,출근 시간,Clock-in time,chulgeun sigan
+TIME,2,퇴근 시간,Clock-out time,toegeun sigan
+TIME,3,약속,Appointment / Promise,yaksok
+TIME,3,시간 돼요?,Do you have time?,sigan dwaeyo
+TIME,3,언제 만날까요?,When shall we meet?,eonje mannalkkayo
+TIME,3,언제가 좋아요?,When is good for you?,eonjega joayo
+TIME,3,아무 때나 괜찮아요,Anytime is fine,amu ttaena gwaenchanayo
+TIME,3,바빠요?,Are you busy?,bappayo
+TIME,3,한가해요,I'm free (Not busy),hangahaeyo
+TIME,3,스케줄 확인해 볼게요,I'll check my schedule,seukejul hwaginhae bolgeyo
+TIME,3,몇 시에 볼까요?,What time shall we meet?,myeot sie bolkkayo
+TIME,3,어디서 볼까요?,Where shall we meet?,eodiseo bolkkayo
+TIME,3,다음 주 어때요?,How about next week?,daeum ju eottaeyo
+TIME,3,이번 주말에 뭐 해요?,What are you doing this weekend?,ibeon jumare mwo haeyo
+TIME,3,놀러 가요,Let's hang out / Go play,nolleo gayo
+TIME,3,밥 한번 먹어요,Let's have a meal sometime,bap hanbeon meogeoyo
+TIME,3,술 한잔해요,Let's have a drink,sul hanjanhaeyo
+TIME,3,데이트 신청,Asking out on a date,deiteu sincheong
+TIME,3,예약했어요?,Did you make a reservation?,yeyakaesseoyo
+TIME,3,찜해놨어요,I saved/picked it,jjimhaenwasseoyo
+TIME,4,빨리빨리,Hurry hurry (8282),ppallippalli
+TIME,4,서두르세요,Please hurry up,seodureuseyo
+TIME,4,급해요,It's urgent,geupaeyo
+TIME,4,시간 없어요,I don't have time,sigan eopseoyo
+TIME,4,늦었어요,I'm late,neujeosseoyo
+TIME,4,뛰어!,Run!,ttwieo
+TIME,4,마감 시간,Deadline / Closing time,magam sigan
+TIME,4,잠시만요,Just a moment,jamsimanyo
+TIME,4,기다려 주세요,Please wait,gidaryeo juseyo
+TIME,4,천천히 오세요,Take your time,cheoncheonhi oseyo
+TIME,4,재촉하지 마세요,Don't rush me,jaechokhaji maseyo
+TIME,4,금방 끝나요,It will finish soon,geumbangkkeunnayo
+TIME,4,바로 갈게요,I'm coming right now,baro galgeyo
+TIME,4,지금 당장,Right now!,jigeum dangjang
+TIME,4,오 분만요,Give me 5 minutes,o bunmanyo
+TIME,4,거의 다 왔어요,I'm almost there,geoui da wasseoyo
+TIME,4,출발했어요,I departed / I left,chulbalhaesseoyo
+TIME,4,칼퇴 (칼퇴근),Leaving work on time,kalttoe
+TIME,5,얼마나 걸려요?,How long does it take?,eolmana geollyeoyo
+TIME,5,한 시간 걸려요,It takes one hour,han sigan geollyeoyo
+TIME,5,삼십 분 정도,About 30 minutes,samsip bun jeongdo
+TIME,5,가까워요,It's close,gakkawoyo
+TIME,5,멀어요,It's far,meoreoyo
+TIME,5,걸어서 10분,10 minutes by foot,georeoseo sipbun
+TIME,5,차로 20분,20 minutes by car,charo isipbun
+TIME,5,택시 타고 오세요,Come by taxi,taeksi tago oseyo
+TIME,5,금방 가요,I'll be there soon,geumbang gayo
+TIME,5,오래 걸려요?,Does it take long?,orae geollyeoyo
+TIME,5,차가 막혀요,Traffic is bad,chaga makyeoyo
+TIME,5,러시 아워,Rush hour,reosiawo
+TIME,5,도착 예정,Estimated arrival,dochak yejeong
+TIME,5,왕복,Round trip,wangbok
+TIME,5,편도,One way,pyeondo
+TIME,5,거리,Distance,geori
+TIME,5,시간,Time / Hour,sigan
+TIME,5,분,Minute,bun
+TIME,5,초,Second,cho
+TIME,6,약속 변경,Change appointment,yaksok byeongyeong
+TIME,6,약속 취소,Cancel appointment,yaksok chwiso
+TIME,6,미뤄도 될까요?,Can we postpone it?,mirwodo doelkkayo
+TIME,6,일이 생겼어요,Something came up,iri saenggyeosseoyo
+TIME,6,갑자기,Suddenly,gapjagi
+TIME,6,못 갈 것 같아요,I don't think I can make it,mot gal geot gatayo
+TIME,6,늦을 것 같아요,I think I'll be late,neujeul geot gatayo
+TIME,6,차가 너무 막혀요,The traffic is too heavy,chaga neomu makyeoyo
+TIME,6,늦잠 잤어요,I overslept,neutjam jasseoyo
+TIME,6,깜빡했어요,I forgot,kkampakaesseoyo
+TIME,6,기다리게 해서 미안해요,Sorry for keeping you waiting,gidarige haeseo mianhaeyo
+TIME,6,바람맞았어요,I got stood up,barammajasseoyo
+TIME,6,약속 펑크,Bailing on a plan,yaksok peongkeu
+TIME,6,다음에 봐요,See you next time,daeume bwayo
+TIME,6,죄송합니다,I'm sorry (Formal),joesonghamnida
+TIME,6,어떡하죠?,What should I do?,eotteokhajo
+TIME,6,기다릴게요,I will wait,gidarilgeyo
+TIME,6,먼저 가세요,You go first,meonjeo gaseyo
+TIME,7,매일 (맨날),Every day,maeil
+TIME,7,매주,Every week,maeju
+TIME,7,매달,Every month,maedal
+TIME,7,매년,Every year,maenyeon
+TIME,7,항상 (언제나),Always,hangsang
+TIME,7,자주,Often,jaju
+TIME,7,가끔,Sometimes,gakkeum
+TIME,7,보통,Usually,botong
+TIME,7,거의 안 해요,I rarely do it,geoui an haeyo
+TIME,7,절대로 (네버),Never,jeoldaero
+TIME,7,오랜만에,It's been a while,oraenmane
+TIME,7,이번 주,This week,ibeon ju
+TIME,7,다음 주,Next week,daeum ju
+TIME,7,지난주,Last week,jinan ju
+TIME,7,평소에,Normally / Usually,pyeongsoe
+TIME,7,주말마다,Every weekend,jumalmada
+TIME,7,하루에 한 번,Once a day,harue han beon
+TIME,7,일주일에 두 번,Twice a week,iljuire du beon
+TIME,7,처음,First time,cheoeum
+TIME,7,마지막,Last time,majimak
+
+HEALTH,1,머리,Head,meori
+HEALTH,1,눈,Eye,nun
+HEALTH,1,코,Nose,ko
+HEALTH,1,입,Mouth,ip
+HEALTH,1,목 (목구멍),Throat / Neck,mok
+HEALTH,1,귀,Ear,gwi
+HEALTH,1,어깨,Shoulder,eokkae
+HEALTH,1,팔,Arm,pal
+HEALTH,1,손,Hand,son
+HEALTH,1,손가락,Finger,songarak
+HEALTH,1,가슴,Chest,gaseum
+HEALTH,1,심장,Heart,simjang
+HEALTH,1,배 (위장),Stomach / Belly,bae
+HEALTH,1,허리,Waist / Lower back,heori
+HEALTH,1,등,Back,deung
+HEALTH,1,엉덩이,Buttocks,eongdeongi
+HEALTH,1,다리,Leg,dari
+HEALTH,1,무릎,Knee,mureup
+HEALTH,1,발,Foot,bal
+HEALTH,1,발목,Ankle,balmok
+HEALTH,1,피부,Skin,pibu
+HEALTH,1,근육,Muscle,geunyuk
+HEALTH,1,뼈,Bone,ppyeo
+HEALTH,2,감기,Cold,gamgi
+HEALTH,2,독감,Flu (Influenza),dokgam
+HEALTH,2,열이 나요,I have a fever,yeori nayo
+HEALTH,2,기침해요,I have a cough,gichimhaeyo
+HEALTH,2,콧물,Runny nose,konmul
+HEALTH,2,코가 막혀요,My nose is stuffy,koga makyeoyo
+HEALTH,2,재채기,Sneeze,jaechaegi
+HEALTH,2,목이 아파요,I have a sore throat,mogi apayo
+HEALTH,2,가래,Phlegm,garae
+HEALTH,2,몸살,Body ache / Fatigue,momsal
+HEALTH,2,오한 (추워요),Chills,ohan
+HEALTH,2,두통,Headache,dutong
+HEALTH,2,어지러워요,I feel dizzy,eojireowoyo
+HEALTH,2,식은땀,Cold sweat,sigeunttam
+HEALTH,2,목소리가 안 나와요,I lost my voice,moksoriga an nawayo
+HEALTH,2,숨쉬기 힘들어요,It's hard to breathe,sumswigi himdeureoyo
+HEALTH,2,마스크,Mask,maseukeu
+HEALTH,2,전염돼요?,Is it contagious?,jeonyeomdwaeyo
+HEALTH,3,소화불량,Indigestion,sohwabullyang
+HEALTH,3,체했어요,I have an upset stomach,chehaesseoyo
+HEALTH,3,속이 안 좋아요,My stomach feels weird,sogi an joayo
+HEALTH,3,토할 것 같아요,I feel like vomiting (Nausea),tohal geot gatayo
+HEALTH,3,구토 (오바이트),Vomiting,guto
+HEALTH,3,설사,Diarrhea,seolsa
+HEALTH,3,변비,Constipation,byeonbi
+HEALTH,3,배탈 났어요,I have a stomachache,baetal nasseoyo
+HEALTH,3,가스 찼어요,I'm gassy,gaseu chasseoyo
+HEALTH,3,속 쓰려요,I have heartburn,sok sseuryeoyo
+HEALTH,3,식중독,Food poisoning,sikjungdok
+HEALTH,3,장염,Enteritis (Intestinal inflammation),jangyeom
+HEALTH,3,생리통,Period cramp,saengnitong
+HEALTH,3,위염,Gastritis,wiyeom
+HEALTH,3,잘못 먹었어요,I ate something wrong,jalmot meogeosseoyo
+HEALTH,3,입맛이 없어요,I have no appetite,immasi eopseoyo
+HEALTH,3,금식,Fasting,geumsik
+HEALTH,3,물만 드세요,Drink only water,mulman deuseyo
+HEALTH,4,아파요,It hurts,apayo
+HEALTH,4,통증,Pain,tongjeung
+HEALTH,4,따끔따끔해요,It stings / Prickles,ttakkeumttakkeumhaeyo
+HEALTH,4,욱신욱신해요,It throbs,uksinnuksinhaeyo
+HEALTH,4,지끈지끈해요,It's pounding (Headache),jikkeunjikkeunhaeyo
+HEALTH,4,뻐근해요,It's stiff (Muscles),ppeogeunhaeyo
+HEALTH,4,간지러워요,It's itchy,ganjireowoyo
+HEALTH,4,쓰라려요,It burns / Sore,sseuraryeoyo
+HEALTH,4,멍들었어요,I got a bruise,meongdeureosseoyo
+HEALTH,4,부었어요,It's swollen,bueosseoyo
+HEALTH,4,피나요,I'm bleeding,pinayo
+HEALTH,4,베였어요,I got a cut,beyeosseoyo
+HEALTH,4,데였어요,I got a burn,deyeosseoyo
+HEALTH,4,접질렸어요 (삐었어요),I sprained it,jeopjillyeosseoyo
+HEALTH,4,부러졌어요 (골절),It's broken (Fracture),bureojyeosseoyo
+HEALTH,4,쥐가 났어요,I have a cramp,jwiga nasseoyo
+HEALTH,4,저려요,It's numb / Tingling,jeoryeoyo
+HEALTH,5,약국,Pharmacy,yakguk
+HEALTH,5,약사,Pharmacist,yaksa
+HEALTH,5,처방전,Prescription,cheobangjeon
+HEALTH,5,처방전 필요해요?,Do I need a prescription?,cheobangjeon piryohaeyo
+HEALTH,5,진통제 (타이레놀),Painkiller,jintongje
+HEALTH,5,종합 감기약,Cold medicine,jonghap gamgiyak
+HEALTH,5,소화제,Digestive medicine,sohwaje
+HEALTH,5,해열제,Fever reducer,haeyeolje
+HEALTH,5,지사제,Diarrhea medicine,jisaje
+HEALTH,5,파스,Pain relief patch (Pas),paseu
+HEALTH,5,뿌리는 파스,Spray patch,ppurineun paseu
+HEALTH,5,연고 (마데카솔/후시딘),Ointment,yeongo
+HEALTH,5,소독약,Disinfectant,sodogyak
+HEALTH,5,밴드 (대일밴드),Band-aid,baendeu
+HEALTH,5,붕대,Bandage,bungdae
+HEALTH,5,인공눈물,Artificial tears / Eye drops,ingongnunmul
+HEALTH,5,영양제 (비타민),Supplement / Vitamin,yeongyangje
+HEALTH,5,수면 유도제,Sleep aid,sumyeon yudoje
+HEALTH,5,임신 테스트기,Pregnancy test,imsin teseuteugi
+HEALTH,5,피임약,Birth control pill,piimyak
+HEALTH,6,병원,Hospital / Clinic,byeongwon
+HEALTH,6,응급실,Emergency Room (ER),eunggeupsil
+HEALTH,6,내과 (감기/배탈),Internal Medicine,naegwa
+HEALTH,6,이비인후과 (코/목/귀),ENT Clinic,ibinhugwa
+HEALTH,6,정형외과 (뼈/근육),Orthopedics,jeonghyeong-oegwa
+HEALTH,6,피부과,Dermatology,pibugwa
+HEALTH,6,안과,Ophthalmology (Eye doctor),angwa
+HEALTH,6,치과,Dentist,chigwa
+HEALTH,6,접수,Registration,jeopsu
+HEALTH,6,예약하셨나요?,Did you make a reservation?,yeyakhasyeonnayo
+HEALTH,6,신분증,ID card,sinbunjeung
+HEALTH,6,건강보험,Health insurance,geongangboheom
+HEALTH,6,여행자 보험,Travel insurance,yeohaengja boheom
+HEALTH,6,진료,Medical treatment / Consultation,jillyo
+HEALTH,6,의사 선생님,Doctor,uisa seonsaengnim
+HEALTH,6,간호사,Nurse,ganhosa
+HEALTH,6,주사,Injection / Shot,jusa
+HEALTH,6,링거 (수액),IV Drip,ringgeo
+HEALTH,6,엑스레이,X-ray,eksuseurei
+HEALTH,6,입원,Hospitalization,ibwon
+HEALTH,6,진단서,Medical certificate,jindanseo
+HEALTH,7,복용법,Dosage / Usage,bogyongbeop
+HEALTH,7,하루 세 번,Three times a day,haru se beon
+HEALTH,7,식후 30분,30 minutes after meal,siku samsipbun
+HEALTH,7,식전 (공복),Before meal (Empty stomach),sikjeon
+HEALTH,7,자기 전,Before sleeping,jagi jeon
+HEALTH,7,알약,Pill / Tablet,allyak
+HEALTH,7,가루약,Powder medicine,garuyak
+HEALTH,7,물약 (시럽),Liquid medicine,mullyak
+HEALTH,7,한 알씩,One pill at a time,han alssik
+HEALTH,7,졸릴 수 있어요,It may make you drowsy,jollil su isseoyo
+HEALTH,7,술 드시지 마세요,Do not drink alcohol,sul deusiji maseyo
+HEALTH,7,임산부,Pregnant woman,imsanbu
+HEALTH,7,부작용,Side effect,bujagyong
+HEALTH,7,알레르기,Allergy,allereugi
+HEALTH,7,꾸준히 드세요,Take it consistently,kkujunhi deuseyo
+HEALTH,8,숙취,Hangover,sukchwi
+HEALTH,8,필름 끊겼어요,Blacked out,pilleum kkeunkkyeosseoyo
+HEALTH,8,토했어요,I threw up,tohaesseoyo
+HEALTH,8,속이 안 좋아요,My stomach hurts (Hangover),sogi an joayo
+HEALTH,8,머리 깨질 것 같아요,Splitting headache,meori kkaejil geot gatayo
+HEALTH,8,숙취 해소제,Hangover cure drink/pill,sukchwi haesoje
+HEALTH,8,컨디션/여명 (마시는 거),Hangover drink brands,keondisyeon
+HEALTH,8,상쾌환 (먹는 거),Hangover pill brand,sangkwaehwan
+HEALTH,8,해장,Hangover cure (Action),haejang
+HEALTH,8,해장국,Hangover soup,haejangguk
+HEALTH,8,라면,Ramyeon (Spicy soup for hangover),ramyeon
+HEALTH,8,꿀물,Honey water,kkulmul
+HEALTH,8,초코우유,Chocolate milk (Popular cure),chokouyu
+HEALTH,8,아이스 아메리카노,Iced Americano,aiseu amerikano
+HEALTH,8,술병 났어요,Sick from drinking,sulbyeong nasseoyo
+HEALTH,8,이제 술 안 마실 거예요,I won't drink anymore (Lie),ije sul an masil geoyeyo
+
+RELATIONSHIPS,1,가족,Family,gajok
+RELATIONSHIPS,1,부모님,Parents,bumonim
+RELATIONSHIPS,1,아버지 (아빠),Father (Dad),abeoji
+RELATIONSHIPS,1,어머니 (엄마),Mother (Mom),eomeoni
+RELATIONSHIPS,1,할아버지,Grandfather,harabeoji
+RELATIONSHIPS,1,할머니,Grandmother,halmeoni
+RELATIONSHIPS,1,형제 자매,Siblings,hyeongje jamae
+RELATIONSHIPS,1,남동생,Younger brother,namdongsaeng
+RELATIONSHIPS,1,여동생,Younger sister,yeodongsaeng
+RELATIONSHIPS,1,아들,Son,adeul
+RELATIONSHIPS,1,딸,Daughter,ttal
+RELATIONSHIPS,1,막내,Youngest,mangnae
+RELATIONSHIPS,1,외동,Only child,oedong
+RELATIONSHIPS,1,쌍둥이,Twins,ssangdungi
+RELATIONSHIPS,1,친척,Relatives,chincheok
+RELATIONSHIPS,1,삼촌,Uncle,samchon
+RELATIONSHIPS,1,이모/고모,Aunt,imo/gomo
+RELATIONSHIPS,1,조카,Nephew / Niece,joka
+RELATIONSHIPS,1,결혼,Marriage,gyeolhon
+RELATIONSHIPS,1,남편,Husband,nampyeon
+RELATIONSHIPS,1,아내 (와이프),Wife,anae
+RELATIONSHIPS,1,부부,Couple (Married),bubu
+RELATIONSHIPS,1,효도,Filial piety,hyodo
+RELATIONSHIPS,2,나이,Age,nai
+RELATIONSHIPS,2,몇 년생이세요?,What year were you born?,myeot nyeonsaengiseyo
+RELATIONSHIPS,2,서열,Hierarchy / Rank,seoyeol
+RELATIONSHIPS,2,오빠,Older brother (for female),oppa
+RELATIONSHIPS,2,언니,Older sister (for female),eonni
+RELATIONSHIPS,2,형,Older brother (for male),hyeong
+RELATIONSHIPS,2,형님,Older brother (Formal),hyeongnim
+RELATIONSHIPS,2,누나,Older sister (for male),nuna
+RELATIONSHIPS,2,누님,Older sister (Formal),nunim
+RELATIONSHIPS,2,동생,Younger sibling,dongsaeng
+RELATIONSHIPS,2,연상,Older than me,yeonsang
+RELATIONSHIPS,2,연하,Younger than me,yeonha
+RELATIONSHIPS,2,동갑,Same age,donggap
+RELATIONSHIPS,2,친구,Friend (Same age),chingu
+RELATIONSHIPS,2,빠른 년생,Early birthday (School year confusing),ppareun nyeonsaeng
+RELATIONSHIPS,2,족보 꼬이다,Age hierarchy gets messed up,jokbo kkoida
+RELATIONSHIPS,2,동안이시네요,You look young,donganisineyo
+RELATIONSHIPS,2,노안,Looking old for age,noan
+RELATIONSHIPS,2,만 나이,International age,man nai
+RELATIONSHIPS,2,한국 나이,Korean age,hanguk nai
+RELATIONSHIPS,2,밥 사주면 형,If you buy meal you are Hyung,bap sajumyeon hyeong
+RELATIONSHIPS,3,존댓말 (높임말),Formal speech,jondaemmal
+RELATIONSHIPS,3,반말,Casual speech,bammal
+RELATIONSHIPS,3,말 놓으세요,Please speak casually,mal noeuseyo
+RELATIONSHIPS,3,말 편하게 해도 돼요?,Can I speak comfortably?,mal pyeonhage haedo dwaeyo
+RELATIONSHIPS,3,말 놓을까?,Shall we drop honorifics?,mal noeulkka
+RELATIONSHIPS,3,저 (자기를 낮춤),I (Humble),jeo
+RELATIONSHIPS,3,나 (친구끼리),I (Casual),na
+RELATIONSHIPS,3,너 (친구끼리),You (Casual),neo
+RELATIONSHIPS,3,당신 (주의해서 사용),You (Formal/Specific context),dangsin
+RELATIONSHIPS,3,야!,Hey! (Casual),ya
+RELATIONSHIPS,3,예의,Manners,yeui
+RELATIONSHIPS,3,건방지다,Rude / Arrogant,geonbangjida
+RELATIONSHIPS,3,싸가지 없다,Rude (Slang),ssagaji eopda
+RELATIONSHIPS,3,친해지다,Get close,chinhaejida
+RELATIONSHIPS,3,어색하다,Awkward,eosaekhada
+RELATIONSHIPS,3,우리 친구 하자,Let's be friends,uri chingu haja
+RELATIONSHIPS,3,이름이 뭐예요?,What is your name?,ireumi mwoyeyo
+RELATIONSHIPS,3,성함이 어떻게 되세요?,What is your name? (Formal),seonghami eotteoke doeseyo
+RELATIONSHIPS,3,말 조심해,Watch your language,mal josimhae
+RELATIONSHIPS,3,요 (존댓말 끝),Yo (Polite ending),yo
+RELATIONSHIPS,4,호칭,Title / Appellation,hoching
+RELATIONSHIPS,4,님 (존중),Mr./Ms. (Honorific suffix),nim
+RELATIONSHIPS,4,씨 (일반적),Mr./Ms. (Polite suffix),ssi
+RELATIONSHIPS,4,분 (사람 높임),Person (Honorific),bun
+RELATIONSHIPS,4,선생님,Teacher / Mr./Ms. (Respectful),seonsaengnim
+RELATIONSHIPS,4,사장님 (가게에서),Boss (Shopkeeper),sajangnim
+RELATIONSHIPS,4,이모님 (식당에서),Aunt (Restaurant staff),imonim
+RELATIONSHIPS,4,저기요 (부를 때),Excuse me (Calling),jeogiyo
+RELATIONSHIPS,4,여기요 (부를 때),Over here,yeogiyo
+RELATIONSHIPS,4,고객님,Customer (Polite),gogaeknim
+RELATIONSHIPS,4,기사님,Driver,gisanim
+RELATIONSHIPS,4,아저씨,Middle-aged man,ajeossi
+RELATIONSHIPS,4,아주머니 (아줌마),Middle-aged woman,ajumeoni
+RELATIONSHIPS,4,학생,Student,haksaeng
+RELATIONSHIPS,4,아가씨,Young lady (Old-fashioned),agassi
+RELATIONSHIPS,4,총각,Bachelor / Young man,chonggak
+RELATIONSHIPS,4,어르신,Elderly person,eoreusin
+RELATIONSHIPS,4,자기야 (연인),Honey / Darling,jagiya
+RELATIONSHIPS,4,여보 (부부),Honey (Married),yeobo
+RELATIONSHIPS,5,학교,School,hakgyo
+RELATIONSHIPS,5,선배님,Senior,seonbaenim
+RELATIONSHIPS,5,후배,Junior,hubae
+RELATIONSHIPS,5,동기,Classmate (Same year),donggi
+RELATIONSHIPS,5,학번,Class year (Entry year),hakbeon
+RELATIONSHIPS,5,캠퍼스 커플 (CC),Campus Couple,ssissi
+RELATIONSHIPS,5,과대표 (과대),Department representative,gwadaepyo
+RELATIONSHIPS,5,동아리,Club / Circle,dongari
+RELATIONSHIPS,5,엠티 (MT),Membership Training (Retreat),emti
+RELATIONSHIPS,5,오티 (OT),Orientation,oti
+RELATIONSHIPS,5,신입생,Freshman,sinipsaeng
+RELATIONSHIPS,5,졸업생,Graduate,joreopsaeng
+RELATIONSHIPS,5,복학생,Returning student,bokhaksaeng
+RELATIONSHIPS,5,휴학,Leave of absence,hyuhak
+RELATIONSHIPS,5,밥 약속,Meal appointment,bap yaksok
+RELATIONSHIPS,5,족보 (시험 정보),Exam dump / Past papers,jokbo
+RELATIONSHIPS,5,교수님,Professor,gyosunim
+RELATIONSHIPS,5,인싸 (인사이더),Insider (Popular),inssa
+RELATIONSHIPS,5,아싸 (아웃사이더),Outsider (Loner),assa
+RELATIONSHIPS,6,회사 (직장),Company / Workplace,hoesa
+RELATIONSHIPS,6,직급,Rank / Position,jikgeup
+RELATIONSHIPS,6,대표님,CEO / Representative,daepyonim
+RELATIONSHIPS,6,사장님,President / Boss,sajangnim
+RELATIONSHIPS,6,이사님,Director,isanim
+RELATIONSHIPS,6,부장님,Department Head,bujangnim
+RELATIONSHIPS,6,팀장님,Team Leader,timjangnim
+RELATIONSHIPS,6,과장님,Manager (Section Chief),gwajangnim
+RELATIONSHIPS,6,대리님,Assistant Manager,daerinim
+RELATIONSHIPS,6,주임님,Senior Staff,juimnim
+RELATIONSHIPS,6,사원,Staff / Employee,sawon
+RELATIONSHIPS,6,신입 사원,New employee,sinip sawon
+RELATIONSHIPS,6,상사,Superior / Boss,sangsa
+RELATIONSHIPS,6,부하 직원,Subordinate,buha jigwon
+RELATIONSHIPS,6,동료,Colleague,dongnyo
+RELATIONSHIPS,6,승진,Promotion,seungjin
+RELATIONSHIPS,6,명함,Business card,myeongham
+RELATIONSHIPS,6,인턴,Intern,inteon
+RELATIONSHIPS,7,출근,Go to work,chulgeun
+RELATIONSHIPS,7,퇴근,Leave work,toegeun
+RELATIONSHIPS,7,수고하셨습니다,Good job / Thank you for your effort,sugohasyeotseumnida
+RELATIONSHIPS,7,먼저 들어가보겠습니다,I'm leaving first (Polite),meonjeo deureogabogetseumnida
+RELATIONSHIPS,7,내일 뵙겠습니다,See you tomorrow,naeil boepgetseumnida
+RELATIONSHIPS,7,회의,Meeting,hoeui
+RELATIONSHIPS,7,야근,Overtime work,yageun
+RELATIONSHIPS,7,회식,Company dinner,hoesik
+RELATIONSHIPS,7,연차,Annual leave,yeoncha
+RELATIONSHIPS,7,반차,Half-day leave,bancha
+RELATIONSHIPS,7,월차,Monthly leave,wolcha
+RELATIONSHIPS,7,병가,Sick leave,byeongga
+RELATIONSHIPS,7,조퇴,Leaving early,jotoe
+RELATIONSHIPS,7,출장,Business trip,chuljang
+RELATIONSHIPS,7,결재,Approval,gyeoljae
+RELATIONSHIPS,7,보고,Report,bogo
+RELATIONSHIPS,7,전화 돌려드릴게요,I'll transfer the call,jeonhwa dollyeodeurilgeyo
+RELATIONSHIPS,7,자리에 안 계십니다,He/She is not at the desk,jarie an gyesimnida
+RELATIONSHIPS,7,메모 남겨드릴까요?,Shall I leave a memo?,memo namgyeodeurilkkayo
+RELATIONSHIPS,8,반려동물,Pet,banryeodongmul
+RELATIONSHIPS,8,강아지,Puppy / Dog,gangaji
+RELATIONSHIPS,8,고양이,Cat,goyangi
+RELATIONSHIPS,8,댕댕이,Doggo (Slang),daengdaengi
+RELATIONSHIPS,8,냥이,Kitty (Slang),nyangi
+RELATIONSHIPS,8,집사,Butler (Cat owner),jipsa
+RELATIONSHIPS,8,산책,Walk,sanchaek
+RELATIONSHIPS,8,간식,Snack,gansik
+RELATIONSHIPS,8,사료,Pet food,saryo
+RELATIONSHIPS,8,목줄,Leash,mokjul
+RELATIONSHIPS,8,배변 봉투,Poop bag,baebyeon bongtu
+RELATIONSHIPS,8,앉아,Sit,anja
+RELATIONSHIPS,8,손,Hand (Paw),son
+RELATIONSHIPS,8,기다려,Wait,gidaryeo
+RELATIONSHIPS,8,짖다,Bark,jitda
+RELATIONSHIPS,8,물다,Bite,mulda
+RELATIONSHIPS,8,우리 개는 안 물어요,My dog doesn't bite,uri gaeneun an mureoyo
+RELATIONSHIPS,8,만져봐도 돼요?,Can I pet him/her?,manjyeobwado dwaeyo
+RELATIONSHIPS,8,입양,Adoption,ibyang
+RELATIONSHIPS,8,동물병원,Vet clinic,dongmulbyeongwon
+
+EMOTIONS,1,행복해,I'm happy,haengbokhae
+EMOTIONS,1,기분 좋아,I feel good,gibun joa
+EMOTIONS,1,신나,I'm excited,sinna
+EMOTIONS,1,즐거워,It's fun / enjoyable,jeulgeowo
+EMOTIONS,1,기뻐,I'm glad,gippeo
+EMOTIONS,1,뿌듯해,I'm proud (of achievement),ppudeuthae
+EMOTIONS,1,상쾌해,I feel refreshed,sangkwaehae
+EMOTIONS,1,홀가분해,I feel relieved / lighthearted,holgabunhae
+EMOTIONS,1,대박,Awesome / Jackpot,daebak
+EMOTIONS,1,꿀잼,Honey fun (Very funny),kkuljaem
+EMOTIONS,1,웃겨,It's funny,utgyeo
+EMOTIONS,1,행운이야,It's lucky,haenguniya
+EMOTIONS,1,만족해,I'm satisfied,manjokhae
+EMOTIONS,1,감동받았어,I was moved / touched,gamdongbadasseo
+EMOTIONS,1,기대돼,I'm looking forward to it,gidaedwae
+EMOTIONS,1,텐션 업,Tension up (High energy),tensyeon eop
+EMOTIONS,1,찐 (진짜),Real / Genuine,jjin
+EMOTIONS,1,최고야,It's the best,choegoya
+EMOTIONS,1,자신감 있어,I'm confident,jasingam isseo
+EMOTIONS,1,사랑스러워,It's lovely,sarangseureowo
+EMOTIONS,2,화나,I'm angry,hwana
+EMOTIONS,2,짜증나,I'm annoyed,jjajeungna
+EMOTIONS,2,열받아,I'm heated (Pissed off),yeolbada
+EMOTIONS,2,킹받네,King-annoying (Super annoying),kingbanne
+EMOTIONS,2,답답해,It's stuffy / Frustrating,dapdaphae
+EMOTIONS,2,억울해,It's unfair,eogulhae
+EMOTIONS,2,속상해,I'm upset,soksanghae
+EMOTIONS,2,서운해,I'm disappointed / hurt,seounhae
+EMOTIONS,2,미치겠어,I'm going crazy,michigesseo
+EMOTIONS,2,어이없어,I'm speechless / absurd,eoieopseo
+EMOTIONS,2,황당해,I'm flustered / dumbfounded,hwangdanghae
+EMOTIONS,2,기분 나빠,I feel bad / offended,gibun nappa
+EMOTIONS,2,질투 나,I'm jealous,jiltu na
+EMOTIONS,2,복수할 거야,I will get revenge,boksuhal geoya
+EMOTIONS,2,싸우자,Let's fight,ssauja
+EMOTIONS,2,참아,Hold it in / Endure,chama
+EMOTIONS,2,폭발 직전,About to explode,pokbal jikjeon
+EMOTIONS,2,삐쳤어?,Are you sulking?,ppichyeosseo
+EMOTIONS,2,삐지지 마,Don't sulk,ppijiji ma
+EMOTIONS,2,손절,Cut ties,sonjeol
+EMOTIONS,3,슬퍼,I'm sad,seulpeo
+EMOTIONS,3,우울해,I'm depressed,uulhae
+EMOTIONS,3,외로워,I'm lonely,oerowo
+EMOTIONS,3,심심해,I'm bored,simsimhae
+EMOTIONS,3,지루해,It's boring,jiruhae
+EMOTIONS,3,귀찮아,It's bothersome / I don't want to,gwichana
+EMOTIONS,3,피곤해,I'm tired,pigonhae
+EMOTIONS,3,지쳐,I'm exhausted,jichyeo
+EMOTIONS,3,힘들어,It's hard / tough,himdeureo
+EMOTIONS,3,무기력해,I feel lethargic,mugiryeokhae
+EMOTIONS,3,현타 와 (현자타임),Reality check hits hard,hyeonta wa
+EMOTIONS,3,멘붕 (멘탈 붕괴),Mental breakdown,menbung
+EMOTIONS,3,멍때리다,Space out,meongttaerida
+EMOTIONS,3,후회돼,I regret it,huhoedwae
+EMOTIONS,3,부끄러워,I'm shy / embarrassed,bukkeureowo
+EMOTIONS,3,창피해,I'm ashamed,changpihae
+EMOTIONS,3,쪽팔려,It's embarrassing (Slang),jjokpallyeo
+EMOTIONS,3,눈물 나,Tears are coming out,nunmul na
+EMOTIONS,3,울고 싶어,I want to cry,ulgo sipeo
+EMOTIONS,3,의욕이 없어,I have no motivation,uiyogi eopseo
+EMOTIONS,4,놀랐어,I was surprised,nollasseo
+EMOTIONS,4,깜짝이야,You scared me!,kkamjjagiya
+EMOTIONS,4,충격이야,It's a shock,chunggyeogiya
+EMOTIONS,4,무서워,I'm scared,museowo
+EMOTIONS,4,소름 돋아,I got goosebumps,soreum doda
+EMOTIONS,4,두려워,I'm afraid,duryeowo
+EMOTIONS,4,공포,Horror / Terror,gongpo
+EMOTIONS,4,심쿵 (심장 쿵),Heart flutter / Heart attack,simkung
+EMOTIONS,4,설레,My heart creates flutter,seolle
+EMOTIONS,4,떨려,I'm trembling / nervous,tteollyeo
+EMOTIONS,4,긴장돼,I'm nervous / tense,ginjangdwae
+EMOTIONS,4,신기해,It's amazing / fascinating,singihae
+EMOTIONS,4,궁금해,I'm curious,gunggeumhae
+EMOTIONS,4,믿을 수 없어,I can't believe it,mideul su eopseo
+EMOTIONS,4,말도 안 돼,No way / Nonsense,maldo an dwae
+EMOTIONS,4,헐,OMG,heol
+EMOTIONS,4,세상에,Oh my god,sesange
+EMOTIONS,4,맙소사,Oh my goodness,mapsosa
+EMOTIONS,4,반했어,I fell in love / crushed,banhaesseo
+EMOTIONS,4,첫눈에 반하다,Love at first sight,cheonnune banhada
+EMOTIONS,5,걱정돼,I'm worried,geokjeongdwae
+EMOTIONS,5,불안해,I'm anxious,buranhae
+EMOTIONS,5,초조해,I'm restless,chojohae
+EMOTIONS,5,조마조마해,I'm nervous (Butterflies),jomajomahae
+EMOTIONS,5,스트레스 받아,I'm stressed out,seuteureseu bada
+EMOTIONS,5,압박감,Pressure,apbakgam
+EMOTIONS,5,다행이다,That's a relief,dahaengida
+EMOTIONS,5,안심해,Feel relieved,ansimhae
+EMOTIONS,5,편안해,I'm comfortable,pyeonanhae
+EMOTIONS,5,안정,Stability,anjeong
+EMOTIONS,5,괜찮아,It's okay,gwaenchana
+EMOTIONS,5,용서해,Forgive,yongseohae
+EMOTIONS,5,이해해,I understand,ihaehae
+EMOTIONS,5,고마워,Thank you,gomawo
+EMOTIONS,5,미안해,Sorry,mianhae
+EMOTIONS,5,감사,Gratitude,gamsa
+EMOTIONS,5,희망,Hope,huimang
+EMOTIONS,5,절망,Despair,jeolmang
+EMOTIONS,5,위로,Consolation,wiro
+EMOTIONS,5,응원해,I support you,eungwonhae
+EMOTIONS,6,힐링,Healing,hilling
+EMOTIONS,6,소확행,Small but certain happiness,sohwakhaeng
+EMOTIONS,6,불멍,Fire spacing out (Campfire),bulmeong
+EMOTIONS,6,물멍,Water spacing out,mulmeong
+EMOTIONS,6,호캉스,Hotel vacation,hokangseu
+EMOTIONS,6,휴식,Rest,hyusik
+EMOTIONS,6,여유,Relaxation / Leisure,yeoyu
+EMOTIONS,6,자유,Freedom,jayu
+EMOTIONS,6,취미,Hobby,chwimi
+EMOTIONS,6,덕질,Fangirling / Fanboying,deokjil
+EMOTIONS,6,최애,Bias / Favorite,choeae
+EMOTIONS,6,정주행,Binge-watching,jeongjuhaeng
+EMOTIONS,6,기분 전환,Change of mood,gibun jeonhwan
+EMOTIONS,6,꿀잠,Honey sleep (Good sleep),kkuljam
+EMOTIONS,6,맛점 (맛있는 점심),Delicious lunch,matjeom
+EMOTIONS,6,퇴근길,Way home from work,toegeungil
+EMOTIONS,6,월급날,Payday,wolgeumnal
+EMOTIONS,6,여행,Travel,yeohaeng
+EMOTIONS,6,산책,Walk,sanchaek
+EMOTIONS,6,나를 위한 선물,Gift for myself,nareul wihan seonmul
+EMOTIONS,7,리액션,Reaction,raeksyeon
+EMOTIONS,7,진짜요?,Really?,jinjjayo
+EMOTIONS,7,정말요?,Seriously?,jeongmalyo
+EMOTIONS,7,거짓말,Lie,geojitmal
+EMOTIONS,7,에이 설마,No way (Disbelief),ei seolma
+EMOTIONS,7,그렇구나,I see / Aha,geureokuna
+EMOTIONS,7,맞아,Right / Exactly,maja
+EMOTIONS,7,내 말이,That's what I'm saying,nae mari
+EMOTIONS,7,아이고,Oh my / Oops,aigo
+EMOTIONS,7,어머,Oh my (Feminine),eomeo
+EMOTIONS,7,우와,Wow,uwa
+EMOTIONS,7,대박,Daebak (Awesome/Crazy),daebak
+EMOTIONS,7,헐,Heol (OMG),heol
+EMOTIONS,7,ㅋㅋㅋ (크크크),LOL (Text laughter),keukeukeu
+EMOTIONS,7,ㅠㅠ (유유),Crying face (Text),yuyu
+EMOTIONS,7,좋아요,Like / Good,joayo
+EMOTIONS,7,싫어요,Dislike / Hate,sireoyo
+EMOTIONS,7,관심 없어요,I'm not interested,gwansim eopseoyo
+EMOTIONS,7,신기하다,That's fascinating,singihada
+EMOTIONS,7,재밌다,That's funny,jaemitda
+
+SLANG,1,대박,Daebak (Awesome/Jackpot),daebak
+SLANG,1,헐,Heol (OMG/Shock),heol
+SLANG,1,진짜요?,Really?,jinjjayo
+SLANG,1,레알 (리얼),Real (Seriously?),real
+SLANG,1,찐 (진짜),Genuine / Real deal,jjin
+SLANG,1,미쳤다,Crazy / Insane (Positive/Negative),michyeotda
+SLANG,1,돌았다,Crazy (Slang),doratda
+SLANG,1,소름,Goosebumps,soreum
+SLANG,1,인정,Admit / Agreed,injeong
+SLANG,1,노인정 (인정 안 함),No admit (Disagreed - Pun),noinjeong
+SLANG,1,쩔어,Dope / Sick,jjeoreo
+SLANG,1,폼 미쳤다,Form is crazy (Skill is insane),pom michyeotda
+SLANG,1,무슨 일이야?,What's going on?,museun iriya
+SLANG,1,말도 안 돼,Nonsense / No way,maldo an dwae
+SLANG,1,에바 (오바),Over / Exaggeration,eba
+SLANG,1,선 넘네,Crossing the line,seon neomne
+SLANG,1,실화냐?,Is this real life?,silhwanya
+SLANG,1,그건 좀...,That's a bit... (Soft refusal),geugeon jom
+SLANG,1,찢었다,Ripped it (Nailed it),jjijeotda
+SLANG,1,나락,Abyss (Hit rock bottom),narak
+SLANG,1,떡상,Skyrocketing (Price/Popularity),tteoksang
+SLANG,1,떡락,Plummeting (Price/Popularity),tteoknak
+SLANG,2,ㅋㅋㅋ (크크크),LOL (Laughter),keukeukeu
+SLANG,2,ㅎㅎㅎ (하하하),Haha (Soft laughter),hahaha
+SLANG,2,ㅠㅠ (유유),Crying eyes,yuyu
+SLANG,2,ㅜㅜ (우우),Crying,u-u
+SLANG,2,ㄷㄷ (덜덜),Trembling (Scared/Shocked),deoldeol
+SLANG,2,ㅎㄷㄷ (후덜덜),Shaking (Very scared),hudeoldeol
+SLANG,2,ㅇㅇ (응응),Yeah / Okay,eung-eung
+SLANG,2,ㄴㄴ (노노),No no,nono
+SLANG,2,ㅊㅋ (축하),Congrats,chukha
+SLANG,2,ㄳ (감사),Thx (Thanks),gamsa
+SLANG,2,ㅈㅅ (죄송),Sry (Sorry),joesong
+SLANG,2,ㅁㄹ (몰라),IDK (I don't know),molla
+SLANG,2,ㅇㅈ (인정),Agreed,injeong
+SLANG,2,ㄹㅇ (레알),Real / For real,real
+SLANG,2,헉,Gasp (Surprise),heok
+SLANG,2,엥?,Huh? (Confusion),eng
+SLANG,2,1004,Angel (Number pun),cheonsa
+SLANG,2,8282,Hurry hurry (Number pun),ppallippalli
+SLANG,3,ㅇㅋ (오케이),OK,okei
+SLANG,3,ㄱㄱ (고고),Go Go (Let's do it),gogo
+SLANG,3,ㅂㅂ (바이바이),Bye Bye,baibai
+SLANG,3,ㅎㅇ (하이),Hi,hai
+SLANG,3,ㅅㄱ (수고),Good job / Bye,sugo
+SLANG,3,ㄱㄷ (기다려),Wait,gidaryeo
+SLANG,3,ㅇㄷ (어디),Where?,eodi
+SLANG,3,ㅁㅎ (뭐해),WYD (What you doing?),mwohae
+SLANG,3,ㅈㅂ (제발),Plz (Please),jebal
+SLANG,3,ㅋㅋㄹㅃㅃ,Kukuru-pping-ppong (Mocking laugh),kikeuruppingppong
+SLANG,3,ㄱㅇㄷ (개이득),Big profit / Lucky,gaeideuk
+SLANG,3,ㅇㄱㄹㅇ (이거레알),This is real (True),igeoreal
+SLANG,3,ㅂㅂㅂㄱ (반박불가),Irrefutable,banbakbulga
+SLANG,3,팬아저,Save fan art even if not fan,paenajeo
+SLANG,3,읽씹,Read and ignore,ilksip
+SLANG,3,안읽씹,Ignore without reading,anilksip
+SLANG,3,칼답,Instant reply,kaldap
+SLANG,3,생존신고,Proof of life (Posting after long time),saengjonsingo
+SLANG,3,눈팅,Lurking (Reading without posting),nunting
+SLANG,3,프사,Profile picture,peusa
+SLANG,4,인싸 (인사이더),Insider (Popular person),inssa
+SLANG,4,아싸 (아웃사이더),Outsider (Loner),assa
+SLANG,4,핵인싸,Nuclear Insider (Super popular),haeginssa
+SLANG,4,관종 (관심 종자),Attention seeker,gwanjong
+SLANG,4,꼰대,Boomer / Condescending person,kkondae
+SLANG,4,고인물,Veteran / Oldbie (Game),goinmul
+SLANG,4,뉴비,Newbie,nyubi
+SLANG,4,금손,Golden hands (Talented),geumson
+SLANG,4,똥손,Poop hands (Clumsy),ttongson
+SLANG,4,맵찔이,Weak to spicy food,maepjjiri
+SLANG,4,술찌 (술찔이),Weak to alcohol,suljji
+SLANG,4,헬창,Fitness addict,helchang
+SLANG,4,집돌이/집순이,Homebody,jipdori
+SLANG,4,오타쿠 (덕후),Otaku / Geek,deokhu
+SLANG,4,성덕 (성공한 덕후),Successful fan,seongdeok
+SLANG,4,엄친아,Mom's friend's son (Perfect guy),eomchina
+SLANG,4,TMI (티엠아이),Too Much Information,ti-em-ai
+SLANG,4,TMT (티엠티),Too Much Talker,ti-em-ti
+SLANG,4,MBTI,Personality Test,em-bi-ti-ai
+SLANG,4,너 T야?,Are you a T? (Unsympathetic),neo tiya
+SLANG,5,꿀잼,Honey fun (Very funny),kkuljaem
+SLANG,5,존맛탱 (JMT),F***ing delicious,jonmattaeng
+SLANG,5,개맛있어,Damn delicious,gaemasisseo
+SLANG,5,갓생,God-life (Productive life),gatsaeng
+SLANG,5,득템,Get item (Good purchase),deuktem
+SLANG,5,혜자,Generous (Good value),hyeja
+SLANG,5,가성비,Cost-effectiveness,gaseongbi
+SLANG,5,취저 (취향저격),Taste sniper (My style),chwijeo
+SLANG,5,최애,Bias / Favorite,choeae
+SLANG,5,입덕,Entering fandom,ipdeok
+SLANG,5,리즈 시절,Prime time / Heyday,rijeu sijeol
+SLANG,5,띵곡,Masterpiece song,ttinggok
+SLANG,5,띵작,Masterpiece movie/work,ttingjak
+SLANG,5,심쿵,Heart flutter,simkung
+SLANG,5,꽃길만 걷자,Let's walk on flower path,kkotgilman geotja
+SLANG,5,사이다,Sprite (Refreshing/Satisfying),saida
+SLANG,5,고구마,Sweet potato (Frustrating),goguma
+SLANG,5,품절 대란,Sold-out crisis (Very popular),pumjeol daeran
+SLANG,5,오픈런,Open run (Waiting before open),opeunreon
+SLANG,5,영끌,Gathering soul (Using all resources),yeongkkeul
+SLANG,6,노잼,No fun,nojaem
+SLANG,6,핵노잼,Nuclear no fun (Boring),haengnojaem
+SLANG,6,킹받네,King-annoying (Pissed off),kingbanne
+SLANG,6,극혐,Extreme disgust,geukhyeom
+SLANG,6,손절,Cut ties,sonjeol
+SLANG,6,흑역사,Dark history (Embarrassing past),heukyeoksa
+SLANG,6,창렬,Rip-off (Bad value),changnyeol
+SLANG,6,뇌절,Overdoing it,noejeol
+SLANG,6,꼽주다,Shaming / Embarrassing someone,kkopjuda
+SLANG,6,나대다,Act out / Show off,nadaeda
+SLANG,6,어그로,Aggro (Provoking),eogeuro
+SLANG,6,빌런,Villain (Troublemaker),billeon
+SLANG,6,쉴드 치다,Shielding (Defending),swildeu chida
+SLANG,6,팩트 폭행 (팩폭),Fact violence (Truth hurts),paekteu pokhaeng
+SLANG,6,안물안궁,Didn't ask didn't curious,anmulangung
+SLANG,6,듣보잡,Never heard of (Unknown),deutbojap
+SLANG,6,먹튀,Eat and run (Scam),meoktwi
+SLANG,6,무개념,No concept (Rude/Clueless),mugaenyeom
+SLANG,6,진상,Nuisance customer,jinsang
+SLANG,7,아아,Iced Americano,a-a
+SLANG,7,뜨아,Hot Americano,tteu-a
+SLANG,7,얼죽아,Frozen to death but Iced Americano,eoljuga
+SLANG,7,혼밥,Eating alone,honbap
+SLANG,7,혼술,Drinking alone,honsul
+SLANG,7,치맥,Chicken and Beer,chimaek
+SLANG,7,피맥,Pizza and Beer,pimaek
+SLANG,7,소맥,Soju and Beer,somaek
+SLANG,7,불금,Fire Friday,bulgeum
+SLANG,7,칼퇴,Leaving work exactly on time,kalttoe
+SLANG,7,스벅,Starbucks,seubeok
+SLANG,7,맥날,McDonald's,maengnal
+SLANG,7,배라,Baskin Robbins,baera
+SLANG,7,비번,Password,bibeon
+SLANG,7,생선,Birthday present,saengseon
+SLANG,7,버카,Bus card,beoka
+SLANG,7,페북,Facebook,pebuk
+SLANG,7,인스타,Instagram,inseuta
+SLANG,7,유튜브,YouTube,yutyubeu
+SLANG,7,카톡,KakaoTalk,katok
+SLANG,8,갑분싸,Mood suddenly turned cold,gapbunssa
+SLANG,8,내로남불,If I do it's romance if you do it's affair,naeronambul
+SLANG,8,라떼는 말이야,Latte is horse (Back in my days...),latteneun mariya
+SLANG,8,소확행,Small but certain happiness,sohwakhaeng
+SLANG,8,케바케,Case by case,kebake
+SLANG,8,사바사,Person by person,sabasa
+SLANG,8,이생망,This life is ruined,isaengmang
+SLANG,8,할많하않,Have a lot to say but won't,halmanha-an
+SLANG,8,자만추,Natural meeting seeker,jamanchu
+SLANG,8,인만추,Artificial meeting seeker (Apps),inmanchu
+SLANG,8,워라밸,Work-Life Balance,worabael
+SLANG,8,핑프,Finger Princess (Won't search),pingpeu
+SLANG,8,눈치 챙겨,Take a hint,nunchi chaenggyeo
+SLANG,8,1도 모르겠다,Don't know a single thing,ildo moreugetda
+SLANG,8,중꺾마,Unbreakable spirit,jungkkeongma
+SLANG,8,오히려 좋아,Actually better,ohiryeo joa
+SLANG,8,가보자고,Let's go!,gabojago
+SLANG,8,알잘딱깔센,Do it well neatly and sensibly,aljalttakkalksen

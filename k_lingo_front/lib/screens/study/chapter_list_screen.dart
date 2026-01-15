@@ -1,42 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:io';
-import '../../services/word_category_service.dart';
-import '../../models/word/word_category.dart';
-import '../../config/routes.dart';
-import '../../config/app_config.dart';
-import '../../services/api_service.dart';
+import 'package:k_lingo_front/services/chapter_service.dart';
+import 'package:k_lingo_front/models/study/chapter.dart';
+import 'package:k_lingo_front/config/routes.dart';
 
-class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+class ChapterListScreen extends StatefulWidget {
+  const ChapterListScreen({Key? key}) : super(key: key);
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
+  State<ChapterListScreen> createState() => _ChapterListScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
-  final WordCategoryService _categoryService = WordCategoryService();
+class _ChapterListScreenState extends State<ChapterListScreen> {
+  final ChapterService _chapterService = ChapterService();
   
-  List<WordCategory>? _categories;
+  List<Chapter>? _chapters;
   bool _isLoading = true;
   String? _error;
+  bool _shouldReload = false; 
 
   @override
   void initState() {
     super.initState();
-    _loadCategories();
+    _loadChapters();
   }
 
-  Future<void> _loadCategories() async {
+  Future<void> _loadChapters() async {
     setState(() {
       _isLoading = true;
       _error = null;
     });
 
     try {
-      final categories = await _categoryService.getCategories();
+      final chapters = await _chapterService.getChapters("TOPIC");
+      
       setState(() {
-        _categories = categories;
+        _chapters = chapters;
         _isLoading = false;
       });
     } catch (e) {
@@ -54,31 +52,22 @@ class _CategoryScreenState extends State<CategoryScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
-        // 1. 기존 leading(뒤로가기) 영역 자동 생성 끄기
         automaticallyImplyLeading: false, 
-        // 2. 타이틀 좌우 여백 없애기
         titleSpacing: 0, 
-        
-        // 3. title 안에 Row를 써서 [화살표 + 텍스트]를 한 덩어리로 만듦
         title: Padding(
-          padding: const EdgeInsets.only(left: 24.0), // 전체적인 왼쪽 여백 살짝 줌
+          padding: const EdgeInsets.only(left: 24.0),
           child: Row(
             children: [
-              // 4. 뒤로가기 버튼을 여기로 이동
               IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.black87),
-                onPressed: () => Navigator.pop(context),
-                // 아이콘 자체의 불필요한 패딩 제거 (더 딱 붙게 하려면 필수)
+                onPressed: () => Navigator.pop(context, true),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(), 
                 style: const ButtonStyle(
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap, // 터치 영역 최소화
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ),
-              
-              // 5. 화살표와 텍스트 사이 간격 (여기 숫자를 줄이면 더 붙습니다!)
               const SizedBox(width: 8), 
-
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -88,11 +77,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       color: Colors.black87,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      height: 1.2, // 줄 간격 살짝 조정
+                      height: 1.2,
                     ),
                   ),
                   Text(
-                    '카테고리 선택',
+                    '챕터 선택',
                     style: TextStyle(
                       color: Colors.black54,
                       fontSize: 14,
@@ -125,7 +114,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             Text('오류: $_error'),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _loadCategories,
+              onPressed: _loadChapters,
               child: const Text('다시 시도'),
             ),
           ],
@@ -135,15 +124,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: _categories?.length ?? 0,
+      itemCount: _chapters?.length ?? 0,
       itemBuilder: (context, index) {
-        final category = _categories![index];
-        return _buildCategoryCard(category);
+        final chapter = _chapters![index];
+        return _buildChapterCard(chapter);
       },
     );
   }
 
-  Widget _buildCategoryCard(WordCategory category) {
+  Widget _buildChapterCard(Chapter chapter) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -161,19 +150,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () {
-            // 스테이지 화면으로 이동
-            Navigator.pushNamed(
+          onTap: () async {
+            final result = await Navigator.pushNamed(
               context,
-              '/stages',
-              arguments: category,
+              Routes.stages,
+              arguments: chapter,
             );
+            
+            if (result == true) {
+              _shouldReload = true;
+            }
           },
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Row(
               children: [
-                // Icon Container
                 Container(
                   width: 64,
                   height: 64,
@@ -181,54 +172,35 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     gradient: const LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFFF3E5F5), // Light purple
-                        Color(0xFFFCE4EC), // Light pink
-                      ],
+                      colors: [Color(0xFFF3E5F5), Color(0xFFFCE4EC)],
                     ),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Center(
                     child: Text(
-                      category.icon,
+                      chapter.icon,
                       style: const TextStyle(fontSize: 32),
                     ),
                   ),
                 ),
                 const SizedBox(width: 16),
-                // Content
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              category.nameKr,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            category.nameEn,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF9C27B0), // Purple
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        chapter.nameEn,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        category.description,
+                        chapter.description,
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black54,
@@ -239,12 +211,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ],
                   ),
                 ),
-                // Arrow
-                const Icon(
-                  Icons.chevron_right,
-                  color: Colors.black26,
-                  size: 24,
-                ),
+                const Icon(Icons.chevron_right, color: Colors.black26, size: 24),
               ],
             ),
           ),
@@ -253,35 +220,30 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
   }
 
+  // ★ 이 두 메서드를 클래스 안으로 이동
   Widget _buildBottomNav() {
     return Container(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color(0xFFEC407A), // Pink
-            Color(0xFF9C27B0), // Purple
-          ],
-        ),
+        color: Colors.white, 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: const Offset(0, -2),
+            offset: const Offset(0, -5),
           ),
         ],
       ),
       child: SafeArea(
+        top: false, 
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(Icons.home, 'Home', true),
+              _buildNavItem(Icons.home, 'Home', false),
               _buildNavItem(Icons.calendar_today, 'Event', false),
               _buildNavItem(Icons.track_changes, 'Quest', false),
-              _buildNavItem(Icons.people, 'Community', false),
+              _buildNavItem(Icons.search, 'Community', true),
               _buildNavItem(Icons.person, 'Profile', false),
             ],
           ),
@@ -291,31 +253,28 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return InkWell(
+    return InkWell( 
       onTap: () {
-        // 네비게이션 처리
+        // 네비게이션 이동 로직
       },
-      child: Opacity(
-        opacity: isActive ? 1.0 : 0.7,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: Colors.white,
-              size: 24,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF), 
+            size: 24,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF),
+              fontSize: 12,
+              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

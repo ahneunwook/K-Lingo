@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class WordCategory {
+class Chapter {
   final int id;
   final String nameKr;
   final String nameEn;
   final String description;
   final String icon;
 
-  WordCategory({
+  Chapter({
     required this.id,
     required this.nameKr,
     required this.nameEn,
@@ -17,8 +17,8 @@ class WordCategory {
   });
 
   // JSON 데이터를 Dart 객체로 변환하는 공장(Factory)
-  factory WordCategory.fromJson(Map<String, dynamic> json) {
-    return WordCategory(
+  factory Chapter.fromJson(Map<String, dynamic> json) {
+    return Chapter(
       id: json['id'],
       nameKr: json['nameKr'],
       nameEn: json['nameEn'],

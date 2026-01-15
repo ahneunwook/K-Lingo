@@ -29,7 +29,7 @@ class AuthService {
   Future<AuthTokenResponse> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      
+
       if (googleUser == null) {
         throw Exception('Google 로그인이 취소되었습니다.');
       }
@@ -48,7 +48,6 @@ class AuthService {
 
       final tokenResponse = AuthTokenResponse.fromJson(response['data']);
       
-      // ✅ 한 번에 처리
       await _setTokens(tokenResponse.accessToken, tokenResponse.refreshToken);
 
       return tokenResponse;
@@ -64,13 +63,11 @@ class AuthService {
     await _clearTokens();
   }
 
-  /// ✅ 토큰 세팅 (SecureStorage + ApiService 메모리 동시 처리)
+  /// 토큰 세팅
   Future<void> _setTokens(String accessToken, String refreshToken) async {
-    // SecureStorage에 저장
     await _storage.write(key: _accessTokenKey, value: accessToken);
     await _storage.write(key: _refreshTokenKey, value: refreshToken);
     
-    // ApiService 메모리에 저장
     _apiService.setAuthToken(accessToken);
     _apiService.setRefreshToken(refreshToken);
   }
@@ -82,34 +79,44 @@ class AuthService {
     _apiService.clearAuthToken();
   }
 
-  /// 로그인 상태 확인 (앱 시작 시)
+  /// ✅ 수정: 로그인 상태 확인
   Future<bool> isLoggedIn() async {
     try {
+      print('🔍 AuthService: 로그인 상태 확인 시작');
+      
       // 1. 저장된 토큰 불러오기
       final accessToken = await _storage.read(key: _accessTokenKey);
       final refreshToken = await _storage.read(key: _refreshTokenKey);
-      
-      // 토큰이 아예 없으면 로그인 필요
+
+      // 토큰이 없으면 로그인 필요
       if (accessToken == null || accessToken.isEmpty) {
+        print('❌ AuthService: 저장된 토큰 없음');
         return false;
       }
 
-      // 2. ApiService에 토큰 장착 (이게 있어야 요청을 보냄)
-      _apiService.setAuthToken(accessToken);
+      print('✅ AuthService: 저장된 토큰 발견');
+      print('   AccessToken: ${accessToken.substring(0, 20)}...');
       if (refreshToken != null) {
+        print('   RefreshToken: ${refreshToken.substring(0, 20)}...');
+      }
+
+      // 2. ApiService에 토큰 장착 (✅ 이 순서가 중요!)
+      _apiService.setAuthToken(accessToken);
+      if (refreshToken != null && refreshToken.isNotEmpty) {
         _apiService.setRefreshToken(refreshToken);
       }
 
-      // 3. 테스트 API 호출
-      // ApiService가 내부적으로 (401 발생 -> 토큰 갱신 -> 재요청) 과정을 처리합니다.
-      await _apiService.get('/words/categories');
+      // 3. 간단한 API 호출로 토큰 유효성 검증
+      print('🔍 AuthService: 토큰 유효성 검증 중...');
+      await _apiService.get('/members/me/progress');
       
-      // 에러 없이 여기까지 왔다면 로그인(또는 갱신) 성공!
+      print('✅ AuthService: 토큰 유효! (또는 갱신 성공)');
       return true;
 
     } catch (e) {
-      print('❌ 로그인 검증 실패: $e');
-      // ApiService가 갱신까지 시도했으나 실패한 경우이므로 로그아웃 처리
+      print('❌ AuthService: 로그인 검증 실패 - $e');
+      
+      // 토큰 갱신도 실패했다면 로그아웃 처리
       await _clearTokens();
       return false;
     }

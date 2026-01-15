@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
-import '../../services/word_stage_service.dart'; 
-import '../../models/word/stage.dart'; 
-import '../../models/word/word_category.dart';
-import '../../config/routes.dart';
+import 'package:k_lingo_front/services/stage_service.dart'; 
+import 'package:k_lingo_front/models/study/stage.dart'; 
+import 'package:k_lingo_front/models/study/chapter.dart';
+import 'package:k_lingo_front/config/routes.dart';
 
 class StageScreen extends StatefulWidget {
-  final WordCategory category;
+  final Chapter chapter;
 
-  const StageScreen({Key? key, required this.category}) : super(key: key);
+  const StageScreen({Key? key, required this.chapter}) : super(key: key);
 
   @override
   State<StageScreen> createState() => _StageScreenState();
 }
 
 class _StageScreenState extends State<StageScreen> {
-  // 제공해주신 WordStageService 클래스 사용
-  final WordStageService _stageService = WordStageService();
+  final StageService _stageService = StageService();
   
-  List<WordStage>? _stages;
+  List<Stage>? _stages;
   bool _isLoading = true;
   String? _error;
+  bool _shouldReload = false;
 
   @override
   void initState() {
     super.initState();
-    // 화면이 생성되자마자 바로 로딩 시작
     _loadStages();
   }
 
@@ -35,8 +34,7 @@ class _StageScreenState extends State<StageScreen> {
     });
 
     try {
-      // [핵심] _category 변수 대신 widget.category를 바로 사용합니다.
-      final stages = await _stageService.getStages(widget.category.id);
+      final stages = await _stageService.getStages(widget.chapter.id);
       setState(() {
         _stages = stages;
         _isLoading = false;
@@ -65,7 +63,7 @@ class _StageScreenState extends State<StageScreen> {
       elevation: 0.5,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: Colors.black87),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => Navigator.pop(context, _shouldReload),
       ),
       title: Row(
         children: [
@@ -81,8 +79,10 @@ class _StageScreenState extends State<StageScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
-              // widget.category 사용
-              child: Text(widget.category.icon ?? '📚', style: const TextStyle(fontSize: 24)),
+              child: Text(
+                widget.chapter.icon ?? '📚',
+                style: const TextStyle(fontSize: 24),
+              ),
             ),
           ),
           const SizedBox(width: 12),
@@ -91,7 +91,7 @@ class _StageScreenState extends State<StageScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.category.nameKr, // widget.category 사용
+                  widget.chapter.nameKr,
                   style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 18,
@@ -99,7 +99,7 @@ class _StageScreenState extends State<StageScreen> {
                   ),
                 ),
                 Text(
-                  widget.category.nameEn, // widget.category 사용
+                  widget.chapter.nameEn, // nameEn 유지
                   style: const TextStyle(
                     color: Color(0xFF9C27B0),
                     fontSize: 11,
@@ -155,8 +155,7 @@ class _StageScreenState extends State<StageScreen> {
     );
   }
 
-  Widget _buildStageCard(WordStage stage) {
-    // 모델 필드명이 nullable일 경우를 대비해 안전하게 처리
+  Widget _buildStageCard(Stage stage) { // WordStage → Stage
     bool isLocked = stage.isLocked ?? false; 
     
     return Container(
@@ -172,22 +171,21 @@ class _StageScreenState extends State<StageScreen> {
         ],
       ),
       child: Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: isLocked ? null : () async {  
-        // 퀴즈 화면으로 이동하고 결과 받기
-        final result = await Navigator.pushNamed( 
-            context,
-            Routes.quiz,
-            arguments: stage.id,
-        );
-    
-        // 퀴즈 완료 후 돌아왔으면 새로고침
-        if (result == true && mounted) { 
-            _loadStages();
-        }
-        },
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: isLocked ? null : () async {  
+            final result = await Navigator.pushNamed( 
+              context,
+              Routes.quiz,
+              arguments: stage.id,
+            );
+        
+            if (result == true && mounted) { 
+              _loadStages();
+              _shouldReload = true;
+            }
+          },
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Row(
@@ -205,56 +203,56 @@ class _StageScreenState extends State<StageScreen> {
   }
 
   // --- 아래 UI 관련 메서드들은 그대로 둡니다 (수정 필요 없음) ---
-  Widget _buildStageIcon(WordStage stage) {
-    Color backgroundColor;
-    Widget icon;
-    
+  Widget _buildStageIcon(Stage stage) {
     bool isLocked = stage.isLocked ?? false;
     bool isCleared = stage.isCleared ?? false;
+    
+    // 점수에 따른 링 색상 및 채움 정도
+    double progress = isLocked ? 0 : ((stage.bestScore ?? 0) / 10.0);
+    Color activeColor = isCleared ? const Color(0xFF4CAF50) : const Color(0xFF9C27B0);
 
-    if (isLocked) {
-      backgroundColor = const Color(0xFFE0E0E0);
-      icon = const Icon(Icons.lock, color: Colors.white, size: 28);
-    } else if (isCleared) {
-      backgroundColor = const Color(0xFF4CAF50);
-      icon = const Icon(Icons.check, color: Colors.white, size: 32);
-    } else {
-      return Container(
-        width: 64,
-        height: 64,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF9C27B0), Color(0xFFEC407A)],
-          ),
-          borderRadius: BorderRadius.circular(32),
-        ),
-        child: Center(
-          child: Text(
-            '${stage.stageOrder ?? 0}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+    return SizedBox(
+      width: 54, height: 54,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // 1. 회색 트랙 (배경 링)
+          SizedBox(
+            width: 54, height: 54,
+            child: CircularProgressIndicator(
+              value: 1.0, // 전체 원
+              strokeWidth: 4,
+              valueColor: AlwaysStoppedAnimation(Colors.grey[200]),
             ),
           ),
-        ),
-      );
-    }
-
-    return Container(
-      width: 64,
-      height: 64,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(32),
+          // 2. 진행률 표시 링 (점수만큼 차오름)
+          if (!isLocked)
+            SizedBox(
+              width: 54, height: 54,
+              child: CircularProgressIndicator(
+                value: isCleared ? 1.0 : progress, // 클리어면 꽉 채움
+                strokeWidth: 4,
+                valueColor: AlwaysStoppedAnimation(activeColor),
+                strokeCap: StrokeCap.round, // 끝부분 둥글게
+              ),
+            ),
+          // 3. 가운데 아이콘 또는 숫자
+          isLocked
+              ? const Icon(Icons.lock, color: Colors.grey, size: 20)
+              : Text(
+                  '${stage.stageOrder}',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: activeColor, // 글자색도 링 색깔과 맞춤
+                  ),
+                ),
+        ],
       ),
-      child: Center(child: icon),
     );
   }
 
-  Widget _buildStageContent(WordStage stage) {
+  Widget _buildStageContent(Stage stage) {
     bool isLocked = stage.isLocked ?? false;
     
     return Column(
@@ -321,7 +319,7 @@ class _StageScreenState extends State<StageScreen> {
     );
   }
 
-  Widget _buildStageTrailing(WordStage stage) {
+  Widget _buildStageTrailing(Stage stage) {
     if (stage.isLocked ?? false) {
       return const Icon(Icons.lock, color: Colors.black12, size: 20);
     }
@@ -331,29 +329,26 @@ class _StageScreenState extends State<StageScreen> {
   Widget _buildBottomNav() {
     return Container(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Color(0xFFEC407A), Color(0xFF9C27B0)],
-        ),
+        color: Colors.white, // 배경 흰색
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.05), // 홈 화면과 같은 그림자 농도
             blurRadius: 10,
-            offset: const Offset(0, -2),
+            offset: const Offset(0, -5),
           ),
         ],
       ),
       child: SafeArea(
+        top: false, // 위쪽은 SafeArea 무시 (내용물과 자연스럽게 연결)
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(Icons.home, 'Home', true),
+              _buildNavItem(Icons.home, 'Home', false), // 현재 화면이 아니므로 false
               _buildNavItem(Icons.calendar_today, 'Event', false),
               _buildNavItem(Icons.track_changes, 'Quest', false),
-              _buildNavItem(Icons.people, 'Community', false),
+              _buildNavItem(Icons.search, 'Community', true), // 현재 화면(예: Community)만 true
               _buildNavItem(Icons.person, 'Profile', false),
             ],
           ),
@@ -363,25 +358,28 @@ class _StageScreenState extends State<StageScreen> {
   }
 
   Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return InkWell(
-      onTap: () {},
-      child: Opacity(
-        opacity: isActive ? 1.0 : 0.7,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: Colors.white, size: 24),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
+    return InkWell( // 터치 효과 추가
+      onTap: () {
+        // 네비게이션 이동 로직
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF), // 홈 화면과 동일한 색상
+            size: 24,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF),
+              fontSize: 12,
+              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

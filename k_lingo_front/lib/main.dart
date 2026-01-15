@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'screens/splash/splash_screen.dart';
-import 'screens/word/category_screen.dart';
-import 'screens/word/stage_screen.dart';
-import 'screens/word/quiz_screen.dart'; // import 확인
-import 'config/routes.dart';
-import 'models/word/word_category.dart';
+import 'package:k_lingo_front/screens/splash/splash_screen.dart';
+import 'package:k_lingo_front/screens/study/chapter_list_screen.dart';
+import 'package:k_lingo_front/screens/study/stage_screen.dart';
+import 'package:k_lingo_front/screens/word/quiz_screen.dart';
+import 'package:k_lingo_front/config/routes.dart';
+import 'package:k_lingo_front/models/study/chapter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,24 +27,22 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
 
       routes: {
-        Routes.categories: (context) => const CategoryScreen(),
+        Routes.categories: (context) => ChapterListScreen(), // const 제거
       },
 
       onGenerateRoute: (settings) {
         
-        // 1. 스테이지 화면 이동
         if (settings.name == Routes.stages) {
-          final category = settings.arguments as WordCategory;
+          final chapter = settings.arguments as Chapter; // WordCategory → Chapter
           return MaterialPageRoute(
-            builder: (context) => StageScreen(category: category),
+            builder: (context) => StageScreen(chapter: chapter),
           );
         }
 
-        // 2. 퀴즈 화면 이동
         if (settings.name == Routes.quiz) {
-          final stageId = settings.arguments as int; // 넘어온 stageId 받기
+          final stageId = settings.arguments as int;
           return MaterialPageRoute(
-            builder: (context) => QuizScreen(stageId: stageId), // 생성자에 넣어줌
+            builder: (context) => QuizScreen(stageId: stageId),
           );
         }
 

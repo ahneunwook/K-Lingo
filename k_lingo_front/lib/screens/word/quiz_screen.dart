@@ -17,9 +17,15 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateMixin {
+  static const Color kBackground = Color(0xFFF3E8FF); 
+  static const Color kAccentPurple = Color(0xFF9F7AEA); 
+  static const Color kAccentDeep = Color(0xFF805AD5);   
+  static const Color kLightLavender = Color(0xFFE9D8FD);
+  static const Color kTextBlack = Color(0xFF4A4A4A);
+  static const Color kTextGrey = Color(0xFF8D8D8D);
+
   final WordQuizService _quizService = WordQuizService();
   final AudioPlayer _audioPlayer = AudioPlayer();
-  // final TextEditingController _answerController = TextEditingController(); // 삭제됨 (더 이상 안 씀)
 
   static const int maxAttempts = 2;
   int wrongCount = 0;
@@ -125,22 +131,14 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
         // 1번 틀림 → 다시 시도 기회 줌
         setState(() {
           _tempSelected = null;
-          // 블록 상태만 리셋 (다시 풀 수 있게)
+          // 블록 상태 리셋
           _selectedBlocks.clear();
           
-          // 섞인 블록 다시 원상복구 (정답 글자들 다시 밑으로 내림)
-          final String cleanAnswer = currentQuiz.meaning.trim();
-          _shuffledBlocks = cleanAnswer.split('').toList();
+          // 블록 다시 섞기
           _shuffledBlocks.shuffle();
         });
         
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('틀렸어요! 다시 한번 시도해보세요'),
-            duration: Duration(seconds: 1),
-            backgroundColor: Colors.red,
-          ),
-        );
+        _showErrorNotification(context, 'Incorrect! Try again.'); 
       }
     }
   }
@@ -184,7 +182,7 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
       final result = await _quizService.submitQuiz(widget.stageId, answers);
 
       if (mounted) {
-        Navigator.pop(context);
+        Navigator.pop(context, true); 
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -198,7 +196,7 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
       }
     } catch (e) {
       if (mounted) {
-        Navigator.pop(context);
+        Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('제출 실패: $e')),
         );
@@ -224,7 +222,7 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(
-        backgroundColor: Color(0xFFF8F3FF),
+        backgroundColor: const Color(0xFFF3E8FF),
         body: Center(child: CircularProgressIndicator(color: Color(0xFF9C27B0))),
       );
     }
@@ -270,7 +268,7 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
             children: [
               _buildHeader(progress),
               Expanded(
-                child: SingleChildScrollView(
+                child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: _buildQuizContent(currentQuiz),
                 ),
@@ -285,36 +283,86 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
 
   Widget _buildHeader(double progress) {
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          IconButton(
-            icon: const Icon(Icons.close, color: Colors.black87),
-            onPressed: () => Navigator.pop(context),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Text(
-                  '${_currentIndex + 1} / ${_quizzes!.length}',
-                  style: const TextStyle(fontSize: 14, color: Colors.black54),
+      color: Colors.transparent,
+      padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
+      child: SafeArea(
+        bottom: false,
+        child: Row(
+          children: [
+            // 1. 닫기 버튼
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(50),
+                onTap: () => Navigator.pop(context, true),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Icon(Icons.close_rounded, color: Colors.black54, size: 24),
                 ),
-                const SizedBox(height: 8),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: LinearProgressIndicator(
-                    value: progress,
-                    backgroundColor: Colors.grey[200],
-                    valueColor: const AlwaysStoppedAnimation(Color(0xFF9C27B0)),
-                    minHeight: 8,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          const SizedBox(width: 48),
-        ],
+            
+            // 2. 게이지 바
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(right: 32),
+                height: 24,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    // 원래 계산된 너비
+                    final double calculatedWidth = constraints.maxWidth * progress;
+                    
+                    // [핵심 수정] 
+                    // 계산된 너비가 60보다 작으면 강제로 60으로 늘림 (글자 공간 확보)
+                    // 아니면 원래대로 표시
+                    final double displayWidth = calculatedWidth < 60 ? 60 : calculatedWidth;
+
+                    return Stack(
+                      children: [
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeOutCubic,
+                          width: displayWidth,
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            // [변경] 그라데이션 대신 '단색 블루베리'가 더 깔끔하고 요즘 느낌입니다.
+                            color: const Color(0xFF9F7AEA), 
+                            borderRadius: BorderRadius.circular(20),
+                            // 그림자는 아주 약하게 넣거나 뺍니다.
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF9F7AEA).withOpacity(0.4),
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0), // 여백 살짝 늘림
+                            child: Text(
+                              '${_currentIndex + 1} / ${_quizzes!.length}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -331,41 +379,36 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
     }
   }
 
-  // --- 1. 객관식 UI (기존 동일) ---
+  // --- 객관식 UI ---
   Widget _buildMultipleChoice(WordQuizRes quiz) {
-    return Column(
-      children: [
-        _buildQuestionCard('객관식', '다음 단어의 뜻을 고르세요', quiz),
-        const SizedBox(height: 24),
-        ...quiz.options.map((option) {
-          return _buildOptionButton(option, quiz.meaning);
-        }).toList(),
-        const SizedBox(height: 16),
-        if (!_isAnswered) _buildSubmitButton('정답 확인'),
-      ],
+    // 여기에 SingleChildScrollView 추가
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _buildQuestionCard('객관식', '다음 단어의 뜻을 고르세요', quiz),
+          const SizedBox(height: 24),
+          ...quiz.options.map((option) {
+            return _buildOptionButton(option, quiz.meaning);
+          }).toList(),
+          const SizedBox(height: 16),
+          if (!_isAnswered) _buildSubmitButton('정답 확인'),
+        ],
+      ),
     );
   }
 
-  // --- 2. [수정됨] 주관식 UI -> 글자 조각 맞추기 ---
   Widget _buildWriting(WordQuizRes quiz) {
+    // 1. 블록 초기화 로직 (기존 유지)
     if (!_isBlocksInitialized) {
-      // 1. 정답에서 공백 제거하고 리스트로 만듦
       String cleanAnswer = quiz.meaning.replaceAll(' ', '');
       _shuffledBlocks = cleanAnswer.split('').toList();
-
-      // 2. [핵심] 현재 스테이지의 '다른 단어들'에서 글자를 추출 (오답 풀 만들기)
-      final Set<String> distractorPool = {};
       
-      // _quizzes 리스트 전체를 돌면서 글자 수집
+      final Set<String> distractorPool = {};
       if (_quizzes != null) {
         for (var otherQuiz in _quizzes!) {
-          // 자기 자신은 제외
           if (otherQuiz.wordId == quiz.wordId) continue;
-          
-          // 공백 제거한 글자들을 후보군에 등록
           String otherMeaning = otherQuiz.meaning.replaceAll(' ', '');
           for (var char in otherMeaning.split('')) {
-            // 정답에 이미 포함된 글자는 굳이 오답으로 안 넣음 (중복 방지)
             if (!cleanAnswer.contains(char)) {
               distractorPool.add(char);
             }
@@ -373,274 +416,408 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
         }
       }
 
-      // 3. 오답 글자 섞어서 2~3개 뽑기
       final List<String> poolList = distractorPool.toList();
-      poolList.shuffle(); // 후보군 섞기
-      
+      poolList.shuffle();
       final random = Random();
-      // 글자 수에 따라 오답 개수 조절 (예: 3글자 이하면 3개 추가, 길면 2개 추가)
       int countToAdd = cleanAnswer.length <= 3 ? 3 : 2;
 
       for (int i = 0; i < countToAdd; i++) {
         if (poolList.isNotEmpty) {
-          _shuffledBlocks.add(poolList.removeAt(0)); // 앞에서 하나씩 꺼내기
+          _shuffledBlocks.add(poolList.removeAt(0));
         } else {
-          // 만약 스테이지에 단어가 1개뿐이라 가져올 게 없으면 랜덤 한글로 대체 (방어 코드)
           final fallback = ['는', '가', '을', '를', '이', '하', '지', '도'];
           _shuffledBlocks.add(fallback[random.nextInt(fallback.length)]);
         }
       }
-
-      // 4. 최종적으로 정답+오답 섞기
       _shuffledBlocks.shuffle();
       _isBlocksInitialized = true;
     }
 
+    // 현재 정답 칸에 들어갈 글자 조합 (String 리스트 조인)
+    final currentAnswerString = _selectedBlocks.join();
+
     return Column(
       children: [
-        // 상단 문제 카드 (듣기 버튼 포함)
+        // --- 1. 상단 문제 카드 (블루베리 디자인 적용) ---
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: kAccentPurple.withOpacity(0.1),
                 blurRadius: 20,
-                offset: const Offset(0, 4),
+                offset: const Offset(0, 8),
               ),
             ],
           ),
           child: Column(
             children: [
-              _buildBadge('순서 맞추기'),
-              const SizedBox(height: 16),
-              const Text('글자를 순서대로 선택하세요', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 24),
+              // 듣기 버튼
               InkWell(
                 onTap: () => _playAudio(quiz.audioUrl),
                 child: Container(
-                  width: 80, height: 80,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [Color(0xFF9C27B0), Color(0xFFEC407A)]),
+                  padding: const EdgeInsets.all(12),
+                  decoration: const BoxDecoration(
+                    color: kLightLavender,
                     shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(color: const Color(0xFF9C27B0).withOpacity(0.3), blurRadius: 20, spreadRadius: 5),
-                    ],
                   ),
-                  child: const Icon(Icons.volume_up, size: 40, color: Colors.white),
+                  child: const Icon(Icons.volume_up_rounded, size: 28, color: kAccentDeep),
                 ),
               ),
-              const SizedBox(height: 12),
-              Text(
-                quiz.content,
-                style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color(0xFF9C27B0)),
-                textAlign: TextAlign.center,
+              const SizedBox(height: 16),
+              
+              // 메인 단어
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  quiz.content,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: kAccentDeep,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
+              
+              // 발음
               if (quiz.pronunciation != null) ...[
                 const SizedBox(height: 8),
-                Text('[ ${quiz.pronunciation} ]', style: const TextStyle(fontSize: 16, color: Colors.black54)),
+                Text('[${quiz.pronunciation}]',
+                    style: const TextStyle(fontSize: 16, color: kTextGrey, fontWeight: FontWeight.w500)),
               ]
             ],
-          ),
-        ),
-        
-        const SizedBox(height: 32),
-
-        // 2. [정답 입력 칸] (선택된 블록들이 들어가는 곳)
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-          constraints: const BoxConstraints(minHeight: 80),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: _isAnswered
-                  ? (_selectedBlocks.join() == quiz.meaning.replaceAll(' ', '') ? Colors.green : Colors.red)
-                  : const Color(0xFF9C27B0), // 기본 보라색
-              width: 2,
-            ),
-          ),
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 8,
-            runSpacing: 8,
-            children: _selectedBlocks.isEmpty
-                ? [const Text('아래 버튼을 눌러 정답을 맞추세요', style: TextStyle(color: Colors.grey, fontSize: 16))]
-                : _selectedBlocks.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final char = entry.value;
-                    return GestureDetector(
-                      onTap: _isAnswered ? null : () {
-                        // 정답 칸의 블록을 누르면 다시 아래(보기)로 내려감 (취소)
-                        setState(() {
-                          _selectedBlocks.removeAt(index);
-                          _shuffledBlocks.add(char);
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF3E5F5),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: const Color(0xFF9C27B0)),
-                          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
-                        ),
-                        child: Text(char, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF9C27B0))),
-                      ),
-                    );
-                  }).toList(),
           ),
         ),
 
         const SizedBox(height: 24),
 
-        // 3. [보기 블록들] (섞여있는 글자들)
-        // 이미 제출했으면(정답 확인 후면) 보기 블록을 숨김
-        if (!_isAnswered)
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 12,
-            runSpacing: 12,
-            children: _shuffledBlocks.map((char) {
-              return ElevatedButton(
-                onPressed: () {
-                  // 보기 블록을 누르면 정답 칸으로 올라감
-                  setState(() {
-                    _shuffledBlocks.remove(char); // 리스트에서 하나 삭제
-                    _selectedBlocks.add(char);
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black87,
-                  elevation: 2,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    side: BorderSide(color: Colors.grey[300]!),
-                  ),
-                ),
-                child: Text(char, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-              );
-            }).toList(),
-          ),
-
-        const SizedBox(height: 32),
-
-        // 4. [제출 버튼]
-        if (!_isAnswered)
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              // 하나라도 선택해야 버튼 활성화
-              onPressed: _selectedBlocks.isNotEmpty
-                  ? () {
-                      final answerString = _selectedBlocks.join(); // 리스트 -> 문자열
-                      _handleAnswerSelect(answerString);
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                backgroundColor: const Color(0xFF9C27B0),
-                disabledBackgroundColor: Colors.grey[300],
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        // --- 2. 정답 칸 (로직: _selectedBlocks 사용) ---
+        Container(
+          width: double.infinity,
+          height: 160,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: _isAnswered
+                  ? (currentAnswerString == quiz.meaning.replaceAll(' ', '')
+                      ? const Color(0xFF48BB78) // 정답: 파스텔 초록
+                      : const Color(0xFFF56565)) // 오답: 파스텔 빨강
+                  : kLightLavender, // 평소: 연보라
+              width: 2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: kAccentPurple.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
               ),
-              child: const Text('정답 확인', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+            ],
+          ),
+          child: SingleChildScrollView(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8,
+              runSpacing: 8,
+              children: _selectedBlocks.isEmpty
+                  ? [
+                      const Text(
+                        '아래 단어를 눌러보세요',
+                        style: TextStyle(color: Color(0xFFCBD5E0), fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ]
+                  // [로직 유지] _selectedBlocks 사용
+                  : _selectedBlocks.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final char = entry.value;
+                      return GestureDetector(
+                        onTap: _isAnswered
+                            ? null
+                            : () {
+                                setState(() {
+                                  _selectedBlocks.removeAt(index);
+                                });
+                              },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          decoration: BoxDecoration(
+                            color: kAccentPurple, // 선택된 건 진한 보라
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: kAccentDeep.withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              )
+                            ],
+                          ),
+                          child: Text(
+                            char,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+            ),
+          ),
+        ),
+
+        // --- 3. 보기 블록 (로직: 중복 글자 계산 방식 + 디자인: 마카롱) ---
+        Expanded(
+          child: Center(
+            child: _isAnswered
+                ? const SizedBox()
+                : SingleChildScrollView(
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: List.generate(_shuffledBlocks.length, (index) {
+                        final char = _shuffledBlocks[index];
+
+                        // [핵심 로직 복구] 중복 글자 처리 로직 (이게 있어야 위치가 고정됨)
+                        int inAnswerCount = _selectedBlocks.where((e) => e == char).length;
+                        int priorInOptionsCount = _shuffledBlocks.sublist(0, index).where((e) => e == char).length;
+                        bool isSelected = priorInOptionsCount < inAnswerCount;
+
+                        return Visibility(
+                          visible: !isSelected,
+                          maintainSize: true,
+                          maintainAnimation: true,
+                          maintainState: true,
+                          child: ElevatedButton(
+                            onPressed: isSelected
+                                ? null
+                                : () {
+                                    setState(() {
+                                      _selectedBlocks.add(char);
+                                    });
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white, // 배경 흰색
+                              foregroundColor: kTextBlack,   // 글자 먹색
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side: const BorderSide(color: Color(0xFFE2E8F0), width: 1.5),
+                              ),
+                            ).copyWith(
+                              overlayColor: MaterialStateProperty.all(kLightLavender.withOpacity(0.5)),
+                            ),
+                            child: Text(char,
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+          ),
+        ),
+
+        // --- 4. Check 버튼 ---
+        if (!_isAnswered)
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                // [로직 유지] _selectedBlocks 사용
+                onPressed: _selectedBlocks.isNotEmpty
+                    ? () {
+                        final answerString = _selectedBlocks.join();
+                        _handleAnswerSelect(answerString);
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  backgroundColor: kAccentPurple,
+                  disabledBackgroundColor: kLightLavender,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  shadowColor: kAccentDeep,
+                  elevation: 4,
+                ),
+                child: const Text('Check',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
             ),
           ),
       ],
     );
   }
 
-  // --- 3. 듣기 평가 UI (기존 동일) ---
+  // --- 듣기 평가 UI ---
   Widget _buildListening(WordQuizRes quiz) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(32),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 20,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              _buildBadge('듣기'),
-              const SizedBox(height: 16),
-              const Text('들려주는 단어의 뜻은?', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 24),
-              InkWell(
-                onTap: () => _playAudio(quiz.audioUrl),
-                child: Container(
-                  width: 120, height: 120,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [Color(0xFF9C27B0), Color(0xFFEC407A)]),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF9C27B0).withOpacity(0.3),
-                        blurRadius: 20,
-                        spreadRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: const Icon(Icons.volume_up, size: 60, color: Colors.white),
+    // 여기에 SingleChildScrollView 추가
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, 4),
                 ),
-              ),
-              const SizedBox(height: 16),
-              const Text('🔊 눌러서 듣기', style: TextStyle(fontSize: 14, color: Colors.black54)),
-            ],
+              ],
+            ),
+            child: Column(
+              children: [
+                _buildBadge('듣기'),
+                const SizedBox(height: 16),
+                const Text('들려주는 단어의 뜻은?',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 24),
+                InkWell(
+                  onTap: () => _playAudio(quiz.audioUrl),
+                  child: Container(
+                    width: 90, height: 90,
+                    decoration: BoxDecoration(
+                      // [변경] 은은한 그라데이션 (연보라 -> 조금 진한 보라)
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0xFFD6BCFA), Color(0xFF9F7AEA)],
+                      ),
+                      shape: BoxShape.circle,
+                      // 그림자를 부드럽게 퍼뜨려서 '몽글몽글'하게
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF9F7AEA).withOpacity(0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.volume_up_rounded, size: 40, color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text('🔊 눌러서 듣기',
+                    style: TextStyle(fontSize: 14, color: Colors.black54)),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 24),
-        ...quiz.options.map((option) => _buildOptionButton(option, quiz.meaning)).toList(),
-        const SizedBox(height: 16),
-        if (!_isAnswered) _buildSubmitButton('정답 확인'),
-      ],
+          const SizedBox(height: 24),
+          ...quiz.options
+              .map((option) => _buildOptionButton(option, quiz.meaning))
+              .toList(),
+          const SizedBox(height: 16),
+          if (!_isAnswered) _buildSubmitButton('정답 확인'),
+        ],
+      ),
     );
   }
 
   // --- 공통 위젯들 (기존 동일) ---
   Widget _buildQuestionCard(String badge, String title, WordQuizRes quiz) {
+    // 글자 크기 계산 로직 (기존 동일)
+    double fontSize;
+    if (quiz.content.length > 30) {
+      fontSize = 22;
+    } else if (quiz.content.length > 15) {
+      fontSize = 28;
+    } else {
+      fontSize = 36;
+    }
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(24), // 모서리 둥글게 (24)
+        // [변경] 그림자를 아주 연한 보라색으로 변경
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: kAccentPurple.withOpacity(0.1),
             blurRadius: 20,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 8),
           ),
         ],
       ),
       child: Column(
         children: [
-          _buildBadge(badge),
-          const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 24),
-          Text(
-            quiz.content,
-            style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold, color: Color(0xFF9C27B0)),
-            textAlign: TextAlign.center,
+          // [변경] 뱃지 디자인: 그라데이션 빼고 파스텔 톤으로
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: kLightLavender, // 연한 라벤더 배경
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              badge, 
+              style: const TextStyle(
+                fontSize: 13, 
+                fontWeight: FontWeight.bold, 
+                color: kAccentDeep // 글자는 진한 보라
+              )
+            ),
           ),
+          
+          const SizedBox(height: 20),
+          
+          // 질문 제목 (연한 회색)
+          Text(title,
+              style: const TextStyle(
+                fontSize: 16, 
+                fontWeight: FontWeight.w600,
+                color: kTextGrey, 
+              )),
+              
+          const SizedBox(height: 24),
+          
+          // 메인 단어 (보라색 포인트)
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              quiz.content,
+              style: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: kAccentDeep, // [변경] 진한 보라색
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 3,
+            ),
+          ),
+          
+          // 발음 (우리가 아까 수정한 로직 포함)
           if (quiz.pronunciation != null) ...[
-            const SizedBox(height: 8),
-            Text('[ ${quiz.pronunciation} ]', style: const TextStyle(fontSize: 16, color: Colors.black54)),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              width: double.infinity,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  '[${quiz.pronunciation}]',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: kTextGrey,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
           ]
         ],
       ),
@@ -662,26 +839,28 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
     final isSelected = _isAnswered ? _selectedAnswer == option : _tempSelected == option;
     final isCorrect = option == correctAnswer;
 
-    Color? bgColor = Colors.white;
-    Color borderColor = Colors.grey[300]!;
-    double borderWidth = 2;
-    Widget? trailing;
+    Color bgColor = Colors.white; // 기본은 깨끗한 흰색
+    Color borderColor = Colors.transparent;
+    Color textColor = const Color(0xFF4A4A4A); // 기본 글자색 (먹색)
 
     if (_isAnswered) {
       if (isCorrect) {
-        bgColor = Colors.green[50];
-        borderColor = Colors.green;
-        trailing = const Icon(Icons.check, color: Colors.green);
+        bgColor = const Color(0xFFC6F6D5); // 파스텔 민트 (정답)
+        textColor = const Color(0xFF2F855A);
       } else if (isSelected) {
-        bgColor = Colors.red[50];
-        borderColor = Colors.red;
-        trailing = const Icon(Icons.close, color: Colors.red);
+        bgColor = const Color(0xFFFED7D7); // 파스텔 레드 (오답)
+        textColor = const Color(0xFFC53030);
       }
     } else {
       if (isSelected) {
-        bgColor = const Color(0xFFF3E5F5);
-        borderColor = const Color(0xFF9C27B0);
-        borderWidth = 3;
+        // [변경] 선택 시: 사진 속 'Progress' 버튼 같은 연한 보라색 배경
+        bgColor = const Color(0xFFE9D8FD); 
+        borderColor = const Color(0xFF9F7AEA); // 블루베리색 테두리
+        textColor = const Color(0xFF6B46C1);   // 글자도 진한 보라
+      } else {
+        // 선택 안 함: 그냥 흰색 박스 (그림자만 살짝)
+        bgColor = Colors.white;
+        textColor = const Color(0xFF4A4A4A);
       }
     }
 
@@ -689,18 +868,38 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
       margin: const EdgeInsets.only(bottom: 12),
       child: InkWell(
         onTap: _isAnswered ? null : () => setState(() => _tempSelected = option),
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: const EdgeInsets.all(20),
+        borderRadius: BorderRadius.circular(20), // [변경] 더 둥글게 (20)
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           decoration: BoxDecoration(
             color: bgColor,
-            border: Border.all(color: borderColor, width: borderWidth),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: borderColor, 
+              width: isSelected ? 2 : 0
+            ),
+            // 선택 안 된 애들만 부드러운 그림자 (카드 느낌)
+            boxShadow: isSelected || _isAnswered ? [] : [
+              BoxShadow(
+                color: const Color(0xFF9F7AEA).withOpacity(0.05), // 그림자도 보라빛 살짝
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: Row(
             children: [
-              Expanded(child: Text(option, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500))),
-              if (trailing != null) trailing,
+              Expanded(
+                child: Text(
+                  option,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                    color: textColor,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -712,75 +911,138 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
     bool isEnabled = false;
     final currentQuiz = _quizzes![_currentIndex];
 
+    // 1. 활성화 여부 체크
     if (currentQuiz.quizType == 'WRITING') {
-      isEnabled = _selectedBlocks.isNotEmpty; // 블록이 하나라도 선택되면 활성화
+      isEnabled = _selectedBlocks.isNotEmpty; // 블록 퀴즈일 때
     } else {
-      isEnabled = _tempSelected != null;
+      isEnabled = _tempSelected != null;      // 객관식일 때
     }
 
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
+        // [수정] 여기가 비어있었습니다! 로직을 다시 채워넣음
         onPressed: isEnabled
             ? () {
                 if (currentQuiz.quizType == 'WRITING') {
-                   final answerString = _selectedBlocks.join();
+                  // 블록 퀴즈 정답 제출
+                  final answerString = _selectedBlocks.join();
                   _handleAnswerSelect(answerString);
                 } else {
+                  // 객관식 정답 제출
                   _handleAnswerSelect(_tempSelected!);
                 }
               }
             : null,
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          backgroundColor: const Color(0xFF9C27B0),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          backgroundColor: const Color(0xFF9F7AEA), // 블루베리 퍼플
+          disabledBackgroundColor: const Color(0xFFD6BCFA), // 연한 보라
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          shadowColor: const Color(0xFF805AD5),
+          elevation: 4,
         ),
-        child: Text(text, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
 
   // --- O/X 결과 바텀시트 ---
   Widget _buildBottomSheet(WordQuizRes quiz) {
+    // 공백 제거 후 비교 로직
     final bool isCorrect = _selectedAnswer!.replaceAll(' ', '') == quiz.meaning.replaceAll(' ', '');
 
+    // 색상 테마 설정 (파스텔 톤)
+    final Color iconColor = isCorrect ? const Color(0xFF38A169) : const Color(0xFFE53E3E); // 초록 / 빨강
+    final Color bgColor = isCorrect ? const Color(0xFFF0FFF4) : const Color(0xFFFFF5F5); // 연한 초록 / 연한 빨강 배경
+    final String msg = isCorrect ? '정답입니다!' : '오답입니다';
+    final IconData icon = isCorrect ? Icons.check_circle_rounded : Icons.cancel_rounded;
+
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.fromLTRB(24, 32, 24, 40), // 하단 여백 넉넉히
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10, offset: const Offset(0, -2))],
+        // 위쪽 모서리만 둥글게
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 20,
+            offset: const Offset(0, -4),
+          )
+        ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // 1. 결과 메시지 행
           Row(
             children: [
-              Icon(isCorrect ? Icons.check_circle : Icons.cancel, color: isCorrect ? Colors.green : Colors.red, size: 32),
-              const SizedBox(width: 12),
-              Text(isCorrect ? '정답입니다!' : '오답입니다', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isCorrect ? Colors.green : Colors.red)),
+              // 아이콘 뒤에 연한 배경 원 추가
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: bgColor, 
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, color: iconColor, size: 28),
+              ),
+              const SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    msg,
+                    style: TextStyle(
+                      fontSize: 20, 
+                      fontWeight: FontWeight.bold, 
+                      color: iconColor
+                    ),
+                  ),
+                  // 오답일 때 정답 보여주기
+                  if (!isCorrect) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      '정답: ${quiz.meaning}',
+                      style: const TextStyle(
+                        fontSize: 15, 
+                        color: kTextGrey,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ],
           ),
-          if (!isCorrect) ...[
-            const SizedBox(height: 8),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('정답: ${quiz.meaning}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
-            ),
-          ],
-          const SizedBox(height: 24),
+          
+          const SizedBox(height: 32),
+          
+          // 2. 다음 버튼 (정답확인 버튼과 스타일 통일)
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: _handleNext,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
-                backgroundColor: const Color(0xFF9C27B0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                backgroundColor: kAccentPurple, // 블루베리 퍼플
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                shadowColor: kAccentDeep,
+                elevation: 4,
               ),
               child: Text(
                 _currentIndex < _quizzes!.length - 1 ? '다음 문제' : '결과 보기',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -796,6 +1058,14 @@ class QuizResultScreen extends StatelessWidget {
   final WordQuizResultRes result;
   final int stageId;
 
+  // 색상 테마 (QuizScreen과 통일)
+  static const Color kBackground = Color(0xFFF3E8FF);
+  static const Color kAccentPurple = Color(0xFF9F7AEA);
+  static const Color kAccentDeep = Color(0xFF805AD5);
+  static const Color kLightLavender = Color(0xFFE9D8FD);
+  static const Color kTextBlack = Color(0xFF4A4A4A);
+  static const Color kTextGrey = Color(0xFF8D8D8D);
+
   const QuizResultScreen({
     Key? key,
     required this.result,
@@ -804,152 +1074,219 @@ class QuizResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPassed = result.isPassed;
+    final bool isPassed = result.isPassed;
+    // 통과 여부에 따른 멘트와 아이콘 설정
+    final String title = isPassed ? 'Perfect!' : 'Keep Going';
+    final String subTitle = isPassed 
+        ? '정말 대단해요! 실력이 늘고 있어요 🎉' 
+        : '조금만 더 노력하면 할 수 있어요 💪';
+    final IconData mainIcon = isPassed ? Icons.emoji_events_rounded : Icons.school_rounded;
+    final Color iconColor = isPassed ? const Color(0xFFFFD700) : kAccentPurple; // 골드 vs 보라
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F3FF),
+      backgroundColor: kBackground, // 연한 라벤더 배경
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // 1. 결과 카드
+                Container(
+                  width: double.infinity,
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(32), // 둥글둥글하게
+                    boxShadow: [
+                      BoxShadow(
+                        color: kAccentPurple.withOpacity(0.15),
+                        blurRadius: 30,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      // 아이콘 (배경 원 + 아이콘)
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: isPassed ? const Color(0xFFFFF9C4) : kLightLavender, // 연한 노랑 vs 연한 보라
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(mainIcon, size: 64, color: iconColor),
+                      ),
+                      
+                      const SizedBox(height: 32),
+
+                      // 타이틀 (통과!)
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w900,
+                          color: kTextBlack,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 8),
+
+                      // 서브 메시지
+                      Text(
+                        subTitle,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: kTextGrey,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+
+                      const SizedBox(height: 40),
+
+                      // 점수 표시 (가장 중요!)
+                      // 핑크 박스 없애고, 거대한 텍스트로 강조
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                            '${result.correctCount}',
+                            style: const TextStyle(
+                              fontSize: 80, // 엄청 크게!
+                              fontWeight: FontWeight.w900,
+                              color: kAccentDeep, // 진한 보라색
+                              height: 1.0,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            '/ ${result.totalCount}',
+                            style: const TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFCBD5E0), // 연한 회색
+                            ),
+                          ),
+                        ],
+                      ),
+                      
+                      // 점수 아래 작은 설명
+                      const SizedBox(height: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: kBackground,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Text(
+                          'Correct Answers',
+                          style: TextStyle(fontSize: 12, color: kAccentPurple, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+
+              // 2. 하단 버튼 (목록으로)
+                // [수정] SizedBox -> Container 로 변경 (SizedBox는 constraints 속성이 없음)
+                Container(
+                  width: double.infinity,
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context, true);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      backgroundColor: kAccentPurple, // 블루베리 퍼플
+                      foregroundColor: Colors.white,
+                      elevation: 4,
+                      shadowColor: kAccentDeep.withOpacity(0.5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: const Text(
+                      '목록으로 돌아가기',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// 상단 에러 알림 함수
+  void _showErrorNotification(BuildContext context, String message) {
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        // 상태바(Top Notch) 바로 아래 위치
+        top: MediaQuery.of(context).padding.top + 10,
+        left: 20,
+        right: 20,
+        child: Material(
+          color: Colors.transparent,
+          child: TweenAnimationBuilder<double>(
+            tween: Tween(begin: -100.0, end: 0.0), // 위에서 아래로 슬라이드
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            builder: (context, value, child) {
+              return Transform.translate(
+                offset: Offset(0, value),
+                child: child,
+              );
+            },
             child: Container(
-              constraints: const BoxConstraints(maxWidth: 500),
-              padding: const EdgeInsets.all(32),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
-                    blurRadius: 30,
-                    offset: const Offset(0, 10),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              child: Row(
                 children: [
-                  // 아이콘
+                  // 빨간색 에러 아이콘 배경
                   Container(
-                    width: 120,
-                    height: 120,
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: isPassed 
-                          ? Colors.green.withOpacity(0.1)
-                          : Colors.orange.withOpacity(0.1),
+                      color: Colors.red.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: Center(
-                      child: Icon(
-                        isPassed ? Icons.check_circle : Icons.close,
-                        size: 80,
-                        color: isPassed ? Colors.green : Colors.orange,
-                      ),
-                    ),
+                    child: const Icon(Icons.close, color: Colors.red, size: 20),
                   ),
-                  const SizedBox(height: 24),
-                  
-                  // 제목
-                  Text(
-                    isPassed ? '통과!' : '아쉬워요',
-                    style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    isPassed 
-                        ? '7문제 이상 맞췄어 합니다'
-                        : '7문제 이상 맞춰야 합니다',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 32),
-                  
-                  // 점수 카드
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFF3E5F5), Color(0xFFFCE4EC)],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      children: [
-                        // 큰 점수 표시
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            ShaderMask(
-                              shaderCallback: (bounds) => const LinearGradient(
-                                colors: [Color(0xFF9C27B0), Color(0xFFEC407A)],
-                              ).createShader(bounds),
-                              child: Text(
-                                '${result.correctCount}',
-                                style: const TextStyle(
-                                  fontSize: 72,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              ' / ${result.totalCount}',
-                              style: TextStyle(
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[400],
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '친구 사귀기 (일상 회화)',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black54,
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 32),
-                  
-                  // 목록으로 버튼
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        Navigator.pop(context); 
-                      },
-                      icon: const Icon(Icons.home_outlined),
-                      label: const Text(
-                        '목록으로',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.all(20),
-                        foregroundColor: Colors.grey[700],
-                        side: BorderSide(
-                          color: Colors.grey[400]!,
-                          width: 2,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                  const SizedBox(width: 12),
+                  // 메시지 텍스트
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Color(0xFF1E293B),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -960,28 +1297,12 @@ class QuizResultScreen extends StatelessWidget {
         ),
       ),
     );
-  }
 
-  Widget _buildStatItem(String value, String label, Color color) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: color,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[600],
-          ),
-        ),
-      ],
-    );
+    // 화면에 표시
+    Overlay.of(context).insert(overlayEntry);
+
+    // 2초 뒤에 사라짐 (오답은 빨리 사라지는 게 좋음)
+    Future.delayed(const Duration(seconds: 2), () {
+      overlayEntry.remove();
+    });
   }
-}
