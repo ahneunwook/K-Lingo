@@ -5,6 +5,8 @@ import com.kdopamine.app.domain.dailytip.dto.response.DailyTipRes;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder
 public class MemberProgressResponse {
@@ -19,8 +21,10 @@ public class MemberProgressResponse {
     private Integer totalCompletedQuests;
 
     private DailyTipRes dailyTipRes;
+    private List<SectionProgressRes> sections;
 
-    public static MemberProgressResponse from(Member member, DailyTipRes dailyTips) {
+
+    public static MemberProgressResponse from(Member member, DailyTipRes dailyTips, List<SectionProgressRes> sections) {
         int requiredXp = member.getRequiredXpForNextLevel();
         int remainingXp = requiredXp - member.getCurrentXp();
         int percentage = (int) ((double) member.getCurrentXp() / requiredXp * 100);
@@ -36,6 +40,7 @@ public class MemberProgressResponse {
                 .totalAttendanceDays(member.getTotalAttendanceDays())
                 .totalCompletedQuests(member.getTotalCompletedQuests())
                 .dailyTipRes(dailyTips)
+                .sections(sections)
                 .build();
     }
 }

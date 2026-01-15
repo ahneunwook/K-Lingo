@@ -2,7 +2,9 @@ package com.kdopamine.app.domain.word.service;
 
 import com.kdopamine.app.domain.word.dto.response.StageRes;
 import com.kdopamine.app.domain.word.repository.ChapterRepository;
+import com.kdopamine.app.domain.word.repository.StageRepository;
 import com.kdopamine.app.domain.word.repository.StageRepositoryCustom;
+import com.kdopamine.app.global.entity.SectionType;
 import com.kdopamine.app.global.exception.BusinessException;
 import com.kdopamine.app.global.exception.ErrorCode;
 import com.kdopamine.app.global.security.CustomUserPrincipal;
@@ -17,6 +19,7 @@ import java.util.List;
 public class StageService {
 
     private final StageRepositoryCustom stageRepositoryCustom;
+    private final StageRepository stageRepository;
     private final ChapterRepository chapterRepository;
 
     @Transactional(readOnly = true)
@@ -42,5 +45,10 @@ public class StageService {
             }
         }
         return stageRes;
+    }
+
+    @Transactional(readOnly = true)
+    public long getTotalStageCount(SectionType type) {
+        return stageRepository.countTotalStagesByType(type);
     }
 }

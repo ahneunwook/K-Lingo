@@ -7,13 +7,14 @@ import com.kdopamine.app.domain.quest.service.QuestService;
 import com.kdopamine.app.domain.studylog.entity.MemberStageProgress;
 import com.kdopamine.app.domain.studylog.repository.MemberStageProgressRepository;
 import com.kdopamine.app.domain.word.entity.Stage;
+import com.kdopamine.app.global.entity.SectionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class MemberStageService {
+public class MemberStageProgressService {
 
     private final MemberStageProgressRepository memberStageProgressRepository;
     private final MemberRepository memberRepository;
@@ -35,5 +36,10 @@ public class MemberStageService {
         if (isPassed) {
             questService.handleAction(memberId, QuestType.STAGE_CLEAR);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public long getClearedStageCount(Long memberId, SectionType type) {
+        return memberStageProgressRepository.countClearedStagesByMemberAndType(memberId, type);
     }
 }

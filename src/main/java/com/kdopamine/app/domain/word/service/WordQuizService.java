@@ -2,7 +2,7 @@ package com.kdopamine.app.domain.word.service;
 
 import com.kdopamine.app.domain.quest.entity.QuestType;
 import com.kdopamine.app.domain.quest.service.QuestService;
-import com.kdopamine.app.domain.studylog.service.MemberStageService;
+import com.kdopamine.app.domain.studylog.service.MemberStageProgressService;
 import com.kdopamine.app.domain.word.dto.request.WordQuizCheckReq;
 import com.kdopamine.app.domain.word.dto.response.WordQuizRes;
 import com.kdopamine.app.domain.word.dto.response.WordQuizResultRes;
@@ -26,7 +26,7 @@ public class WordQuizService {
 
     private final WordRepository wordRepository;
     private final StageRepository stageRepository;
-    private final MemberStageService memberStageService;
+    private final MemberStageProgressService memberStageProgressService;
     private final QuestService questService;
     private final Random random = new Random();
 
@@ -145,7 +145,7 @@ public class WordQuizService {
         int score = correctCount;
         boolean isPassed = score >= stage.getPassScore();
 
-        memberStageService.saveOrUpdateProgress(memberId, stage, score, isPassed);
+        memberStageProgressService.saveOrUpdateProgress(memberId, stage, score, isPassed);
 
         // 결과 반환
         return WordQuizResultRes.of(totalCount, correctCount, score, isPassed);

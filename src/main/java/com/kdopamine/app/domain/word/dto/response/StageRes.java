@@ -11,13 +11,11 @@ public class StageRes {
     private Long id;
     private Integer stageOrder;
     private String title;
-    private Integer xpReward;
     private Integer bestScore;
     private Boolean isCleared;
 
     @Setter
     private Boolean isLocked;
-
 
     public static StageRes from(StageRes stage, MemberStageProgress progress, Boolean isLocked){
         return StageRes.builder()
