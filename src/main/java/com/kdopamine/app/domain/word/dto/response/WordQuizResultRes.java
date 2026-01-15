@@ -1,6 +1,5 @@
 package com.kdopamine.app.domain.word.dto.response;
 
-import com.kdopamine.app.domain.word.entity.WordStage;
 import lombok.Builder;
 import lombok.Getter;
 

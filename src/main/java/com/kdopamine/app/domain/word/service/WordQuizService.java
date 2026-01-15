@@ -7,10 +7,10 @@ import com.kdopamine.app.domain.word.dto.request.WordQuizCheckReq;
 import com.kdopamine.app.domain.word.dto.response.WordQuizRes;
 import com.kdopamine.app.domain.word.dto.response.WordQuizResultRes;
 import com.kdopamine.app.domain.word.entity.QuizType;
+import com.kdopamine.app.domain.word.entity.Stage;
 import com.kdopamine.app.domain.word.entity.Word;
-import com.kdopamine.app.domain.word.entity.WordStage;
 import com.kdopamine.app.domain.word.repository.WordRepository;
-import com.kdopamine.app.domain.word.repository.WordStageRepository;
+import com.kdopamine.app.domain.word.repository.StageRepository;
 import com.kdopamine.app.global.exception.BusinessException;
 import com.kdopamine.app.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +25,14 @@ import java.util.stream.Collectors;
 public class WordQuizService {
 
     private final WordRepository wordRepository;
-    private final WordStageRepository wordStageRepository;
+    private final StageRepository stageRepository;
     private final MemberStageService memberStageService;
     private final QuestService questService;
     private final Random random = new Random();
 
     @Transactional(readOnly = true)
     public List<WordQuizRes> getWordQuiz(Long stageId) {
-        List<Word> words = wordRepository.findByWordStageId(stageId);
+        List<Word> words = wordRepository.findAllByStageId(stageId);
 
         Collections.shuffle(words);
 
@@ -106,8 +106,8 @@ public class WordQuizService {
 
     @Transactional
     public WordQuizResultRes submitQuiz(Long memberId, Long stageId, List<WordQuizCheckReq> answers) {
-        WordStage stage = wordStageRepository.findById(stageId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.WORD_STAGE_NOT_FOUND));
+        Stage stage = stageRepository.findById(stageId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.STAGE_NOT_FOUND));
 
         List<Long> wordIds = answers.stream().map(WordQuizCheckReq::getWordId).collect(Collectors.toList());
 

@@ -5,26 +5,26 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "word_stage",
+@Table(name = "stages",
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk_stage_category_order",
-                        columnNames = {"word_category_id", "stage_order"}
+                        columnNames = {"chapter_id", "stage_order"}
                 )
         })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
-public class WordStage extends BaseEntity {
+public class Stage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "word_category_id", nullable = false)
-    private WordCategory wordCategory;
+    @JoinColumn(name = "chapter_id", nullable = false)
+    private Chapter chapter;
 
     @Column(nullable = false)
     private Integer stageOrder;
@@ -35,12 +35,16 @@ public class WordStage extends BaseEntity {
     @Column(nullable = false)
     private Integer passScore; // 7점 이상
 
-    public static WordStage createStage(WordCategory category, Integer order, String title, Integer passScore) {
-        return WordStage.builder()
-                .wordCategory(category)
-                .stageOrder(order)
+    @Column(nullable = false)
+    private Integer xpReward;
+
+    public static Stage create(Chapter chapter, Integer stageOrder, String title, Integer passScore, Integer xpReward) {
+        return Stage.builder()
+                .chapter(chapter)
+                .stageOrder(stageOrder)
                 .title(title)
                 .passScore(passScore)
+                .xpReward(xpReward)
                 .build();
     }
 }

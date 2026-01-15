@@ -25,29 +25,36 @@ public class Member extends BaseEntity {
     private String nickname;
 
     @Column(nullable = false, length = 10)
-    private String provider;   // GOOGLE, APPLE
+    private String provider;
 
     @Column(nullable = false)
-    private String providerId; // 소셜 서비스에서 제공하는 고유 식별값 (PK 역할)
+    private String providerId;
 
     @Enumerated(EnumType.STRING)
-    private Role role; // USER, ADMIN
+    private Role role;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer level = 1;
 
-    @Column(nullable = false)
+    @Builder.Default
+    @Column(name = "current_xp", nullable = false)
     private Integer currentXp = 0;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer streakDays = 0;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer totalAttendanceDays = 0;
 
     private LocalDate lastAttendanceDate;
 
-    // 소셜 로그인 신규 회원 생성용
+    @Builder.Default
+    @Column(nullable = false)
+    private Integer totalCompletedQuests = 0;
+
     public static Member createSocialMember(String email, String nickname, String provider, String providerId) {
         return Member.builder()
                 .email(email)
@@ -69,5 +76,26 @@ public class Member extends BaseEntity {
 
     public int getRequiredXpForNextLevel() {
         return (int) (100 * Math.pow(1.2, this.level - 1));
+    }
+
+    public void increaseCompletedQuestCount() {
+        this.totalCompletedQuests++;
+    }
+
+    public void checkAttendance(){
+        LocalDate today = LocalDate.now();
+
+        if (lastAttendanceDate != null && lastAttendanceDate.isEqual(today)){
+            return;
+        }
+
+        if (lastAttendanceDate != null && lastAttendanceDate.isEqual(today.minusDays(1))){
+            this.streakDays++;
+        } else {
+            this.streakDays = 1;
+        }
+
+        this.totalAttendanceDays++;
+        this.lastAttendanceDate = today;
     }
 }

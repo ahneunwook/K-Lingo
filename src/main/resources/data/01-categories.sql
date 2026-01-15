@@ -1,25 +1,25 @@
 -- ===================================
--- 카테고리 초기 데이터 (핵심 15개)
+-- 챕터 초기 데이터 (기존 카테고리 -> 챕터로 통합)
 -- ===================================
 
-INSERT INTO word_category (name_en, name_kr, icon, display_order, description, created_at, updated_at) VALUES
--- 1. 일단 생존하자 (Survival)
-('GREETINGS', '왕기초 인사', '👋', 1, '안녕? 반가워! 필수 예절', NOW(), NOW()),
-('NUMBERS', '숫자/계산', '🔢', 2, '하나 둘 셋, 가격 계산하기', NOW(), NOW()),
-('SURVIVAL', '생존 회화', '🚨', 3, '도와주세요! 화장실 어디에요?', NOW(), NOW()),
-('FOOD', '맛있는 음식', '🍗', 4, '김치, 치맥, 삼겹살 먹방', NOW(), NOW()),
-('ORDERING', '주문하기', '☕', 5, '아이스 아메리카노 주세요', NOW(), NOW()),
+INSERT INTO chapters (name_en, name_kr, icon, display_order, description, type, created_at, updated_at) VALUES
+-- 1. 일단 생존하자 (TOPIC)
+('GREETINGS', '왕기초 인사', '👋', 1, '안녕? 반가워! 필수 예절', 'TOPIC', NOW(), NOW()),
+('NUMBERS', '숫자/계산', '🔢', 2, '하나 둘 셋, 가격 계산하기', 'TOPIC', NOW(), NOW()),
+('SURVIVAL', '생존 회화', '🚨', 3, '도와주세요! 화장실 어디에요?', 'TOPIC', NOW(), NOW()),
+('FOOD', '맛있는 음식', '🍗', 4, '김치, 치맥, 삼겹살 먹방', 'TOPIC', NOW(), NOW()),
+('ORDERING', '주문하기', '☕', 5, '아이스 아메리카노 주세요', 'TOPIC', NOW(), NOW()),
 
--- 2. 한국 즐기기 (Living)
-('TRANSPORT', '교통/길찾기', '🚇', 6, '지옥철, 버스, 환승입니다', NOW(), NOW()),
-('PLACES', '핫플레이스', '📍', 7, '한강, 편의점, 노래방, PC방', NOW(), NOW()),
-('SHOPPING', '쇼핑하기', '🛍️', 8, '신상, 세일, 깎아주세요', NOW(), NOW()),
-('TIME', '시간/약속', '⏰', 9, '주말 약속, 빨리빨리 문화', NOW(), NOW()),
-('HEALTH', '병원/약국', '💊', 10, '아파요, 약 주세요, 밴드', NOW(), NOW()),
+-- 2. 한국 즐기기 (TOPIC)
+('TRANSPORT', '교통/길찾기', '🚇', 6, '지옥철, 버스, 환승입니다', 'TOPIC', NOW(), NOW()),
+('PLACES', '핫플레이스', '📍', 7, '한강, 편의점, 노래방, PC방', 'TOPIC', NOW(), NOW()),
+('SHOPPING', '쇼핑하기', '🛍️', 8, '신상, 세일, 깎아주세요', 'TOPIC', NOW(), NOW()),
+('TIME', '시간/약속', '⏰', 9, '주말 약속, 빨리빨리 문화', 'TOPIC', NOW(), NOW()),
+('HEALTH', '병원/약국', '💊', 10, '아파요, 약 주세요, 밴드', 'TOPIC', NOW(), NOW()),
 
--- 3. 인싸 되기 (Social & Culture)
-('RELATIONSHIPS', '호칭/가족', '👨‍👩‍👧', 11, '오빠, 언니, 선배님, 꼰대(?)', NOW(), NOW()),
-('EMOTIONS', '기분/감정', '🥰', 12, '행복해, 킹받네(?), 우울해', NOW(), NOW()),
-('K_CULTURE', 'K-POP/드라마', '🎵', 13, '최애, 덕질, 정주행, 스포 금지', NOW(), NOW()),
-('SLANG', '요즘 유행어', '😎', 14, '대박, 헐, 꿀잼, 인싸', NOW(), NOW()),
-('LOVE', '연애/사랑', '💖', 15, '썸타다, 고백, 심쿵, 데이트', NOW(), NOW());
+-- 3. 인싸 되기 (TOPIC)
+('RELATIONSHIPS', '호칭/가족', '👨‍👩‍👧', 11, '오빠, 언니, 선배님, 꼰대(?)', 'TOPIC', NOW(), NOW()),
+('EMOTIONS', '기분/감정', '🥰', 12, '행복해, 킹받네(?), 우울해', 'TOPIC', NOW(), NOW()),
+('K_CULTURE', 'K-POP/드라마', '🎵', 13, '최애, 덕질, 정주행, 스포 금지', 'TOPIC', NOW(), NOW()),
+('SLANG', '요즘 유행어', '😎', 14, '대박, 헐, 꿀잼, 인싸', 'TOPIC', NOW(), NOW()),
+('LOVE', '연애/사랑', '💖', 15, '썸타다, 고백, 심쿵, 데이트', 'TOPIC', NOW(), NOW());

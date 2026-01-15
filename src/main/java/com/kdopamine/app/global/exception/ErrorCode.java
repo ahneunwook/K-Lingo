@@ -30,7 +30,7 @@ public enum ErrorCode {
     //words
     CATEGORY_NOT_FOUND(404, "D001","해당 카테고리가 없습니다."),
     WORD_NOT_FOUND(404, "D002", "해당 단어가 없습니다."),
-    WORD_STAGE_NOT_FOUND(404, "D003", "해당 스테이지가 없습니다."),
+    STAGE_NOT_FOUND(404, "D003", "해당 스테이지가 없습니다."),
 
     //quest
     QUEST_IS_NOT_COMPLETE(400, "E001", "퀘스트가 완료되지 않았습니다."),

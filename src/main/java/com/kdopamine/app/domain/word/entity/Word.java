@@ -35,15 +35,15 @@ public class Word extends BaseEntity {
     private String audioUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stage_id")
-    private WordStage wordStage;
+    @JoinColumn(name = "stage_id", nullable = false)
+    private Stage stage;
 
     /**
      * 기본 단어 생성
      */
-    public static Word createWord(WordStage wordStage, String korean, String english) {
+    public static Word createWord(Stage stage, String korean, String english) {
         return Word.builder()
-            .wordStage(wordStage)
+            .stage(stage)
             .korean(korean)
             .english(english)
             .build();
@@ -53,13 +53,13 @@ public class Word extends BaseEntity {
      * 발음 포함 단어 생성
      */
     public static Word createWordWithPronunciation(
-        WordStage wordStage,
+        Stage stage,
         String korean,
         String pronunciation,
         String english
     ) {
         return Word.builder()
-            .wordStage(wordStage)
+            .stage(stage)
             .korean(korean)
             .pronunciation(pronunciation)
             .english(english)

@@ -69,6 +69,10 @@ public class QuestService {
 
         for (MemberQuest mq : targetQuests) {
             mq.increaseProgress(correctCount);
+
+            if (mq.isCompleted()){
+                mq.getMember().increaseCompletedQuestCount();
+            }
         }
     }
 

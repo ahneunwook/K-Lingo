@@ -1,7 +1,7 @@
 package com.kdopamine.app.domain.studylog.entity;
 
 import com.kdopamine.app.domain.auth.entity.Member;
-import com.kdopamine.app.domain.word.entity.WordStage;
+import com.kdopamine.app.domain.word.entity.Stage;
 import com.kdopamine.app.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,8 +23,8 @@ public class MemberStageProgress extends BaseEntity {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "word_stage_id", nullable = false)
-    private WordStage wordStage;
+    @JoinColumn(name = "stage_id", nullable = false)
+    private Stage stage;
 
     @Builder.Default
     @Column(name = "is_cleared", nullable = false)
@@ -34,10 +34,10 @@ public class MemberStageProgress extends BaseEntity {
     @Column(name = "best_score", nullable = false)
     private Integer bestScore = 0;
 
-    public static MemberStageProgress create(Member member, WordStage stage) {
+    public static MemberStageProgress create(Member member, Stage stage) {
         return MemberStageProgress.builder()
                 .member(member)
-                .wordStage(stage)
+                .stage(stage)
                 .build();
     }
 
@@ -51,3 +51,11 @@ public class MemberStageProgress extends BaseEntity {
         }
     }
 }
+
+
+//uniqueConstraints = {
+//@UniqueConstraint(
+//        name = "uk_member_stage",
+//        columnNames = {"member_id", "stage_id"} // 유저당 스테이지 기록은 하나뿐
+//)
+//        })

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 @RequiredArgsConstructor
 @Slf4j
-public class MemberController {
+public class AuthController {
 
     private final OAuthService oAuthService;
 
