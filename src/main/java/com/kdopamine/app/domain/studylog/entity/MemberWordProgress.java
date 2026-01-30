@@ -7,12 +7,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "member_stage_progress")
+@Table(name = "member_word_progress")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
-public class MemberStageProgress extends BaseEntity {
+public class MemberWordProgress extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +34,8 @@ public class MemberStageProgress extends BaseEntity {
     @Column(name = "best_score", nullable = false)
     private Integer bestScore = 0;
 
-    public static MemberStageProgress create(Member member, Stage stage) {
-        return MemberStageProgress.builder()
+    public static MemberWordProgress create(Member member, Stage stage) {
+        return MemberWordProgress.builder()
                 .member(member)
                 .stage(stage)
                 .build();

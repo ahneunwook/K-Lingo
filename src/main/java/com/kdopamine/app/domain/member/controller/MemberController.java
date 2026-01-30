@@ -1,5 +1,6 @@
 package com.kdopamine.app.domain.member.controller;
 
+import com.kdopamine.app.domain.member.dto.response.MemberProfileResponse;
 import com.kdopamine.app.domain.member.dto.response.MemberProgressResponse;
 import com.kdopamine.app.domain.member.service.MemberService;
 import com.kdopamine.app.global.response.ApiResponse;
@@ -25,5 +26,14 @@ public class MemberController {
         MemberProgressResponse response = memberService.getProgress(member.getId());
 
         return ResponseEntity.ok(ApiResponse.success(response, "조회 성공"));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ApiResponse<MemberProfileResponse>> getMyProfile(
+            @AuthenticationPrincipal CustomUserPrincipal member
+    ) {
+        MemberProfileResponse response = memberService.getProfile(member.getId());
+
+        return ResponseEntity.ok(ApiResponse.success(response, "프로필 조회 성공"));
     }
 }

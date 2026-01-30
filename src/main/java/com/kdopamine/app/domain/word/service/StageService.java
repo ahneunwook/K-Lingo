@@ -25,7 +25,7 @@ public class StageService {
     @Transactional(readOnly = true)
     public List<StageRes> getStages(Long chapterId, CustomUserPrincipal user) {
         if (!chapterRepository.existsById(chapterId)) {
-            throw new BusinessException(ErrorCode.CATEGORY_NOT_FOUND);
+            throw new BusinessException(ErrorCode.CHAPTER_NOT_FOUND);
         }
 
         List<StageRes> stageRes = stageRepositoryCustom.findStagesWithProgress(chapterId, user.getId());

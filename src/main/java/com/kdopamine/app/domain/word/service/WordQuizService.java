@@ -1,5 +1,7 @@
 package com.kdopamine.app.domain.word.service;
 
+import com.kdopamine.app.domain.auth.entity.Member;
+import com.kdopamine.app.domain.auth.service.MemberReader;
 import com.kdopamine.app.domain.quest.entity.QuestType;
 import com.kdopamine.app.domain.quest.service.QuestService;
 import com.kdopamine.app.domain.studylog.service.MemberStageProgressService;
@@ -28,6 +30,7 @@ public class WordQuizService {
     private final StageRepository stageRepository;
     private final MemberStageProgressService memberStageProgressService;
     private final QuestService questService;
+    private final MemberReader memberReader;
     private final Random random = new Random();
 
     @Transactional(readOnly = true)
@@ -106,39 +109,47 @@ public class WordQuizService {
 
     @Transactional
     public WordQuizResultRes submitQuiz(Long memberId, Long stageId, List<WordQuizCheckReq> answers) {
+        // 멤버 조회
+        Member member = memberReader.getMember(memberId);
+
+        if (answers != null && !answers.isEmpty() && answers.get(0).getStudyTime() != null) {
+            member.updateStudyTime(answers.get(0).getStudyTime());
+        }
+
         Stage stage = stageRepository.findById(stageId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.STAGE_NOT_FOUND));
 
-        List<Long> wordIds = answers.stream().map(WordQuizCheckReq::getWordId).collect(Collectors.toList());
+        // 단어 ID 추출
+        List<Long> wordIds = answers.stream()
+                .map(WordQuizCheckReq::getWordId)
+                .collect(Collectors.toList());
 
-        // DB에서 단어들을 한방에 가져옵니다
+        // 단어 조회
         List<Word> words = wordRepository.findAllById(wordIds);
-
-        // 채점하기 편하게 [WordId : 정답(String)] 형태의 Map으로 바꿉니다.
-        // 이렇게 하면 나중에 찾을 때 반복문 없이 map.get(id)로 바로 찾을 수 있습니다.
         Map<Long, String> answerMap = words.stream()
                 .collect(Collectors.toMap(Word::getId, Word::getKorean));
 
-        // 채점 시작
         int totalCount = answers.size();
         int correctCount = 0;
 
+        // 채점 루프
         for (WordQuizCheckReq req : answers) {
-            // Map에서 정답 꺼내오기 (DB 조회 아님, 메모리 조회라 엄청 빠름)
             String realAnswer = answerMap.get(req.getWordId());
 
-            // 혹시 DB에 없는 단어 ID가 요청으로 왔을 경우 예외처리
             if (realAnswer == null) {
                 throw new BusinessException(ErrorCode.WORD_NOT_FOUND);
             }
 
-            // 정답 비교
             if (isCorrect(realAnswer, req.getUserAnswer())) {
                 correctCount++;
             }
         }
 
+        // [추가된 부분] 맞춘 개수만큼 퀴즈 카운트 & 경험치 증가
         if (correctCount > 0) {
+            member.increaseQuizCount(correctCount); // 맞춘 개수만큼 올림
+            member.gainXp(correctCount * 10);       // 경험치도 개수 * 10
+
             questService.handleAction(memberId, QuestType.QUIZ_CORRECT, correctCount);
         }
 
@@ -147,10 +158,10 @@ public class WordQuizService {
 
         memberStageProgressService.saveOrUpdateProgress(memberId, stage, score, isPassed);
 
-        // 결과 반환
         return WordQuizResultRes.of(totalCount, correctCount, score, isPassed);
     }
 
+    // 정답 체크 (기존 유지)
     private boolean isCorrect(String real, String user) {
         if (user == null) return false;
         return real.replace(" ", "").trim().equals(user.replace(" ", "").trim());

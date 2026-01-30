@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class WordQuizCheckReq {
     private Long wordId;
     private String userAnswer;
+    private Long studyTime;
 }

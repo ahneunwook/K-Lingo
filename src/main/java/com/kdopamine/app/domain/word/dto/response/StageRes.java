@@ -1,6 +1,6 @@
 package com.kdopamine.app.domain.word.dto.response;
 
-import com.kdopamine.app.domain.studylog.entity.MemberStageProgress;
+import com.kdopamine.app.domain.studylog.entity.MemberWordProgress;
 import lombok.*;
 
 @NoArgsConstructor
@@ -17,7 +17,7 @@ public class StageRes {
     @Setter
     private Boolean isLocked;
 
-    public static StageRes from(StageRes stage, MemberStageProgress progress, Boolean isLocked){
+    public static StageRes from(StageRes stage, MemberWordProgress progress, Boolean isLocked){
         return StageRes.builder()
                 .id(stage.getId())
                 .stageOrder(stage.getStageOrder())

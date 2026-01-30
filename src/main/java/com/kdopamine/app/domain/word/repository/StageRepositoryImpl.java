@@ -1,6 +1,6 @@
 package com.kdopamine.app.domain.word.repository;
 
-import com.kdopamine.app.domain.studylog.entity.QMemberStageProgress;
+import com.kdopamine.app.domain.studylog.entity.QMemberWordProgress;
 import com.kdopamine.app.domain.word.dto.response.StageRes;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import static com.kdopamine.app.domain.word.entity.QStage.stage;
-import static com.kdopamine.app.domain.studylog.entity.QMemberStageProgress.memberStageProgress;
+import static com.kdopamine.app.domain.studylog.entity.QMemberWordProgress.memberWordProgress;
 
 @RequiredArgsConstructor
 public class StageRepositoryImpl implements StageRepositoryCustom {
@@ -20,14 +20,14 @@ public class StageRepositoryImpl implements StageRepositoryCustom {
     @Override
     public List<StageRes> findStagesWithProgress(Long chapterId, Long memberId) {
 
-        QMemberStageProgress progress = QMemberStageProgress.memberStageProgress;
+        QMemberWordProgress progress = QMemberWordProgress.memberWordProgress;
 
         return queryFactory.select(Projections.constructor(StageRes.class,
                 stage.id,
                 stage.stageOrder,
                 stage.title,
-                memberStageProgress.bestScore.coalesce(0),
-                memberStageProgress.isCleared.coalesce(false),
+                memberWordProgress.bestScore.coalesce(0),
+                memberWordProgress.isCleared.coalesce(false),
                 Expressions.asBoolean(false)
                 ))
                 .from(stage)

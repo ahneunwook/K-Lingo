@@ -1,9 +1,11 @@
 package com.kdopamine.app.domain.member.service;
 
 import com.kdopamine.app.domain.auth.entity.Member;
+import com.kdopamine.app.domain.auth.repository.MemberRepository;
 import com.kdopamine.app.domain.auth.service.MemberReader;
 import com.kdopamine.app.domain.dailytip.dto.response.DailyTipRes;
 import com.kdopamine.app.domain.dailytip.service.TipService;
+import com.kdopamine.app.domain.member.dto.response.MemberProfileResponse;
 import com.kdopamine.app.domain.member.dto.response.MemberProgressResponse;
 import com.kdopamine.app.domain.member.dto.response.SectionProgressRes;
 import com.kdopamine.app.domain.quest.entity.QuestType;
@@ -11,6 +13,8 @@ import com.kdopamine.app.domain.quest.service.QuestService;
 import com.kdopamine.app.domain.studylog.service.MemberStageProgressService;
 import com.kdopamine.app.domain.word.service.StageService;
 import com.kdopamine.app.global.entity.SectionType;
+import com.kdopamine.app.global.exception.BusinessException;
+import com.kdopamine.app.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +31,15 @@ public class MemberService {
     private final TipService tipService;
     private final StageService stageService;
     private final MemberStageProgressService memberStageProgressService;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public MemberProgressResponse getProgress(Long memberId) {
         Member member = memberReader.getMember(memberId);
 
         member.checkAttendance();
+        memberRepository.save(member);
+
         questService.handleAction(memberId, QuestType.LOGIN);
 
         DailyTipRes dailyTipRes = tipService.dailyTipRes();
@@ -69,4 +76,9 @@ public class MemberService {
         return SectionProgressRes.of(title, description, type, progress);
     }
 
+    public MemberProfileResponse getProfile(Long memberId) {
+        Member member = memberReader.getMember(memberId);
+
+        return MemberProfileResponse.from(member);
+    }
 }

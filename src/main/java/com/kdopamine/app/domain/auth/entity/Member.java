@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "members")
@@ -33,6 +34,9 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(length = 500)
+    private String profileImageUrl;
+
     @Builder.Default
     @Column(nullable = false)
     private Integer level = 1;
@@ -54,6 +58,28 @@ public class Member extends BaseEntity {
     @Builder.Default
     @Column(nullable = false)
     private Integer totalCompletedQuests = 0;
+
+    /**
+     * 총 학습 시간 (초 단위 저장)
+     */
+    @Builder.Default
+    @Column(nullable = false, columnDefinition = "bigint default 0")
+    private Long totalStudyTime = 0L;
+
+    /**
+     * 총 푼 퀴즈/문장 갯수 (단어 + 문장 통합)
+     */
+    @Builder.Default
+    @Column(nullable = false)
+    private Integer totalQuizCount = 0;
+
+    /**
+     * 목표/현재 TOPIK 레벨
+     */
+    @Builder.Default
+    @Column(length = 20)
+    private String topikLevel = "Lv.1";
+
 
     public static Member createSocialMember(String email, String nickname, String provider, String providerId) {
         return Member.builder()
@@ -97,5 +123,21 @@ public class Member extends BaseEntity {
 
         this.totalAttendanceDays++;
         this.lastAttendanceDate = today;
+    }
+
+    public void updateStudyTime(Long seconds) {
+        this.totalStudyTime += seconds;
+    }
+
+    public void increaseQuizCount(int count) {
+        this.totalQuizCount += count;
+    }
+
+    public void updateTopikLevel(String newLevel) {
+        this.topikLevel = newLevel;
+    }
+
+    public void updateProfileImage(String imageUrl) {
+        this.profileImageUrl = imageUrl;
     }
 }
