@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:k_lingo_front/services/chapter_service.dart';
 import 'package:k_lingo_front/models/study/chapter.dart';
 import 'package:k_lingo_front/config/routes.dart';
+// 👇 [추가] 공통 하단 바 import
+import 'package:k_lingo_front/widgets/common_bottom_bar.dart';
 
 class ChapterListScreen extends StatefulWidget {
   const ChapterListScreen({Key? key}) : super(key: key);
@@ -60,7 +62,7 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
             children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.black87),
-                onPressed: () => Navigator.pop(context, true),
+                onPressed: () => Navigator.pop(context, _shouldReload), // 변경사항 있으면 전달
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(), 
                 style: const ButtonStyle(
@@ -95,7 +97,15 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
         ),
       ),
       body: _buildBody(),
-      bottomNavigationBar: _buildBottomNav(),
+      
+      // 👇 [수정] 복잡한 코드 삭제하고 공통 위젯으로 교체!
+      bottomNavigationBar: CommonBottomBar(
+        currentIndex: 0, // Topic은 Home 탭의 하위 메뉴이므로 0번(Home) 활성화
+        onTap: (index) {
+          // 다른 탭을 누르면 메인 화면(MainScreen)으로 돌아가서 해당 탭을 보여줌
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        },
+      ),
     );
   }
 
@@ -220,62 +230,4 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
     );
   }
 
-  // ★ 이 두 메서드를 클래스 안으로 이동
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white, 
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false, 
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.home, 'Home', false),
-              _buildNavItem(Icons.calendar_today, 'Event', false),
-              _buildNavItem(Icons.track_changes, 'Quest', false),
-              _buildNavItem(Icons.search, 'Community', true),
-              _buildNavItem(Icons.person, 'Profile', false),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return InkWell( 
-      onTap: () {
-        // 네비게이션 이동 로직
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF), 
-            size: 24,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF),
-              fontSize: 12,
-              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

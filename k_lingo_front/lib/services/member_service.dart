@@ -20,4 +20,19 @@ class MemberService {
       rethrow; // 화면에서 에러 처리를 할 수 있도록 예외를 다시 던짐
     }
   }
+
+  Future<MemberProfile> getMyProfile() async {
+    try {
+      final response = await _apiService.get('/members/me/profile');
+      
+      if (response['data'] != null) {
+        return MemberProfile.fromJson(response['data']);
+      } else {
+        throw Exception('프로필 데이터가 비어있습니다.');
+      }
+    } catch (e) {
+      print('❌ MemberService: 프로필 조회 실패 - $e');
+      rethrow;
+    }
+  }
 }

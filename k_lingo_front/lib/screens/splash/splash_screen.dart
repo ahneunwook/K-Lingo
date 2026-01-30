@@ -5,6 +5,7 @@ import '../login/login_screen.dart';
 import '../home/home_screen.dart';
 import '../../services/auth_service.dart'; 
 import '../../config/routes.dart';
+import 'package:k_lingo_front/screens/home/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -63,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       
       if (isLoggedIn) {
         print('✅ SplashScreen: 자동 로그인 성공! → HomeScreen');
-        _navigateToScreen(const HomeScreen());
+        _navigateToScreen(const MainScreen());
       } else {
         print('❌ SplashScreen: 저장된 토큰 없음 → LoginScreen');
         _navigateToScreen(const LoginScreen());

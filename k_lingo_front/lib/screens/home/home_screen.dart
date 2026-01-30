@@ -5,7 +5,7 @@ import '../../services/member_service.dart';
 import '../../models/quest/quest.dart';
 import '../../services/quest_service.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
+import 'package:k_lingo_front/screens/study/sentence_chapter_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -86,13 +86,40 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   
   void _handleSectionTap(String type) async {
+    // 1. 단어장 (TOPIC)
     if (type == 'TOPIC') {
       final result = await Navigator.pushNamed(context, Routes.categories);
       if (result == true && mounted) {
         _fetchProgress();
         _fetchQuests();
       }
-    } else {
+    } 
+    // 2. 문장 공부 (SENTENCE)
+    else if (type == 'SENTENCE') {
+      final result = await Navigator.pushNamed(context, Routes.sentenceChapters);
+      if (result == true && mounted) {
+        _fetchProgress();
+        _fetchQuests();
+      }
+    }
+    // 3. K-Drama (✨ 추가)
+    else if (type == 'KDRAMA') {
+      final result = await Navigator.pushNamed(context, Routes.dramaChapters);
+      if (result == true && mounted) {
+        _fetchProgress();
+        _fetchQuests();
+      }
+    }
+    // 4. K-Pop (✨ 추가)
+    else if (type == 'KPOP') {
+      final result = await Navigator.pushNamed(context, Routes.kpopChapters);
+      if (result == true && mounted) {
+        _fetchProgress();
+        _fetchQuests();
+      }
+    }
+    // 5. 그 외 (예외 처리)
+    else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('준비 중인 콘텐츠입니다! 🚧')),
       );
@@ -282,36 +309,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-
-      // 4. 바텀 네비게이션
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          top: false,
-          child: SizedBox(
-            height: 68,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(Icons.home, 'Home', true),
-                _buildNavItem(Icons.calendar_today, 'Event', false),
-                _buildNavItem(Icons.track_changes, 'Quest', false),
-                _buildNavItem(Icons.search, 'Community', false),
-                _buildNavItem(Icons.person, 'Profile', false),
               ],
             ),
           ),
@@ -905,37 +902,6 @@ Widget _buildGridCard({
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Expanded(
-      child: InkWell(
-        onTap: () {},
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF), size: 24),
-            const SizedBox(height: 4),
-            SizedBox(
-              height: 14,
-              child: Text(
-                label,
-                textScaler: TextScaler.noScaling,
-                style: TextStyle(
-                  color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF),
-                  fontSize: 12,
-                  fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-                  height: 1.0,
-                ),
-              ),
             ),
           ],
         ),

@@ -94,3 +94,38 @@ class SectionProgress {
     }
   }
 }
+
+class MemberProfile {
+  // 기본 정보
+  final String nickname;
+  final String profileImageUrl;
+  final String role; // "Passionate Learner"
+
+  // 통계 정보
+  final String totalStudyTime; // 서버에서 이미 "2h 30m" 문자열로 변환해서 줌
+  final int totalQuizCount;
+  final String topikLevel;
+
+  MemberProfile({
+    required this.nickname,
+    required this.profileImageUrl,
+    required this.role,
+    required this.totalStudyTime,
+    required this.totalQuizCount,
+    required this.topikLevel,
+  });
+
+  // JSON -> Dart 객체 변환
+  factory MemberProfile.fromJson(Map<String, dynamic> json) {
+    return MemberProfile(
+      nickname: json['nickname'] ?? '',
+      profileImageUrl: json['profileImageUrl'] ?? '',
+      role: json['role'] ?? '',
+      
+      // Java 서버에서 String으로 변환해서 보냈으므로 String으로 받음
+      totalStudyTime: json['totalStudyTime'] ?? '0h 0m',
+      totalQuizCount: json['totalQuizCount'] ?? 0,
+      topikLevel: json['topikLevel'] ?? 'Lv.1',
+    );
+  }
+}

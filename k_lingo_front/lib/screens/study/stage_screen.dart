@@ -3,6 +3,7 @@ import 'package:k_lingo_front/services/stage_service.dart';
 import 'package:k_lingo_front/models/study/stage.dart'; 
 import 'package:k_lingo_front/models/study/chapter.dart';
 import 'package:k_lingo_front/config/routes.dart';
+import 'package:k_lingo_front/widgets/common_bottom_bar.dart'; 
 
 class StageScreen extends StatefulWidget {
   final Chapter chapter;
@@ -53,7 +54,13 @@ class _StageScreenState extends State<StageScreen> {
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: _buildAppBar(),
       body: _buildBody(),
-      bottomNavigationBar: _buildBottomNav(),
+      bottomNavigationBar: CommonBottomBar(
+        currentIndex: 0, // Topic/Stage는 'Home' 탭의 흐름이므로 0번(Home) 활성화
+        onTap: (index) {
+          // 하단 탭을 누르면 메인 화면(첫 화면)으로 돌아가게 처리
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        },
+      ),
     );
   }
 
@@ -324,63 +331,5 @@ class _StageScreenState extends State<StageScreen> {
       return const Icon(Icons.lock, color: Colors.black12, size: 20);
     }
     return const Icon(Icons.chevron_right, color: Colors.black26, size: 24);
-  }
-
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white, // 배경 흰색
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05), // 홈 화면과 같은 그림자 농도
-            blurRadius: 10,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false, // 위쪽은 SafeArea 무시 (내용물과 자연스럽게 연결)
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.home, 'Home', false), // 현재 화면이 아니므로 false
-              _buildNavItem(Icons.calendar_today, 'Event', false),
-              _buildNavItem(Icons.track_changes, 'Quest', false),
-              _buildNavItem(Icons.search, 'Community', true), // 현재 화면(예: Community)만 true
-              _buildNavItem(Icons.person, 'Profile', false),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return InkWell( // 터치 효과 추가
-      onTap: () {
-        // 네비게이션 이동 로직
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF), // 홈 화면과 동일한 색상
-            size: 24,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: isActive ? const Color(0xFFA855F7) : const Color(0xFF9CA3AF),
-              fontSize: 12,
-              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
