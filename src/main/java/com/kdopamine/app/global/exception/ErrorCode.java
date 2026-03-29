@@ -39,7 +39,11 @@ public enum ErrorCode {
     QUEST_NOT_FOUND(404, "E003", "해당 퀘스트가 없습니다."),
 
     // sentence
-    SENTENCE_NOT_FOUND(404, "F001", "해당 문장이 존재하지 않습니다.");
+    SENTENCE_NOT_FOUND(404, "F001", "해당 문장이 존재하지 않습니다."),
+
+    // mistake note
+    MISTAKE_NOTE_NOT_FOUND(404, "G001", "해당 오답노트를 찾을 수 없습니다."),
+    MISTAKE_NOTE_FORBIDDEN(403, "G002", "본인의 오답노트만 삭제할 수 있습니다.");
 
     private final int status;
     private final String code;

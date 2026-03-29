@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:k_lingo_front/screens/login/login_screen.dart'; // 로그인 화면 import
-import 'package:k_lingo_front/services/auth_service.dart'; // 로그아웃용
+import 'package:k_lingo_front/models/member/member_progress.dart'; // 모델 import
+import 'package:k_lingo_front/services/member_service.dart';     // 서비스 import
+// import 'package:k_lingo_front/screens/login/login_screen.dart';
+// import 'package:k_lingo_front/services/auth_service.dart'; 
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -10,111 +12,154 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final AuthService _authService = AuthService();
-  
+  // 서비스 인스턴스 생성
+  final MemberService _memberService = MemberService();
+  // final AuthService _authService = AuthService(); // 로그아웃용
+
+  // 데이터를 담을 Future 변수
+  Future<MemberProfile>? _profileFuture;
+
   // 테마 컬러
   final Color _primaryColor = const Color(0xFFA855F7);
   
-  // 스위치 상태 (예시)
+  // 스위치 상태
   bool _isNotificationOn = true;
   bool _isSoundOn = true;
 
-//   // 로그아웃 처리
-//   void _handleLogout() async {
-//     // 1. 토큰 삭제
-//     await _authService.logout();
-    
-//     // 2. 로그인 화면으로 이동 (뒤로가기 방지)
-//     if (mounted) {
-//       Navigator.of(context).pushAndRemoveUntil(
-//         MaterialPageRoute(builder: (context) => const LoginScreen()),
-//         (route) => false,
-//       );
-//     }
-//   }
+  @override
+  void initState() {
+    super.initState();
+    // 화면이 켜질 때 내 프로필 정보를 요청합니다.
+    _profileFuture = _memberService.getMyProfile();
+  }
+
+  // 새로고침 기능 (화면을 당겼을 때)
+  Future<void> _refreshProfile() async {
+    setState(() {
+      _profileFuture = _memberService.getMyProfile();
+    });
+  }
+
+//   void _handleLogout() async { ... } (기존 로그아웃 로직 유지)
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              
-              // 1. 프로필 헤더 (이미지 + 이름)
-              _buildProfileHeader(),
-              
-              const SizedBox(height: 30),
+        // FutureBuilder로 감싸서 데이터 상태(로딩/성공/실패)에 따라 화면을 그립니다.
+        child: FutureBuilder<MemberProfile>(
+          future: _profileFuture,
+          builder: (context, snapshot) {
+            // 1. 로딩 중일 때
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            // 2. 에러 났을 때
+            else if (snapshot.hasError) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("프로필을 불러오지 못했습니다."),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: _refreshProfile, 
+                      child: const Text("다시 시도")
+                    ),
+                  ],
+                ),
+              );
+            }
+            // 3. 데이터가 없을 때
+            else if (!snapshot.hasData) {
+              return const Center(child: Text("정보가 없습니다."));
+            }
 
-              // 2. 학습 통계 요약 (Streak, XP, Rank)
-              _buildStatsCard(),
+            // 4. 성공! 데이터 가져오기
+            final profile = snapshot.data!;
 
-              const SizedBox(height: 30),
+            return RefreshIndicator(
+              onRefresh: _refreshProfile,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(), // 당겨서 새로고침 가능
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    
+                    // 헤더에 데이터 전달
+                    _buildProfileHeader(profile),
+                    
+                    const SizedBox(height: 30),
 
-              // 3. 설정 메뉴 리스트
-              _buildSectionTitle("General Settings"),
-              _buildSettingsTile(
-                icon: Icons.notifications_outlined,
-                title: "Notifications",
-                trailing: Switch(
-                  value: _isNotificationOn,
-                  activeColor: _primaryColor,
-                  onChanged: (value) => setState(() => _isNotificationOn = value),
+                    // 통계 카드에 데이터 전달
+                    _buildStatsCard(profile),
+
+                    const SizedBox(height: 30),
+
+                    // --- 아래 설정 메뉴는 고정값이므로 그대로 유지 ---
+                    _buildSectionTitle("General Settings"),
+                    _buildSettingsTile(
+                      icon: Icons.notifications_outlined,
+                      title: "Notifications",
+                      trailing: Switch(
+                        value: _isNotificationOn,
+                        activeColor: _primaryColor,
+                        onChanged: (value) => setState(() => _isNotificationOn = value),
+                      ),
+                    ),
+                    _buildSettingsTile(
+                      icon: Icons.volume_up_outlined,
+                      title: "Sound Effects",
+                      trailing: Switch(
+                        value: _isSoundOn,
+                        activeColor: _primaryColor,
+                        onChanged: (value) => setState(() => _isSoundOn = value),
+                      ),
+                    ),
+                    _buildSettingsTile(
+                      icon: Icons.language,
+                      title: "Language",
+                      trailing: const Text("English", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                      onTap: () {},
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    _buildSectionTitle("Account"),
+                    _buildSettingsTile(
+                      icon: Icons.help_outline_rounded,
+                      title: "Help & Support",
+                      onTap: () {},
+                    ),
+                    _buildSettingsTile(
+                      icon: Icons.logout_rounded,
+                      title: "Logout",
+                      textColor: Colors.redAccent,
+                      iconColor: Colors.redAccent,
+                      // onTap: _showLogoutDialog, 
+                    ),
+                    
+                    const SizedBox(height: 40),
+                    
+                    Text(
+                      "Version 1.0.0",
+                      style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                    ),
+                  ],
                 ),
               ),
-              _buildSettingsTile(
-                icon: Icons.volume_up_outlined,
-                title: "Sound Effects",
-                trailing: Switch(
-                  value: _isSoundOn,
-                  activeColor: _primaryColor,
-                  onChanged: (value) => setState(() => _isSoundOn = value),
-                ),
-              ),
-              _buildSettingsTile(
-                icon: Icons.language,
-                title: "Language",
-                trailing: const Text("English", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
-                onTap: () {},
-              ),
-
-              const SizedBox(height: 20),
-
-              _buildSectionTitle("Account"),
-              _buildSettingsTile(
-                icon: Icons.help_outline_rounded,
-                title: "Help & Support",
-                onTap: () {},
-              ),
-              _buildSettingsTile(
-                icon: Icons.logout_rounded,
-                title: "Logout",
-                textColor: Colors.redAccent,
-                iconColor: Colors.redAccent,
-                // onTap: _showLogoutDialog, // 다이얼로그 띄우기
-              ),
-              
-              const SizedBox(height: 40),
-              
-              // 앱 버전
-              Text(
-                "Version 1.0.0",
-                style: TextStyle(color: Colors.grey[400], fontSize: 12),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
   }
 
-  // --- 위젯 빌더 메서드 ---
+  // --- 위젯 빌더 메서드 (데이터 바인딩 적용) ---
 
-  Widget _buildProfileHeader() {
+  Widget _buildProfileHeader(MemberProfile profile) {
     return Column(
       children: [
         Stack(
@@ -125,9 +170,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: _primaryColor.withOpacity(0.2), width: 4),
-                image: const DecorationImage(
-                  // 실제 프로필 이미지가 없으면 플레이스홀더 사용
-                  image: NetworkImage('https://i.pravatar.cc/300'), 
+                image: DecorationImage(
+                  // 프로필 이미지가 없으면 기본 이미지(또는 플레이스홀더) 사용
+                  image: (profile.profileImageUrl.isNotEmpty)
+                      ? NetworkImage(profile.profileImageUrl)
+                      : const NetworkImage('https://i.pravatar.cc/300'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -148,20 +195,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
         const SizedBox(height: 16),
-        const Text(
-          "안은욱", // 실제 사용자 이름 변수
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
+        Text(
+          profile.nickname, // 닉네임 바인딩
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         const SizedBox(height: 4),
         Text(
-          "Lv.5 Passionate Learner 🔥",
+          "${profile.role} 🔥", // 칭호 바인딩
           style: TextStyle(fontSize: 14, color: Colors.grey[600], fontWeight: FontWeight.w500),
         ),
       ],
     );
   }
 
-  Widget _buildStatsCard() {
+  Widget _buildStatsCard(MemberProfile profile) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       decoration: BoxDecoration(
@@ -178,16 +225,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildStatItem(Icons.local_fire_department_rounded, "12", "Day Streak", Colors.orange),
-          Container(width: 1, height: 40, color: Colors.grey[200]), // 구분선
-          _buildStatItem(Icons.bolt_rounded, "1,240", "Total XP", Colors.yellow[700]!),
-          Container(width: 1, height: 40, color: Colors.grey[200]), // 구분선
-          _buildStatItem(Icons.emoji_events_rounded, "Gold", "League", _primaryColor),
+          // 서버 DTO에 맞게 데이터 연결
+          _buildStatItem(Icons.timer_outlined, profile.totalStudyTime, "Study Time", Colors.orange),
+          Container(width: 1, height: 40, color: Colors.grey[200]), 
+          
+          _buildStatItem(Icons.quiz_outlined, "${profile.totalQuizCount}", "Quizzes", _primaryColor),
+          Container(width: 1, height: 40, color: Colors.grey[200]), 
+          
+          _buildStatItem(Icons.school_outlined, profile.topikLevel, "Level", Colors.blueAccent),
         ],
       ),
     );
   }
 
+  // (아래 헬퍼 메서드들은 변경 없음)
   Widget _buildStatItem(IconData icon, String value, String label, Color color) {
     return Column(
       children: [
@@ -213,11 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.only(bottom: 12, left: 4),
         child: Text(
           title,
-          style: TextStyle(
-            color: Colors.grey[800],
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.grey[800], fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -252,11 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         title: Text(
           title,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            color: textColor ?? Colors.black87,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: textColor ?? Colors.black87),
         ),
         trailing: trailing ?? const Icon(Icons.chevron_right, color: Colors.grey),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -264,28 +307,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
-//   void _showLogoutDialog() {
-//     showDialog(
-//       context: context,
-//       builder: (context) => AlertDialog(
-//         title: const Text("Logout"),
-//         content: const Text("Are you sure you want to log out?"),
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-//         actions: [
-//           TextButton(
-//             onPressed: () => Navigator.pop(context),
-//             child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
-//           ),
-//           TextButton(
-//             onPressed: () {
-//               Navigator.pop(context);
-//               _handleLogout();
-//             },
-//             child: const Text("Logout", style: TextStyle(color: Colors.red)),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
 }

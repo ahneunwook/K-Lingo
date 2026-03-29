@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:k_lingo_front/screens/home/home_screen.dart'; // 홈 화면 import
 import 'package:k_lingo_front/widgets/common_bottom_bar.dart'; // 하단 바 import
 import 'package:k_lingo_front/screens/profile/profile_screen.dart';
+import 'package:k_lingo_front/screens/review/review_screen.dart';
 
 
 class MainScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   // 탭별 화면 리스트 (알맹이들)
   final List<Widget> _screens = [
     const HomeScreen(),          // 0: Home
-    const Center(child: Text("Review Screen")), // 1: Review
+    const ReviewScreen(),        // 1: Review
     const Center(child: Text("Search Screen")), // 2: Search
     const Center(child: Text("Stats Screen")),  // 3: Stats
     const ProfileScreen(),

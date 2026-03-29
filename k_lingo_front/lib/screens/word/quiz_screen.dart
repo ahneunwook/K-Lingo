@@ -3,6 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
 import '../../services/word_quiz_service.dart';
+import '../../services/bookmark_service.dart';
 import '../../models/word/word_quiz.dart';      
 import '../../models/word/quiz_submission.dart';
 import '../../config/app_config.dart';
@@ -25,7 +26,11 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
   static const Color kTextGrey = Color(0xFF8D8D8D);
 
   final WordQuizService _quizService = WordQuizService();
+  final BookmarkService _bookmarkService = BookmarkService();
   final AudioPlayer _audioPlayer = AudioPlayer();
+
+  // ✅ 북마크 상태 저장 (wordId -> 북마크 여부)
+  final Set<int> _bookmarkedWordIds = {};
 
   static const int maxAttempts = 2;
   int wrongCount = 0;
@@ -96,6 +101,102 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
   void _shakeScreen() {
     HapticFeedback.heavyImpact();
     _shakeController.forward();
+  }
+
+  // ✅ 북마크 토글
+  Future<void> _toggleBookmark(int wordId) async {
+    final isBookmarked = _bookmarkedWordIds.contains(wordId);
+    
+    // 낙관적 업데이트 (먼저 UI 반영)
+    setState(() {
+      if (isBookmarked) {
+        _bookmarkedWordIds.remove(wordId);
+      } else {
+        _bookmarkedWordIds.add(wordId);
+      }
+    });
+
+    try {
+      if (isBookmarked) {
+        await _bookmarkService.removeWordBookmark(wordId);
+        if (mounted) {
+          _showTopNotification(context, "북마크에서 삭제했어요", isError: false);
+        }
+      } else {
+        await _bookmarkService.addWordBookmark(wordId);
+        if (mounted) {
+          _showTopNotification(context, "북마크에 추가했어요 📚", isError: false);
+        }
+      }
+    } catch (e) {
+      // 실패 시 롤백
+      setState(() {
+        if (isBookmarked) {
+          _bookmarkedWordIds.add(wordId);
+        } else {
+          _bookmarkedWordIds.remove(wordId);
+        }
+      });
+      if (mounted) {
+        _showTopNotification(context, "북마크 처리 실패 😢", isError: true);
+      }
+    }
+  }
+
+  // ✅ 상단 알림 표시
+  void _showTopNotification(BuildContext context, String message, {bool isError = false}) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+    
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: MediaQuery.of(context).padding.top + 10,
+        left: 20,
+        right: 20,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            decoration: BoxDecoration(
+              color: isError ? Colors.redAccent : const Color(0xFF8B5CF6),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  isError ? Icons.error_outline : Icons.bookmark,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 2), () {
+      overlayEntry.remove();
+    });
   }
 
   // 답안 선택 처리 (공통)
@@ -435,62 +536,85 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
 
     // 현재 정답 칸에 들어갈 글자 조합 (String 리스트 조인)
     final currentAnswerString = _selectedBlocks.join();
+    final isBookmarked = _bookmarkedWordIds.contains(quiz.wordId);
 
     return Column(
       children: [
         // --- 1. 상단 문제 카드 (블루베리 디자인 적용) ---
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: [
-              BoxShadow(
-                color: kAccentPurple.withOpacity(0.1),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              // 듣기 버튼
-              InkWell(
-                onTap: () => _playAudio(quiz.audioUrl),
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: const BoxDecoration(
-                    color: kLightLavender,
-                    shape: BoxShape.circle,
+        Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: kAccentPurple.withOpacity(0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
                   ),
-                  child: const Icon(Icons.volume_up_rounded, size: 28, color: kAccentDeep),
+                ],
+              ),
+              child: Column(
+                children: [
+                  // 듣기 버튼
+                  InkWell(
+                    onTap: () => _playAudio(quiz.audioUrl),
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: const BoxDecoration(
+                        color: kLightLavender,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.volume_up_rounded, size: 28, color: kAccentDeep),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  
+                  // 메인 단어
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      quiz.content,
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: kAccentDeep,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  
+                  // 발음
+                  if (quiz.pronunciation != null) ...[
+                    const SizedBox(height: 8),
+                    Text('[${quiz.pronunciation}]',
+                        style: const TextStyle(fontSize: 16, color: kTextGrey, fontWeight: FontWeight.w500)),
+                  ]
+                ],
+              ),
+            ),
+            
+            // ✅ 북마크 버튼 (우상단)
+            Positioned(
+              top: 16,
+              right: 16,
+              child: GestureDetector(
+                onTap: () => _toggleBookmark(quiz.wordId),
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: Icon(
+                    isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                    key: ValueKey(isBookmarked),
+                    color: isBookmarked ? const Color(0xFF8B5CF6) : Colors.grey[400],
+                    size: 28,
+                  ),
                 ),
               ),
-              const SizedBox(height: 16),
-              
-              // 메인 단어
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  quiz.content,
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: kAccentDeep,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              
-              // 발음
-              if (quiz.pronunciation != null) ...[
-                const SizedBox(height: 8),
-                Text('[${quiz.pronunciation}]',
-                    style: const TextStyle(fontSize: 16, color: kTextGrey, fontWeight: FontWeight.w500)),
-              ]
-            ],
-          ),
+            ),
+          ],
         ),
 
         const SizedBox(height: 24),
@@ -661,60 +785,81 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
 
   // --- 듣기 평가 UI ---
   Widget _buildListening(WordQuizRes quiz) {
-    // 여기에 SingleChildScrollView 추가
+    final isBookmarked = _bookmarkedWordIds.contains(quiz.wordId);
+    
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(32),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 20,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                _buildBadge('듣기'),
-                const SizedBox(height: 16),
-                const Text('들려주는 단어의 뜻은?',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 24),
-                InkWell(
-                  onTap: () => _playAudio(quiz.audioUrl),
-                  child: Container(
-                    width: 90, height: 90,
-                    decoration: BoxDecoration(
-                      // [변경] 은은한 그라데이션 (연보라 -> 조금 진한 보라)
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Color(0xFFD6BCFA), Color(0xFF9F7AEA)],
-                      ),
-                      shape: BoxShape.circle,
-                      // 그림자를 부드럽게 퍼뜨려서 '몽글몽글'하게
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF9F7AEA).withOpacity(0.3),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
+          Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(32),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 4),
                     ),
-                    child: const Icon(Icons.volume_up_rounded, size: 40, color: Colors.white),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    _buildBadge('듣기'),
+                    const SizedBox(height: 16),
+                    const Text('들려주는 단어의 뜻은?',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 24),
+                    InkWell(
+                      onTap: () => _playAudio(quiz.audioUrl),
+                      child: Container(
+                        width: 90, height: 90,
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [Color(0xFFD6BCFA), Color(0xFF9F7AEA)],
+                          ),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF9F7AEA).withOpacity(0.3),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(Icons.volume_up_rounded, size: 40, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text('🔊 눌러서 듣기',
+                        style: TextStyle(fontSize: 14, color: Colors.black54)),
+                  ],
+                ),
+              ),
+              
+              // ✅ 북마크 버튼 (우상단)
+              Positioned(
+                top: 16,
+                right: 16,
+                child: GestureDetector(
+                  onTap: () => _toggleBookmark(quiz.wordId),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(
+                      isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                      key: ValueKey(isBookmarked),
+                      color: isBookmarked ? const Color(0xFF8B5CF6) : Colors.grey[400],
+                      size: 28,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 16),
-                const Text('🔊 눌러서 듣기',
-                    style: TextStyle(fontSize: 14, color: Colors.black54)),
-              ],
-            ),
+              ),
+            ],
           ),
           const SizedBox(height: 24),
           ...quiz.options
@@ -739,88 +884,112 @@ class _QuizScreenState extends State<QuizScreen> with SingleTickerProviderStateM
       fontSize = 36;
     }
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24), // 모서리 둥글게 (24)
-        // [변경] 그림자를 아주 연한 보라색으로 변경
-        boxShadow: [
-          BoxShadow(
-            color: kAccentPurple.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // [변경] 뱃지 디자인: 그라데이션 빼고 파스텔 톤으로
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: kLightLavender, // 연한 라벤더 배경
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              badge, 
-              style: const TextStyle(
-                fontSize: 13, 
-                fontWeight: FontWeight.bold, 
-                color: kAccentDeep // 글자는 진한 보라
-              )
-            ),
-          ),
-          
-          const SizedBox(height: 20),
-          
-          // 질문 제목 (연한 회색)
-          Text(title,
-              style: const TextStyle(
-                fontSize: 16, 
-                fontWeight: FontWeight.w600,
-                color: kTextGrey, 
-              )),
-              
-          const SizedBox(height: 24),
-          
-          // 메인 단어 (보라색 포인트)
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              quiz.content,
-              style: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: kAccentDeep, // [변경] 진한 보라색
+    final isBookmarked = _bookmarkedWordIds.contains(quiz.wordId);
+
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: kAccentPurple.withOpacity(0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
               ),
-              textAlign: TextAlign.center,
-              maxLines: 3,
-            ),
+            ],
           ),
-          
-          // 발음 (우리가 아까 수정한 로직 포함)
-          if (quiz.pronunciation != null) ...[
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              width: double.infinity,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
+          child: Column(
+            children: [
+              // 뱃지 디자인
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: kLightLavender,
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Text(
-                  '[${quiz.pronunciation}]',
+                  badge, 
                   style: const TextStyle(
-                    fontSize: 16,
-                    color: kTextGrey,
-                    fontWeight: FontWeight.w500,
-                  ),
+                    fontSize: 13, 
+                    fontWeight: FontWeight.bold, 
+                    color: kAccentDeep
+                  )
                 ),
               ),
+              
+              const SizedBox(height: 20),
+              
+              // 질문 제목 (연한 회색)
+              Text(title,
+                style: const TextStyle(
+                  fontSize: 16, 
+                  fontWeight: FontWeight.w600,
+                  color: kTextGrey, 
+                )
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // 메인 단어 (보라색 포인트)
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  quiz.content,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.bold,
+                    color: kAccentDeep,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                ),
+              ),
+              
+              // 발음
+              if (quiz.pronunciation != null) ...[
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  width: double.infinity,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '[${quiz.pronunciation}]',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: kTextGrey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ]
+            ],
+          ),
+        ),
+        
+        // ✅ 북마크 버튼 (우상단)
+        Positioned(
+          top: 16,
+          right: 16,
+          child: GestureDetector(
+            onTap: () => _toggleBookmark(quiz.wordId),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: Icon(
+                isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                key: ValueKey(isBookmarked),
+                color: isBookmarked ? const Color(0xFF8B5CF6) : Colors.grey[400],
+                size: 28,
+              ),
             ),
-          ]
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 

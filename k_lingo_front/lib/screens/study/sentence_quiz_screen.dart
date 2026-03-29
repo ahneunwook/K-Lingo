@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:k_lingo_front/models/study/sentence_quiz.dart';
 import 'package:k_lingo_front/models/study/sentence_submit_res.dart';
 import 'package:k_lingo_front/services/sentence_service.dart';
+import 'package:k_lingo_front/services/bookmark_service.dart';
 import 'package:k_lingo_front/widgets/quiz_video_player.dart';
 
 class SentenceQuizScreen extends StatefulWidget {
@@ -17,9 +18,14 @@ class _SentenceQuizScreenState extends State<SentenceQuizScreen> {
   final Color _primaryColor = const Color(0xFFA855F7);
   final Color _lightColor = const Color(0xFFF3E8FF);
 
+  final BookmarkService _bookmarkService = BookmarkService();
+
   late Future<List<SentenceQuiz>> _quizListFuture;
   List<SentenceQuiz> _quizzes = [];
   int _currentIndex = 0;
+
+  // ✅ 북마크 상태 저장 (sentenceId -> 북마크 여부)
+  final Set<int> _bookmarkedSentenceIds = {};
 
   // 상태 관리 변수
   final TextEditingController _blankController = TextEditingController();
@@ -34,6 +40,89 @@ class _SentenceQuizScreenState extends State<SentenceQuizScreen> {
   void initState() {
     super.initState();
     _quizListFuture = SentenceService().getChapterQuizzes(widget.chapterId);
+  }
+
+  // ✅ 상단 알림 표시
+  void _showTopNotification(String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry entry;
+    
+    entry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: MediaQuery.of(context).padding.top + 20,
+        left: 20,
+        right: 20,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            decoration: BoxDecoration(
+              color: const Color(0xFF8B5CF6),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.15),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    
+    overlay.insert(entry);
+    Future.delayed(const Duration(seconds: 2), () => entry.remove());
+  }
+
+  // ✅ 북마크 토글
+  Future<void> _toggleBookmark(int sentenceId) async {
+    final isBookmarked = _bookmarkedSentenceIds.contains(sentenceId);
+    
+    // 낙관적 업데이트 (먼저 UI 반영)
+    setState(() {
+      if (isBookmarked) {
+        _bookmarkedSentenceIds.remove(sentenceId);
+      } else {
+        _bookmarkedSentenceIds.add(sentenceId);
+      }
+    });
+
+    try {
+      if (isBookmarked) {
+        await _bookmarkService.removeSentenceBookmark(sentenceId);
+        if (mounted) {
+          _showTopNotification("북마크에서 삭제했어요");
+        }
+      } else {
+        await _bookmarkService.addSentenceBookmark(sentenceId);
+        if (mounted) {
+          _showTopNotification("북마크에 추가했어요 📝");
+        }
+      }
+    } catch (e) {
+      // 실패 시 롤백
+      setState(() {
+        if (isBookmarked) {
+          _bookmarkedSentenceIds.add(sentenceId);
+        } else {
+          _bookmarkedSentenceIds.remove(sentenceId);
+        }
+      });
+      if (mounted) {
+        _showTopNotification("북마크 처리 실패 😢");
+      }
+    }
   }
 
   void _initQuizState(SentenceQuiz quiz) {
@@ -238,10 +327,11 @@ class _SentenceQuizScreenState extends State<SentenceQuizScreen> {
   Widget _buildQuestionCard(SentenceQuiz quiz) {
     // 1. 영상 정보가 있는지 확인
     bool hasVideo = quiz.youtubeId != null && quiz.youtubeId!.isNotEmpty;
+    final isBookmarked = _bookmarkedSentenceIds.contains(quiz.sentenceId);
 
     return Container(
       // 영상일 때는 패딩을 좀 줄여서 화면을 넓게 쓰고, 아닐 땐 기존대로 40
-      padding: EdgeInsets.symmetric(vertical: hasVideo ? 20 : 40, horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: hasVideo ? 20 : 24, horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
@@ -255,6 +345,25 @@ class _SentenceQuizScreenState extends State<SentenceQuizScreen> {
       ),
       child: Column(
         children: [
+          // ✅ 북마크 버튼 (우측 정렬)
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () => _toggleBookmark(quiz.sentenceId),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: Icon(
+                  isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                  key: ValueKey(isBookmarked),
+                  color: isBookmarked ? const Color(0xFF8B5CF6) : Colors.grey[400],
+                  size: 28,
+                ),
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 8),
+          
           // ✨ 2. 여기가 핵심 변경 포인트!
           if (hasVideo)
             // 영상이 있으면 -> 유튜브 플레이어 표시
